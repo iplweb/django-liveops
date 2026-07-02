@@ -10,7 +10,9 @@ dependencies = [
     "django-channels-broadcast",
     "celery>=5",
     "channels-redis>=4",
-    "django-live-operations",
+    # [cli] pulls tqdm so `make demo-text` renders a live progress bar
+    # (TextProgress falls back to plain percent prints without it).
+    "django-live-operations[cli]",
 ]
 
 [tool.uv.sources]
