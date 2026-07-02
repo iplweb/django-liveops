@@ -9,46 +9,47 @@ file, with live progress, stages, and a result summary.
 # my_app/models.py
 from django.db import models
 from live_operations.models import LiveOperation
+from live_operations.progress import Progress
 
 
-class ImportPunktacji(LiveOperation):
+class ScoreImport(LiveOperation):
     """Import CSV file of scored publications."""
 
     csv_path = models.CharField(max_length=500)
 
-    stages = ["Wczytaj", "Weryfikuj", "Zapisz"]
+    stages = ["Load", "Validate", "Save"]
 
     class Meta:
         app_label = "my_app"
 
-    def run(self, p):
+    def run(self, p: Progress):
         import csv
 
         # Stage 1: read the CSV
-        with p.stage("Wczytaj"):
-            p.status("Wczytywanie pliku...")
+        with p.stage("Load"):
+            p.status("Loading file...")
             with open(self.csv_path) as f:
                 rows = list(csv.DictReader(f))
-            p.log(f"Wczytano {len(rows)} wierszy")
+            p.log(f"Loaded {len(rows)} rows")
 
         # Stage 2: validate
-        with p.stage("Weryfikuj"):
+        with p.stage("Validate"):
             valid, errors = [], []
-            for row in p.track(rows, label="Weryfikacja"):
-                if row.get("punkty"):
+            for row in p.track(rows, label="Validation"):
+                if row.get("score"):
                     valid.append(row)
                 else:
                     errors.append(row["id"])
             if errors:
-                p.log(f"Pominięto {len(errors)} wierszy bez punktów")
+                p.log(f"Skipped {len(errors)} rows without a score")
 
         # Stage 3: save
-        with p.stage("Zapisz"):
+        with p.stage("Save"):
             saved = 0
-            for row in p.track(valid, label="Zapis"):
-                Publikacja.objects.update_or_create(
+            for row in p.track(valid, label="Saving"):
+                Publication.objects.update_or_create(
                     pk=row["id"],
-                    defaults={"punkty": int(row["punkty"])},
+                    defaults={"score": int(row["score"])},
                 )
                 saved += 1
 
@@ -57,25 +58,25 @@ class ImportPunktacji(LiveOperation):
 
 ## 2. Create the result template
 
-`my_app/templates/my_app/import_punktacji_result.html`:
+`my_app/templates/my_app/score_import_result.html`:
 
 ```html
-<p>Zaimportowano <strong>{{ saved }}</strong> wierszy.</p>
+<p>Imported <strong>{{ saved }}</strong> rows.</p>
 {% if errors %}
-<p class="warning">Pominięto {{ errors }} wierszy bez punktów.</p>
+<p class="warning">Skipped {{ errors }} rows without a score.</p>
 {% endif %}
 ```
 
 ## 3. Create the host template (optional)
 
 By default, `live_operations/operation.html` is used. To customise, create
-`my_app/templates/my_app/import_punktacji.html`:
+`my_app/templates/my_app/score_import.html`:
 
 ```html
 {% extends "base.html" %}
 {% load live_operations static %}
 {% block content %}
-<h1>Import punktacji</h1>
+<h1>Score import</h1>
 {% live_operation object %}
 <script src="{% static 'live_operations/live-operations.js' %}"></script>
 {% endblock %}
@@ -86,12 +87,12 @@ By default, `live_operations/operation.html` is used. To customise, create
 ```python
 # my_app/forms.py
 from django import forms
-from .models import ImportPunktacji
+from .models import ScoreImport
 
 
-class ImportPunktacjiForm(forms.ModelForm):
+class ScoreImportForm(forms.ModelForm):
     class Meta:
-        model = ImportPunktacji
+        model = ScoreImport
         fields = ["csv_path"]
 ```
 
@@ -100,18 +101,18 @@ class ImportPunktacjiForm(forms.ModelForm):
 ```python
 # my_app/views.py
 from live_operations.views import CreateLiveOperationView, LiveOperationView
-from .models import ImportPunktacji
-from .forms import ImportPunktacjiForm
+from .models import ScoreImport
+from .forms import ScoreImportForm
 
 
 class ImportCreateView(CreateLiveOperationView):
-    model = ImportPunktacji
-    form_class = ImportPunktacjiForm
+    model = ScoreImport
+    form_class = ScoreImportForm
     template_name = "my_app/import_form.html"
 
 
 class ImportLiveView(LiveOperationView):
-    model = ImportPunktacji
+    model = ScoreImport
 ```
 
 ## 6. URLs

@@ -19,20 +19,21 @@ stage navigation, chaining — is handled by the framework.
 ```python
 # models.py
 from live_operations.models import LiveOperation
+from live_operations.progress import Progress
 
-class ImportPunktacji(LiveOperation):
+class ScoreImport(LiveOperation):
     class Meta:
         app_label = "my_app"
 
-    stages = ["Wczytaj", "Weryfikuj", "Zapisz"]
+    stages = ["Load", "Validate", "Save"]
 
-    def run(self, p):
-        with p.stage("Wczytaj"):
-            rows = list(p.track(load_csv(), label="Wczytywanie"))
-        with p.stage("Weryfikuj"):
+    def run(self, p: Progress):
+        with p.stage("Load"):
+            rows = list(p.track(load_csv(), label="Loading"))
+        with p.stage("Validate"):
             valid = [r for r in rows if r.is_valid()]
-        with p.stage("Zapisz"):
-            for row in p.track(valid, label="Zapis"):
+        with p.stage("Save"):
+            for row in p.track(valid, label="Saving"):
                 row.save()
         p.result({"saved": len(valid)})
 ```
@@ -41,7 +42,7 @@ The user sees a live progress bar, stage stepper, log, and final result — all 
 without leaving the page. Works the same via CLI:
 
 ```bash
-python manage.py run_liveop my_app.ImportPunktacji
+python manage.py run_liveop my_app.ScoreImport
 ```
 
 ## Features

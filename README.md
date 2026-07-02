@@ -6,8 +6,12 @@ WebSocket + HTMX user interface — no page reloads, no polling.
 The developer writes one method:
 
 ```python
+from live_operations.models import LiveOperation
+from live_operations.progress import Progress
+
+
 class MyImport(LiveOperation):
-    def run(self, p):
+    def run(self, p: Progress):
         for row in p.track(rows, label="Processing"):
             process(row)
             p.log(f"done: {row}")

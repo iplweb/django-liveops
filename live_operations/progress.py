@@ -12,6 +12,7 @@ WebProgress: emits via async_to_sync(channel_layer.group_send) in JSON
 TextProgress: renders to a stream (stdout). tqdm if available, else print.
     swap/html raise NotImplementedError (web-only, §19.5).
 """
+
 from __future__ import annotations
 
 import sys
@@ -69,7 +70,7 @@ class Progress:
         iterable: Any,
         total: Optional[int] = None,
         label: Optional[str] = None,
-        unit: str = "szt.",
+        unit: str = "item",
     ) -> Generator:
         """
         Generator that yields items and updates percent (throttled).
@@ -146,18 +147,13 @@ class Progress:
         """
         self._cancel_check_count += 1
         now = time.monotonic()
-        if (
-            now - self._last_cancel_check_time < 0.5
-            and self._cancel_check_count < 50
-        ):
+        if now - self._last_cancel_check_time < 0.5 and self._cancel_check_count < 50:
             return
         self._last_cancel_check_time = now
         self._cancel_check_count = 0
         self._operation.refresh_from_db(fields=["cancel_requested"])
         if self._operation.cancel_requested:
-            raise OperationCancelled(
-                f"Operation {self._operation.pk} was cancelled"
-            )
+            raise OperationCancelled(f"Operation {self._operation.pk} was cancelled")
 
     def chain_to(self, next_op: Any) -> None:
         """Chain to next_op. Web: re-init socket. Text: run inline."""
@@ -181,14 +177,10 @@ class Progress:
     # ------------------------------------------------------------------ #
 
     def swap(self, selector: str, name: Optional[str] = None, **ctx: Any) -> None:
-        raise NotImplementedError(
-            "swap/html są webowe; użyj log/status/result"
-        )
+        raise NotImplementedError("swap/html są webowe; użyj log/status/result")
 
     def html(self, selector: str, raw: str, mode: str = "innerHTML") -> None:
-        raise NotImplementedError(
-            "swap/html są webowe; użyj log/status/result"
-        )
+        raise NotImplementedError("swap/html są webowe; użyj log/status/result")
 
 
 # --------------------------------------------------------------------------- #
@@ -322,7 +314,7 @@ class WebProgress(Progress):
             push_fn(
                 format_html(
                     '<div id="op-result" hx-swap-oob="true">'
-                    "<div class=\"error\">{}</div></div>",
+                    '<div class="error">{}</div></div>',
                     message,
                 )
             )
@@ -333,9 +325,7 @@ class WebProgress(Progress):
     # Web-only                                                             #
     # ------------------------------------------------------------------ #
 
-    def swap(
-        self, selector: str, name: Optional[str] = None, **ctx: Any
-    ) -> None:
+    def swap(self, selector: str, name: Optional[str] = None, **ctx: Any) -> None:
         """
         Render a fragment and push it OOB to *selector*.
 
@@ -443,9 +433,7 @@ class WebProgress(Progress):
             # (#op-<current_pk>) with next_op's container (different pk).
             # The rendered container carries hx-swap-oob="outerHTML:#op-<old>"
             # so the JS applyOobSwap replaces the old element in the DOM.
-            container_html = render_op_container(
-                next_op, oob_target=f"op-{current_pk}"
-            )
+            container_html = render_op_container(next_op, oob_target=f"op-{current_pk}")
             push_fn(container_html)
 
             # Chain signal: JS calls channelsBroadcast.init with new token,
@@ -556,7 +544,7 @@ class TextProgress(Progress):
         iterable: Any,
         total: Optional[int] = None,
         label: Optional[str] = None,
-        unit: str = "szt.",
+        unit: str = "item",
     ) -> Generator:
         """Use tqdm natively if available; else plain print at intervals."""
         if total is None:

@@ -8,7 +8,7 @@ Declare stages as a class attribute:
 class MyOp(LiveOperation):
     stages = ["Load", "Process", "Save"]
 
-    def run(self, p):
+    def run(self, p: Progress):
         with p.stage("Load"):
             data = load_data()
         with p.stage("Process"):
@@ -47,7 +47,7 @@ Chain two operations without a page reload:
 
 ```python
 class StepA(LiveOperation):
-    def run(self, p):
+    def run(self, p: Progress):
         p.log("Step A done")
         step_b = StepB.objects.create(owner=self.owner)
         p.chain_to(step_b)

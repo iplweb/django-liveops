@@ -100,11 +100,11 @@ LiveOperation.run(self, p)  ← developer code
 
 ## Auto-derivation
 
-Given `class ImportPunktacji(LiveOperation)` in `my_app`:
+Given `class ScoreImport(LiveOperation)` in `my_app`:
 
 | Derived value | Result |
 |--------------|--------|
-| Host template | `my_app/import_punktacji.html` |
-| Result template | `my_app/import_punktacji_result.html` |
+| Host template | `my_app/score_import.html` |
+| Result template | `my_app/score_import_result.html` |
 | Channel name | `liveop.<uuid>` |
 | Subscription token | signed `{user_pk, ["liveop.<uuid>"], ttl=300}` |

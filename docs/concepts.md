@@ -28,7 +28,7 @@ update arrives twice, the result is the same as if it arrived once.
 This means:
 
 - Progress bar at 50% → arrives twice → still 50%
-- Status "Weryfikacja…" → snapshot sends it again → still "Weryfikacja…"
+- Status "Validation…" → snapshot sends it again → still "Validation…"
 - Result fragment → snapshot on reconnect → same result shown
 
 ## Snapshot-on-connect

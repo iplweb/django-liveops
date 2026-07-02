@@ -87,7 +87,7 @@ Send a status message. `level` may be `"info"`, `"warning"`, `"error"`.
 Send a percent update (0–100). Throttled by `THROTTLE_HZ`. Rapid same-value
 calls are coalesced by a time gate.
 
-#### `p.track(iterable, total=None, label=None, unit="szt.") → Generator`
+#### `p.track(iterable, total=None, label=None, unit="item") → Generator`
 
 Wrap an iterable: yields each item, updates percent after each, calls
 `check_cancelled()` before each item. If `total` is None, the iterable is
