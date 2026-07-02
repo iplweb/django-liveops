@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -42,10 +43,8 @@
   <a href="/new/" class="btn">+ Nowy import</a>
 </nav>
 {% block content %}{% endblock %}
-<script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js"
-        integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
-        crossorigin="anonymous"></script>
-{% load static %}
+<!-- htmx 1.9.12, vendored locally (BSD-2-Clause) — no CDN dependency -->
+<script src="{% static 'demo/vendor/htmx.min.js' %}"></script>
 <script src="{% static 'channels_broadcast/js/notifications.js' %}"></script>
 <script src="{% static 'live_operations/live-operations.js' %}"></script>
 </body>
