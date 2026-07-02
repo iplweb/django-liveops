@@ -2,11 +2,12 @@
 seed_demo — create demo data idempotently.
 
 Creates:
-  - superuser demo/demo (username=demo, password=demo)
+  - superuser admin/admin (username=admin, password=admin)
 
 Idempotent: safe to call multiple times; never duplicates the user.
 
-Auto-login: visit http://localhost:8000/__login__/ to log in as the demo user.
+Log in at http://localhost:8000/accounts/login/ (admin / admin), or visit
+http://localhost:8000/__login__/ to log in without a password prompt.
 """
 
 from django.contrib.auth import get_user_model
@@ -19,9 +20,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         User = get_user_model()
 
-        username = "demo"
-        email = "demo@example.com"
-        password = "demo"
+        username = "admin"
+        email = "admin@example.com"
+        password = "admin"
 
         user, created = User.objects.get_or_create(
             **{User.USERNAME_FIELD: username},

@@ -114,6 +114,8 @@ LANGUAGES = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_URL = "/accounts/login/"
+# Without this, Django defaults to /accounts/profile/ (which 404s) after login.
+LOGIN_REDIRECT_URL = "/"
 
 _runner = os.environ.get("RUNNER", "celery")
 LIVE_OPERATIONS = {

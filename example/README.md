@@ -7,9 +7,10 @@ make demo
 ```
 
 Opens `http://localhost:8000`. The `web` container runs `seed_demo` on
-startup — visit `http://localhost:8000/__login__/` to log in as `demo/demo`,
-then click **+ New import** and watch 5 stages of live progress (WebSocket,
-no reload).
+startup, creating an `admin` / `admin` superuser. Log in at the login page
+(`/accounts/login/`, credentials shown on it) or skip the prompt via
+`http://localhost:8000/__login__/`, then click **+ New import** and watch 5
+stages of live progress (WebSocket, no reload).
 
 What you'll see:
 - Stage stepper advances through Load → Validate → Match → Save → Report.
