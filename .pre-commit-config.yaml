@@ -1,5 +1,5 @@
 # Never rewrite vendored third-party assets (keep htmx byte-exact to upstream).
-exclude: '^example/demo/static/demo/vendor/'
+exclude: '^live_operations/static/live_operations/vendor/'
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks

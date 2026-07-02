@@ -96,10 +96,15 @@ live-operations.js (in this order):
 
 ```html
 {% load static %}
-<script src="https://unpkg.com/htmx.org@1.9/dist/htmx.min.js"></script>
+<script src="{% static 'live_operations/vendor/htmx.min.js' %}"></script>
 <script src="{% static 'channels_broadcast/js/notifications.js' %}"></script>
 <script src="{% static 'live_operations/live-operations.js' %}"></script>
 ```
+
+htmx is bundled with the package (vendored, so no CDN request is needed). If
+your project already loads its own copy of htmx, drop the first line — the
+`live-operations.js` client only calls `htmx.process()` when `window.htmx` is
+present, so it works with whichever htmx you load.
 
 ## 5. Run the demo
 

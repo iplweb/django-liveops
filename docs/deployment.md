@@ -83,7 +83,7 @@ live-operations.js (in this order):
 
 ```html
 {% load static %}
-<script src="https://unpkg.com/htmx.org@1.9/dist/htmx.min.js"></script>
+<script src="{% static 'live_operations/vendor/htmx.min.js' %}"></script>
 <script src="{% static 'channels_broadcast/js/notifications.js' %}"></script>
 <script src="{% static 'live_operations/live-operations.js' %}"></script>
 ```
