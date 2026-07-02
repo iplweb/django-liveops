@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-02 05:36-0500\n"
+"POT-Creation-Date: 2026-07-02 14:40-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,37 +16,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: models.py:20
+
+#: models.py:21
 msgid "Load"
 msgstr "Laadimine"
 
-#: models.py:21
+#: models.py:22
 msgid "Validate"
 msgstr "Valideerimine"
 
-#: models.py:22
+#: models.py:23
 msgid "Match"
 msgstr "Sobitamine"
 
-#: models.py:23
+#: models.py:24
 msgid "Save"
 msgstr "Salvestamine"
 
-#: models.py:24
+#: models.py:25
 msgid "Report"
 msgstr "Aruandlus"
 
-#: models.py:43
+#: models.py:35
+msgid "Label"
+msgstr "Silt"
+
+#: models.py:39
+msgid "A name for this import (shown while it runs)."
+msgstr "Selle importi nimi (kuvatakse töö ajal)."
+
+#: models.py:47
+#, python-format
+msgid "Starting import: %(label)s"
+msgstr "Impordi alustamine: %(label)s"
+
+#: models.py:57
 #, python-format
 msgid "Stage: %(name)s"
 msgstr "Etapp: %(name)s"
 
-#: models.py:49
+#: models.py:63
 #, python-format
 msgid "[%(stage)s] skipped record %(i)s"
 msgstr "[%(stage)s] jäeti vahele kirje %(i)s"
 
-#: models.py:55
+#: models.py:69
 #, python-format
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] kirje viga %(i)s"
@@ -59,38 +73,40 @@ msgstr "Toimingud"
 msgid "+ New import"
 msgstr "+ Uus import"
 
-#: templates/demo/demoimport_create.html:3
+#: templates/demo/demo_import_create.html:3
 msgid "New import — demo"
 msgstr "Uus import — demo"
 
-#: templates/demo/demoimport_create.html:5
+#: templates/demo/demo_import_create.html:5
 msgid "New demonstration import"
 msgstr "Uus näidisimport"
 
-#: templates/demo/demoimport_create.html:6
+#: templates/demo/demo_import_create.html:6
 msgid "Click “Start” to run a 5-stage import with a live progress preview."
-msgstr "Klõpsa “Start”, et käivitada 5-etapiline import reaalajas edenemise eelvaatega."
+msgstr ""
+"Klõpsa “Start”, et käivitada 5-etapiline import reaalajas edenemise "
+"eelvaatega."
 
-#: templates/demo/demoimport_create.html:10
+#: templates/demo/demo_import_create.html:10
 msgid "Start"
 msgstr "Start"
 
-#: templates/demo/demoimport_result.html:2
+#: templates/demo/demo_import_result.html:2
 msgid "Import results"
 msgstr "Impordi tulemused"
 
-#: templates/demo/demoimport_result.html:4
+#: templates/demo/demo_import_result.html:4
 msgid "Total records"
 msgstr "Kirjeid kokku"
 
-#: templates/demo/demoimport_result.html:5
+#: templates/demo/demo_import_result.html:5
 msgid "Imported"
 msgstr "Imporditud"
 
-#: templates/demo/demoimport_result.html:6
+#: templates/demo/demo_import_result.html:6
 msgid "Skipped"
 msgstr "Vahele jäetud"
 
-#: templates/demo/demoimport_result.html:7
+#: templates/demo/demo_import_result.html:7
 msgid "Errors"
 msgstr "Vead"

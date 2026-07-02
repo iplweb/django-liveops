@@ -6,8 +6,9 @@ Each stage does a short time.sleep loop so the browser demo shows live progress.
 
 import time
 
+from django.db import models
 from django.utils.translation import gettext as _
-from django.utils.translation import gettext_noop
+from django.utils.translation import gettext_lazy, gettext_noop
 
 from live_operations.models import LiveOperation
 
@@ -28,10 +29,23 @@ _STAGE_ITEMS = {
 class DemoImport(LiveOperation):
     stages = ["Load", "Validate", "Match", "Save", "Report"]
 
+    # One user-supplied parameter, purely to show how a form value reaches
+    # run(). The demo just echoes it in the first status line.
+    label = models.CharField(
+        gettext_lazy("Label"),
+        max_length=100,
+        blank=True,
+        default="",
+        help_text=gettext_lazy("A name for this import (shown while it runs)."),
+    )
+
     class Meta:
         app_label = "demo"
 
     def run(self, p):
+        if self.label:
+            p.status(_("Starting import: %(label)s") % {"label": self.label})
+
         total_items = sum(_STAGE_ITEMS.values())
         ok = 0
         skipped = 0

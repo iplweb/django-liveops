@@ -6,4 +6,4 @@ from demo.models import DemoImport
 class DemoImportForm(forms.ModelForm):
     class Meta:
         model = DemoImport
-        fields: list = []
+        fields = ["label"]

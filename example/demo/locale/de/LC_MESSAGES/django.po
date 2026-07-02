@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-02 05:36-0500\n"
+"POT-Creation-Date: 2026-07-02 14:40-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,37 +16,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: models.py:20
+
+#: models.py:21
 msgid "Load"
 msgstr "Laden"
 
-#: models.py:21
+#: models.py:22
 msgid "Validate"
 msgstr "Prüfen"
 
-#: models.py:22
+#: models.py:23
 msgid "Match"
 msgstr "Zuordnen"
 
-#: models.py:23
+#: models.py:24
 msgid "Save"
 msgstr "Speichern"
 
-#: models.py:24
+#: models.py:25
 msgid "Report"
 msgstr "Bericht"
 
-#: models.py:43
+#: models.py:35
+msgid "Label"
+msgstr "Bezeichnung"
+
+#: models.py:39
+msgid "A name for this import (shown while it runs)."
+msgstr "Ein Name für diesen Import (wird während der Ausführung angezeigt)."
+
+#: models.py:47
+#, python-format
+msgid "Starting import: %(label)s"
+msgstr "Import wird gestartet: %(label)s"
+
+#: models.py:57
 #, python-format
 msgid "Stage: %(name)s"
 msgstr "Phase: %(name)s"
 
-#: models.py:49
+#: models.py:63
 #, python-format
 msgid "[%(stage)s] skipped record %(i)s"
 msgstr "[%(stage)s] Datensatz %(i)s übersprungen"
 
-#: models.py:55
+#: models.py:69
 #, python-format
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] Fehler bei Datensatz %(i)s"
@@ -59,40 +73,40 @@ msgstr "Vorgänge"
 msgid "+ New import"
 msgstr "+ Neuer Import"
 
-#: templates/demo/demoimport_create.html:3
+#: templates/demo/demo_import_create.html:3
 msgid "New import — demo"
 msgstr "Neuer Import — Demo"
 
-#: templates/demo/demoimport_create.html:5
+#: templates/demo/demo_import_create.html:5
 msgid "New demonstration import"
 msgstr "Neuer Demonstrations-Import"
 
-#: templates/demo/demoimport_create.html:6
+#: templates/demo/demo_import_create.html:6
 msgid "Click “Start” to run a 5-stage import with a live progress preview."
 msgstr ""
-"Klicken Sie auf „Start“, um einen 5-stufigen Import mit einer "
-"Live-Fortschrittsvorschau auszuführen."
+"Klicken Sie auf „Start“, um einen 5-stufigen Import mit einer Live-"
+"Fortschrittsvorschau auszuführen."
 
-#: templates/demo/demoimport_create.html:10
+#: templates/demo/demo_import_create.html:10
 msgid "Start"
 msgstr "Start"
 
-#: templates/demo/demoimport_result.html:2
+#: templates/demo/demo_import_result.html:2
 msgid "Import results"
 msgstr "Import-Ergebnisse"
 
-#: templates/demo/demoimport_result.html:4
+#: templates/demo/demo_import_result.html:4
 msgid "Total records"
 msgstr "Datensätze gesamt"
 
-#: templates/demo/demoimport_result.html:5
+#: templates/demo/demo_import_result.html:5
 msgid "Imported"
 msgstr "Importiert"
 
-#: templates/demo/demoimport_result.html:6
+#: templates/demo/demo_import_result.html:6
 msgid "Skipped"
 msgstr "Übersprungen"
 
-#: templates/demo/demoimport_result.html:7
+#: templates/demo/demo_import_result.html:7
 msgid "Errors"
 msgstr "Fehler"

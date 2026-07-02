@@ -74,11 +74,40 @@ class LiveOperationAdmin(admin.ModelAdmin):
 
     # ---- read-only enforcement --------------------------------------------- #
 
+    # Fields declared on the abstract LiveOperation base. Anything else on a
+    # concrete subclass (e.g. the demo's ``label``) is subclass-specific and
+    # gets surfaced in the detail view automatically.
+    _BASE_FIELDS = frozenset(
+        {
+            "id",
+            "owner",
+            "language",
+            "created_on",
+            "started_on",
+            "finished_on",
+            "finished_successfully",
+            "cancelled",
+            "cancel_requested",
+            "status_text",
+            "percent",
+            "log",
+            "log_seq",
+            "current_stage",
+            "stage_states",
+            "traceback",
+            "result_context",
+        }
+    )
+
     def get_fields(self, request, obj=None):
+        extra = [
+            f.name for f in self.model._meta.fields if f.name not in self._BASE_FIELDS
+        ]
         return [
             "id",
             "owner",
             "state",
+            *extra,  # subclass-specific fields (e.g. the demo's `label`)
             "language",
             "created_on",
             "started_on",
