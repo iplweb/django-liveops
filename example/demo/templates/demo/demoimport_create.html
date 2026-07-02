@@ -1,11 +1,12 @@
 {% extends "base.html" %}
-{% block title %}Nowy import — demo{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "New import — demo" %}{% endblock %}
 {% block content %}
-<h1>Nowy import demonstracyjny</h1>
-<p>Kliknij "Start", żeby uruchomić 5-etapowy import z żywym podglądem postępu.</p>
+<h1>{% trans "New demonstration import" %}</h1>
+<p>{% trans "Click “Start” to run a 5-stage import with a live progress preview." %}</p>
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit" class="btn">Start</button>
+  <button type="submit" class="btn">{% trans "Start" %}</button>
 </form>
 {% endblock %}

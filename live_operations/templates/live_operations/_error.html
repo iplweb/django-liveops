@@ -1,1 +1,1 @@
-<div id="op-result" hx-swap-oob="true"><div class="error">Wystąpił błąd podczas przetwarzania. Identyfikator operacji: {{ op.pk }}</div></div>
+{% load i18n %}<div id="op-result" hx-swap-oob="true"><div class="error">{% blocktrans with pk=op.pk %}An error occurred during processing. Operation ID: {{ pk }}{% endblocktrans %}</div></div>

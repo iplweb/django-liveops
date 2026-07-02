@@ -83,13 +83,13 @@ def test_result_kwargs_merge(op):
 
 def test_swap_raises_not_implemented(op):
     p, stream = make_progress(op)
-    with pytest.raises(NotImplementedError, match="webowe"):
+    with pytest.raises(NotImplementedError, match="web-only"):
         p.swap("#some-id", name="foo")
 
 
 def test_html_raises_not_implemented(op):
     p, stream = make_progress(op)
-    with pytest.raises(NotImplementedError, match="webowe"):
+    with pytest.raises(NotImplementedError, match="web-only"):
         p.html("#some-id", "<p>raw</p>")
 
 

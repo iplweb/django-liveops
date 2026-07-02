@@ -177,10 +177,10 @@ class Progress:
     # ------------------------------------------------------------------ #
 
     def swap(self, selector: str, name: Optional[str] = None, **ctx: Any) -> None:
-        raise NotImplementedError("swap/html są webowe; użyj log/status/result")
+        raise NotImplementedError("swap/html are web-only; use log/status/result")
 
     def html(self, selector: str, raw: str, mode: str = "innerHTML") -> None:
-        raise NotImplementedError("swap/html są webowe; użyj log/status/result")
+        raise NotImplementedError("swap/html are web-only; use log/status/result")
 
 
 # --------------------------------------------------------------------------- #

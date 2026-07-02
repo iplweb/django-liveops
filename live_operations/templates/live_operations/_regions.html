@@ -1,4 +1,4 @@
-{% load live_operations %}
+{% load i18n live_operations %}
 <div id="op-status"></div>
 <div id="op-progress"></div>
 <div id="op-log"></div>
@@ -16,13 +16,13 @@
 {% if cancel_url and op.get_state != "FINISHED_OK" and op.get_state != "FINISHED_ERROR" and op.get_state != "CANCELLED" %}
 <form method="post" action="{{ cancel_url }}">
 {% csrf_token %}
-<button type="submit">Anuluj</button>
+<button type="submit">{% trans "Cancel" %}</button>
 </form>
 {% endif %}
 {% url 'live_operations:restart' pk=op.pk as restart_url %}
 {% if restart_url and op.get_state == "FINISHED_ERROR" %}
 <form method="post" action="{{ restart_url }}">
 {% csrf_token %}
-<button type="submit">Ponów</button>
+<button type="submit">{% trans "Retry" %}</button>
 </form>
 {% endif %}

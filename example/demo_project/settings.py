@@ -36,6 +36,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    # LocaleMiddleware must sit after SessionMiddleware and before CommonMiddleware.
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -53,6 +55,7 @@ TEMPLATES = [
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
+                "django.template.context_processors.i18n",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
@@ -84,6 +87,25 @@ CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticroot"
+
+# --- Internationalization ---------------------------------------------------
+# The demo ships translations for every language django-live-operations
+# supports. Pick one via the language switcher in the nav (POSTs to
+# django.conf.urls.i18n's set_language view), or via Accept-Language.
+LANGUAGE_CODE = "en"
+USE_I18N = True
+USE_TZ = True
+LANGUAGES = [
+    ("en", "English"),
+    ("pl", "Polski"),
+    ("uk", "Українська"),
+    ("lt", "Lietuvių"),
+    ("et", "Eesti"),
+    ("de", "Deutsch"),
+    ("fr", "Français"),
+    ("zh-hans", "简体中文"),
+    ("ja", "日本語"),
+]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

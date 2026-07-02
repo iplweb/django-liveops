@@ -125,7 +125,7 @@ def test_cancel_path_pushes_op_result_fragment(user):
     ]
     assert result_pushes, "Cancel path must push op-result fragment"
     combined = " ".join(result_pushes)
-    assert "anulowana" in combined.lower() or "anulowano" in combined.lower()
+    assert "cancelled" in combined.lower()
 
 
 @pytest.mark.django_db(transaction=True)

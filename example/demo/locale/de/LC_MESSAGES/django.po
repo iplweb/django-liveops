@@ -1,0 +1,98 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-02 05:36-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: machine-translated\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: models.py:20
+msgid "Load"
+msgstr "Laden"
+
+#: models.py:21
+msgid "Validate"
+msgstr "Prüfen"
+
+#: models.py:22
+msgid "Match"
+msgstr "Zuordnen"
+
+#: models.py:23
+msgid "Save"
+msgstr "Speichern"
+
+#: models.py:24
+msgid "Report"
+msgstr "Bericht"
+
+#: models.py:43
+#, python-format
+msgid "Stage: %(name)s"
+msgstr "Phase: %(name)s"
+
+#: models.py:49
+#, python-format
+msgid "[%(stage)s] skipped record %(i)s"
+msgstr "[%(stage)s] Datensatz %(i)s übersprungen"
+
+#: models.py:55
+#, python-format
+msgid "[%(stage)s] record error %(i)s"
+msgstr "[%(stage)s] Fehler bei Datensatz %(i)s"
+
+#: templates/base.html:42
+msgid "Operations"
+msgstr "Vorgänge"
+
+#: templates/base.html:43
+msgid "+ New import"
+msgstr "+ Neuer Import"
+
+#: templates/demo/demoimport_create.html:3
+msgid "New import — demo"
+msgstr "Neuer Import — Demo"
+
+#: templates/demo/demoimport_create.html:5
+msgid "New demonstration import"
+msgstr "Neuer Demonstrations-Import"
+
+#: templates/demo/demoimport_create.html:6
+msgid "Click “Start” to run a 5-stage import with a live progress preview."
+msgstr ""
+"Klicken Sie auf „Start“, um einen 5-stufigen Import mit einer "
+"Live-Fortschrittsvorschau auszuführen."
+
+#: templates/demo/demoimport_create.html:10
+msgid "Start"
+msgstr "Start"
+
+#: templates/demo/demoimport_result.html:2
+msgid "Import results"
+msgstr "Import-Ergebnisse"
+
+#: templates/demo/demoimport_result.html:4
+msgid "Total records"
+msgstr "Datensätze gesamt"
+
+#: templates/demo/demoimport_result.html:5
+msgid "Imported"
+msgstr "Importiert"
+
+#: templates/demo/demoimport_result.html:6
+msgid "Skipped"
+msgstr "Übersprungen"
+
+#: templates/demo/demoimport_result.html:7
+msgid "Errors"
+msgstr "Fehler"

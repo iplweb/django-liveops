@@ -19,6 +19,8 @@ from uuid import uuid4
 
 from django.conf import settings
 from django.db import models
+from django.utils.html import escape
+from django.utils.translation import gettext as _
 
 
 class LiveOperation(models.Model):
@@ -154,14 +156,14 @@ class LiveOperation(models.Model):
         if state == "CANCELLED":
             return (
                 '<div id="op-result" hx-swap-oob="true">'
-                '<div class="cancelled">Operation was cancelled.</div>'
+                '<div class="cancelled">{}</div>'
                 "</div>"
-            )
+            ).format(escape(_("Operation was cancelled.")))
 
         # STARTED or NOT_STARTED — send running status
         return render_to_string(
             "live_operations/_status.html",
-            {"text": "Operation in progress…", "level": "info"},
+            {"text": _("Operation in progress…"), "level": "info"},
         )
 
     def send_snapshot(self) -> None:

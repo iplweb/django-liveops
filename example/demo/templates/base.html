@@ -1,6 +1,6 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,8 +39,19 @@
 </head>
 <body>
 <nav>
-  <a href="/">Operacje</a>
-  <a href="/new/" class="btn">+ Nowy import</a>
+  <a href="/">{% trans "Operations" %}</a>
+  <a href="/new/" class="btn">{% trans "+ New import" %}</a>
+  {% get_current_language as CURRENT_LANGUAGE %}
+  {% get_available_languages as LANGUAGES %}
+  <form action="{% url 'set_language' %}" method="post" style="display:inline; float:right;">
+    {% csrf_token %}
+    <input name="next" type="hidden" value="{{ request.path }}">
+    <select name="language" onchange="this.form.submit()">
+      {% for code, name in LANGUAGES %}
+        <option value="{{ code }}"{% if code == CURRENT_LANGUAGE %} selected{% endif %}>{{ name }}</option>
+      {% endfor %}
+    </select>
+  </form>
 </nav>
 {% block content %}{% endblock %}
 <!-- htmx 1.9.12, vendored locally (BSD-2-Clause) — no CDN dependency -->
