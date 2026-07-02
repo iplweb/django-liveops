@@ -22,11 +22,19 @@ services:
       RUNNER: celery
       SECRET_KEY: demo-docker-key-change-in-production
       DEBUG: "true"
+      # Shared SQLite file so web + worker see the same database.
+      SQLITE_PATH: /data/db.sqlite3
     volumes:
       - static_root:/app/staticroot
+      - db_data:/data
     depends_on:
       redis:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/__login__/"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
 
   worker:
     build:
@@ -38,9 +46,18 @@ services:
       CELERY_BROKER_URL: redis://redis:6379/0
       RUNNER: celery
       SECRET_KEY: demo-docker-key-change-in-production
+      # Same shared SQLite file as web (see settings.SQLITE_PATH).
+      SQLITE_PATH: /data/db.sqlite3
+    volumes:
+      - db_data:/data
     depends_on:
       redis:
+        condition: service_healthy
+      # Start only after web has migrated + seeded the shared DB, so the
+      # worker never races web on first-boot migrations.
+      web:
         condition: service_healthy
 
 volumes:
   static_root:
+  db_data:

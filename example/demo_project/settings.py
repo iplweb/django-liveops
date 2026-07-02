@@ -69,7 +69,11 @@ ASGI_APPLICATION = "demo_project.asgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        # SQLITE_PATH lets the Docker web + worker containers share one SQLite
+        # file on a named volume — without it each container has its own DB and
+        # the worker can't see operations the web created. Local dev uses the
+        # default path.
+        "NAME": os.environ.get("SQLITE_PATH", str(BASE_DIR / "db.sqlite3")),
     }
 }
 
