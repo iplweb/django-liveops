@@ -1,4 +1,4 @@
-# Build context: django-live-operations/ (one level above example/)
+# Build context: django-liveops/ (one level above example/)
 # docker-compose.yml sets: context: .. / dockerfile: example/Dockerfile
 FROM python:3.12-slim
 
@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip install --no-cache-dir uv
 
 # Install the package (editable-style: copy src into /pkg)
-COPY live_operations /pkg/live_operations
+COPY liveops /pkg/liveops
 COPY pyproject.toml README.md /pkg/
 
 RUN uv pip install --system \

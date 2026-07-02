@@ -19,7 +19,7 @@ and checked against `scope["user"].pk`). A token for operation A does NOT
 authorise operation B's channel.
 
 ```python
-from live_operations.security import make_subscription_token
+from liveops.security import make_subscription_token
 token = make_subscription_token(user, operation)
 ```
 
@@ -62,7 +62,7 @@ views are POST-only and protected by Django's standard CSRF protection.
 To restrict live operations to a specific group of users:
 
 ```python
-LIVE_OPERATIONS = {
+LIVEOPS = {
     "REQUIRED_GROUP": "operators",
 }
 ```

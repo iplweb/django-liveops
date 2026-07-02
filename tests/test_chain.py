@@ -13,8 +13,8 @@ import io
 import pytest
 from django.contrib.auth import get_user_model
 
-from live_operations.progress import TextProgress, WebProgress
-from live_operations.runner import enqueue, task_run
+from liveops.progress import TextProgress, WebProgress
+from liveops.runner import enqueue, task_run
 from tests.models import ChainOpA, DemoOp, NextOp
 
 User = get_user_model()

@@ -1,6 +1,6 @@
 # Testing
 
-`django-live-operations` uses a three-tier test approach.
+`django-liveops` uses a three-tier test approach.
 
 ## Tier 1: Unit tests (InMemory channel layer)
 
@@ -22,8 +22,8 @@ Test the consumer with `WebsocketCommunicator`:
 import json
 import pytest
 from channels.testing import WebsocketCommunicator
-from live_operations.consumers import LiveOperationConsumer
-from live_operations.security import make_subscription_token
+from liveops.consumers import LiveOperationConsumer
+from liveops.security import make_subscription_token
 
 
 @pytest.mark.django_db(transaction=True)
@@ -54,7 +54,7 @@ channel layer:
 import pytest
 from asgiref.sync import sync_to_async
 from unittest.mock import MagicMock
-from live_operations.progress import WebProgress
+from liveops.progress import WebProgress
 
 
 @pytest.mark.django_db

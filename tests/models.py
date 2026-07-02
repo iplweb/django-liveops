@@ -2,7 +2,7 @@
 Concrete LiveOperation subclasses used only in the test suite.
 """
 
-from live_operations.models import LiveOperation
+from liveops.models import LiveOperation
 
 
 class DemoOp(LiveOperation):

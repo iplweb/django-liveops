@@ -1,4 +1,4 @@
-# django-live-operations
+# django-liveops
 
 A standalone, reusable Django package for long-running operations with a live
 WebSocket + HTMX user interface — no page reloads, no polling.
@@ -6,8 +6,8 @@ WebSocket + HTMX user interface — no page reloads, no polling.
 The developer writes one method:
 
 ```python
-from live_operations.models import LiveOperation
-from live_operations.progress import Progress
+from liveops.models import LiveOperation
+from liveops.progress import Progress
 
 
 class MyImport(LiveOperation):
@@ -42,4 +42,4 @@ for what you'll see and how the demo is wired.
 ## Documentation
 
 Full docs are published at
-**<https://iplweb.github.io/django-live-operations/>** (source in `docs/`).
+**<https://iplweb.github.io/django-liveops/>** (source in `docs/`).

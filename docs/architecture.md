@@ -24,7 +24,7 @@ FD#388):
 3. **Manual UID ceremony.** Developers wired up channel names, extra channels,
    URL prefixes, and state-to-URL mappings by hand for every operation type.
 
-`django-live-operations` eliminates all three:
+`django-liveops` eliminates all three:
 
 1. **No navigation.** The result arrives as an OOB swap. The page never
    unloads. There is no ACK model. Idempotent swaps make duplicate delivery
@@ -46,7 +46,7 @@ top-level `id`** in the envelope — the `channels_broadcast` client auto-ACKs
 frames with `id` as Notifications, which is the wrong semantic for our
 fragments.
 
-The `live-operations.js` plugin intercepts `msg.liveop_html`, parses the
+The `liveops.js` plugin intercepts `msg.liveop_html`, parses the
 fragment, and applies each `hx-swap-oob` element to the DOM by id-based
 replacement, then calls `htmx.process(node)` to activate any `hx-*` attributes
 in the new content.

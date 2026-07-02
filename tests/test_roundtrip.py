@@ -10,7 +10,7 @@ Tests:
    the {"liveop_html": ...} frames via Redis.
 2. FD#388 case: op FINISHES before client connects → snapshot-on-connect
    delivers the RESULT fragment (not "in progress"). This is the headline
-   guarantee of django-live-operations.
+   guarantee of django-liveops.
 3. §19.4 ordering: result() called inside transaction.atomic() → terminal
    state committed to DB before result fragment is delivered; late connector
    sees result.
@@ -38,7 +38,7 @@ except ImportError:
 
 if not _TC_AVAILABLE:
     pytest.skip(
-        "testcontainers not installed — install django-live-operations[dev] "
+        "testcontainers not installed — install django-liveops[dev] "
         "to run round-trip tests",
         allow_module_level=True,
     )
@@ -69,9 +69,9 @@ from channels.layers import get_channel_layer
 from channels.testing import WebsocketCommunicator
 from django.contrib.auth import get_user_model
 
-from live_operations.consumers import LiveOperationConsumer
-from live_operations.progress import WebProgress
-from live_operations.security import make_subscription_token
+from liveops.consumers import LiveOperationConsumer
+from liveops.progress import WebProgress
+from liveops.security import make_subscription_token
 from tests.models import DemoOp
 
 User = get_user_model()

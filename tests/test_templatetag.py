@@ -14,7 +14,7 @@ def test_live_operation_tag_renders_channel():
     user = User.objects.create_user(username="taguser", password="pass")
     op = DemoOp.objects.create(owner=user)
 
-    tpl = Template("{% load live_operations %}{% live_operation op %}")
+    tpl = Template("{% load liveops %}{% live_operation op %}")
     output = tpl.render(Context({"op": op}))
 
     assert f'data-liveop-channel="liveop.{op.pk}"' in output
@@ -27,7 +27,7 @@ def test_live_operation_tag_renders_region_ids():
     user = User.objects.create_user(username="taguser2", password="pass")
     op = DemoOp.objects.create(owner=user)
 
-    tpl = Template("{% load live_operations %}{% live_operation op %}")
+    tpl = Template("{% load liveops %}{% live_operation op %}")
     output = tpl.render(Context({"op": op}))
 
     for region_id in ("op-status", "op-progress", "op-log", "op-result"):
@@ -46,7 +46,7 @@ def test_render_op_result_finished_op():
         result_context={"answer": "42"},
     )
 
-    tpl = Template("{% load live_operations %}{% render_op_result op %}")
+    tpl = Template("{% load liveops %}{% render_op_result op %}")
     output = tpl.render(Context({"op": op}))
 
     assert "answer=42" in output
@@ -65,7 +65,7 @@ def test_render_op_result_fallback_escapes_values_no_xss():
         result_context={"evil": "<script>alert('xss')</script>"},
     )
 
-    tpl = Template("{% load live_operations %}{% render_op_result op %}")
+    tpl = Template("{% load liveops %}{% render_op_result op %}")
     output = tpl.render(Context({"op": op}))
 
     assert "<script>" not in output
@@ -77,7 +77,7 @@ def test_render_op_result_running_op_returns_empty():
     user = User.objects.create_user(username="taguser4", password="pass")
     op = DemoOp.objects.create(owner=user)
 
-    tpl = Template("{% load live_operations %}{% render_op_result op %}")
+    tpl = Template("{% load liveops %}{% render_op_result op %}")
     output = tpl.render(Context({"op": op}))
 
     assert output.strip() == ""

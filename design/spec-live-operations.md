@@ -1,4 +1,4 @@
-# `live_operations` — reusable framework długich operacji (WebSocket + HTMX, bez pollingu)
+# `liveops` — reusable framework długich operacji (WebSocket + HTMX, bez pollingu)
 
 - **Data:** 2026-06-30
 - **Status:** spec (do akceptacji)
@@ -6,7 +6,7 @@
 - **Następca:** `long_running` (koegzystencja, patrz §11)
 - **Pilotaż:** `import_punktacji_zrodel` (FD#388), potem migracja kolejnych
 
-> Nazwa robocza: **`live_operations`** (alt.: `liveops`, `long_running2`).
+> Nazwa robocza: **`liveops`** (alt.: `liveops`, `long_running2`).
 > Do potwierdzenia — patrz §13.
 
 ---
@@ -33,7 +33,7 @@ FD#388):
    wysłane raz, musi być odebrane i potwierdzone. Każde zgubienie wymaga
    replay i bookkeepingu.
 
-Cel `live_operations`: **płynna, błyskawiczna aktualizacja stanu po
+Cel `liveops`: **płynna, błyskawiczna aktualizacja stanu po
 WebSockecie, podmiana treści in-place przez HTMX (bez nawigacji i bez
 pollingu), oraz ergonomiczne API**, w którym deweloper operuje na obiekcie
 `progress`/operacji, a nie na identyfikatorach kanałów.
@@ -113,8 +113,8 @@ Komponenty:
 ### 4.1 Definicja operacji
 
 ```python
-from live_operations.models import LiveOperation
-from live_operations.progress import Progress
+from liveops.models import LiveOperation
+from liveops.progress import Progress
 
 
 class ImportPunktacji(LiveOperation):
@@ -183,10 +183,10 @@ operacji (`app_label` + snake_case nazwy klasy). Dla
 
 | Rola | Nazwa wyliczona automatycznie | Fallback (z pakietu) |
 |---|---|---|
-| **Host page** („duży" plik, na którym renderują się fragmenty) | `import_punktacji_zrodel/import_punktacji.html` | `live_operations/operation.html` |
-| **Fragment wyniku** (`p.result()`) | `import_punktacji_zrodel/import_punktacji_result.html` | `live_operations/_result.html` |
+| **Host page** („duży" plik, na którym renderują się fragmenty) | `import_punktacji_zrodel/import_punktacji.html` | `liveops/operation.html` |
+| **Fragment wyniku** (`p.result()`) | `import_punktacji_zrodel/import_punktacji_result.html` | `liveops/_result.html` |
 | Fragment `p.swap(sel, name="foo")` | `import_punktacji_zrodel/import_punktacji_foo.html` | — |
-| Status / pasek / log | — | `live_operations/_status.html`, `_progress.html`, `_log.html` |
+| Status / pasek / log | — | `liveops/_status.html`, `_progress.html`, `_log.html` |
 
 Reguły:
 - **Snake_case z CamelCase**: `ImportPunktacji` → `import_punktacji`
@@ -195,7 +195,7 @@ Reguły:
   `result_template_name = "..."`, `host_template_name = "..."`, albo
   argument `p.result(template="...")` / `p.swap(..., template="...")`.
 - **Host page = jeden „duży" plik per operacja.** Domyślnie deweloper nie
-  musi go pisać — pakiet ma `live_operations/operation.html`, który
+  musi go pisać — pakiet ma `liveops/operation.html`, który
   `{% extends %}` bazowy szablon projektu i renderuje regiony przez
   `{% live_operation op %}`. Gdy chce własny layout, tworzy
   `import_punktacji_zrodel/import_punktacji.html` (auto-wykrywany) i tam
@@ -206,7 +206,7 @@ Reguły:
   Deweloper nadpisuje tylko te, które chce — zwykle sam `_result`.
 
 Konfigurowalny prefiks szablonu bazowego (co host page rozszerza) w
-ustawieniach: `LIVE_OPERATIONS = {"BASE_TEMPLATE": "base.html"}` (§15).
+ustawieniach: `LIVEOPS = {"BASE_TEMPLATE": "base.html"}` (§15).
 
 ### 4.5 Anulowanie
 
@@ -231,9 +231,9 @@ ustawieniach: `LIVE_OPERATIONS = {"BASE_TEMPLATE": "base.html"}` (§15).
     <div id="op-{{ operacja.pk }}"
          data-liveop-channel="liveop.{{ operacja.pk }}"
          data-liveop-token="{{ operacja.subscription_token }}">
-      {% include "live_operations/_regions.html" %}
+      {% include "liveops/_regions.html" %}
     </div>
-    {# live-operations.js czyta data-* i woła channelsBroadcast.init(   #}
+    {# liveops.js czyta data-* i woła channelsBroadcast.init(   #}
     {# [channel], {subscriptionToken}) — stała ścieżka, nie per-pk URL  #}
   ```
 - Deweloper **nie** przekazuje UID-a. Wiązanie „ta operacja ↔ ta strona"
@@ -344,7 +344,7 @@ gdy deployment nie ma ASGI. (Cel główny to WS; to tylko siatka.)
 - `LiveOperationListView` — lista operacji użytkownika (jak dziś).
 - WS: **stała ścieżka** `channels_broadcast` (`/asgi/notifications/`) +
   `subscription_token` niosący kanał `liveop.<pk>` (§19.1). **Bez** per-pk URL.
-- Szablony regionów: `live_operations/_regions.html`, `_status.html`,
+- Szablony regionów: `liveops/_regions.html`, `_status.html`,
   `_progress.html`, `_log.html`, `_result.html` (deweloper nadpisuje
   `_result.html` per-aplikacja albo podaje własny w `p.result(...)`).
 
@@ -399,10 +399,10 @@ class LiveOperation(models.Model):       # abstrakcyjny
 
 ## 11. Relacja do istniejącego `long_running`
 
-- **Koegzystencja.** `live_operations` to nowa, niezależna app. `long_running`
+- **Koegzystencja.** `liveops` to nowa, niezależna app. `long_running`
   zostaje dla istniejących konsumentów (`import_list_if`,
   `import_list_ministerialnych`, `rozbieznosci`, raporty…) do czasu migracji.
-- **Pilotaż:** przepisać `import_punktacji_zrodel` na `live_operations`
+- **Pilotaż:** przepisać `import_punktacji_zrodel` na `liveops`
   (mały, świeży, dobrze otestowany konsument; FD#388). Usunąć wtedy
   awaryjny `meta-refresh`.
 - **Migracja stopniowa:** kolejni konsumenci przechodzą pojedynczo. Gdy
@@ -436,8 +436,8 @@ class LiveOperation(models.Model):       # abstrakcyjny
 ## 13. Decyzje
 
 **Rozstrzygnięte (po przeglądzie):**
-- **Dystrybucja**: standalone, reusable **`django-live-operations`** (importowane
-  jako `live_operations`), zdekuplowane od BPP — patrz §15.
+- **Dystrybucja**: standalone, reusable **`django-liveops`** (importowane
+  jako `liveops`), zdekuplowane od BPP — patrz §15.
 - **Nazwy szablonów**: **auto-derivacja** z klasy operacji (§4.4); brak ręcznych
   nazw w `p.result()` / fragmentach.
 - **Backend zadań**: **agnostyczny** (nie wiążemy się z Celery) — pluggable
@@ -462,7 +462,7 @@ i robi snapshot na connect. Szczegóły: §17.10 + §19.
    build-time u konsumenta).
 4. **Pull-fallback** w v1: tak/nie (produkcja BPP ma ASGI/Daphne; pakiet i tak
    powinien działać bez ASGI w trybie degradacji — rekomendacja: tak, opcjonalny).
-5. **Lokalizacja w monorepo**: katalog `django-live-operations/` w korzeniu repo
+5. **Lokalizacja w monorepo**: katalog `django-liveops/` w korzeniu repo
    (własny `pyproject.toml`, dep editable z BPP) — patrz §15.
 
 ---
@@ -480,17 +480,17 @@ i robi snapshot na connect. Szczegóły: §17.10 + §19.
 
 ---
 
-## 15. Pakiet `django-live-operations` (standalone, reusable)
+## 15. Pakiet `django-liveops` (standalone, reusable)
 
 To **osobny, samodzielny pakiet** — nie część domeny BPP. BPP jest tylko jego
 pierwszym konsumentem.
 
 **Layout (katalog w korzeniu monorepo, własny `pyproject.toml`):**
 ```
-django-live-operations/
-  pyproject.toml            # name = "django-live-operations"; import: live_operations
+django-liveops/
+  pyproject.toml            # name = "django-liveops"; import: liveops
   README.md
-  live_operations/
+  liveops/
     __init__.py
     apps.py                 # AppConfig
     models.py               # LiveOperation (abstract), miksiny stanu
@@ -502,14 +502,14 @@ django-live-operations/
     security.py             # token subskrypcji, autoryzacja właściciela
     views.py                # Create/Live/List/Cancel/Restart (CBV miksiny)
     urls.py
-    templatetags/live_operations.py   # {% live_operation op %}
-    conf.py                 # settings dict LIVE_OPERATIONS + defaults
-    templates/live_operations/
+    templatetags/liveops.py   # {% live_operation op %}
+    conf.py                 # settings dict LIVEOPS + defaults
+    templates/liveops/
       operation.html        # domyślny host page (fallback)
       _regions.html _status.html _progress.html _log.html
       _result.html _stages.html _cancelled.html
-    static/live_operations/
-      live-operations.js    # plugin do channels_broadcast: addMessage->OOB-swap
+    static/liveops/
+      liveops.js    # plugin do channels_broadcast: addMessage->OOB-swap
   tests/                    # pytest + pytest-django + channels communicator
   example/                  # demo project (upload→analiza→wyniki, 5 etapów)
 ```
@@ -522,13 +522,13 @@ django-live-operations/
   (dev/test), `eager`/`sync`. Konsument wybiera w ustawieniach. Pakiet
   **nie** zależy od Celery (Celery to opcjonalny extra).
 - **Klient = plugin do `channels_broadcast`** (§17.10), nie samodzielny socket.
-  `live-operations.js` (kilka KB) podmienia `addMessage`: na wiadomość-fragment
+  `liveops.js` (kilka KB) podmienia `addMessage`: na wiadomość-fragment
   robi OOB-swap po `id` + `htmx.process()` (htmx core już jest). Socket,
   reconnect, auth i `init()` (dla `chain_to`) dostarcza `channels_broadcast` —
   nie reimplementujemy ich. Bez `htmx-ext-ws`.
 - **Ustawienia** (`conf.py`):
   ```python
-  LIVE_OPERATIONS = {
+  LIVEOPS = {
       "BASE_TEMPLATE": "base.html",     # co rozszerza host page
       "RUNNER": "celery",               # celery|threading|eager
       "THROTTLE_HZ": 10,                # max wysyłek/s dla percent/track
@@ -538,7 +538,7 @@ django-live-operations/
 - **Publiczne API** (stabilne): `LiveOperation`, `Progress`, `OperationCancelled`,
   miksiny widoków, `{% live_operation %}`. Reszta — wewnętrzne.
 - **Wpięcie do BPP**: dependency editable (`uv add --editable
-  ./django-live-operations`) + `live_operations` w `INSTALLED_APPS` +
+  ./django-liveops`) + `liveops` w `INSTALLED_APPS` +
   `routing` w ASGI; potem pilotaż `import_punktacji_zrodel`.
 - **CI/jakość** (docelowo, jak inne pakiety iplweb): macierz Python×Django,
   `pytest-testcontainers-django` dla Postgresa/kanału, ruff, pre-commit.
@@ -676,7 +676,7 @@ nieprawdziwe pod modelem workera z jedną transakcją.
   wejściu: framework zapisuje `percent/status/log` **osobnym połączeniem w
   autocommit** (uwaga Django: w `atomic()` nawet `.update()` wpada do
   transakcji, więc potrzebny dedykowany connection). Snapshot odtwarza wtedy
-  dokładny stan. **Domyślnie wyłączone** (`LIVE_OPERATIONS["PERSIST_PROGRESS"]
+  dokładny stan. **Domyślnie wyłączone** (`LIVEOPS["PERSIST_PROGRESS"]
   = False`) — bo dla większości przypadków self-heal wystarcza.
 
 ### 17.2 (W5) Throttling obejmuje TAKŻE zapis do DB
@@ -767,7 +767,7 @@ wysyła jej snapshot. **Brak reloadu, brak ręcznego cyklu życia socketu.**
 
 To zdejmuje blocker B2 (htmx-ext-ws niepotrzebny) i B3 (cyklem życia socketu
 zarządza `channels_broadcast`, nie my). Zależność pakietu: `channels_broadcast`
-(osobny pakiet iplweb, nie BPP) staje się zależnością `django-live-operations` —
+(osobny pakiet iplweb, nie BPP) staje się zależnością `django-liveops` —
 akceptowalne, bo to nie kod domenowy BPP.
 
 ---
@@ -810,7 +810,7 @@ albo helper `MyImport(...).run_text()` — tworzy obiekt, wstrzykuje
 crona, debugowania, CI i ręcznego odpalenia bez przeglądarki.
 
 ### 18.3 Szczegóły
-- **tqdm jako opcjonalny extra** (`django-live-operations[cli]`). Brak tqdm →
+- **tqdm jako opcjonalny extra** (`django-liveops[cli]`). Brak tqdm →
   `TextProgress` degraduje do prostych `print` (pasek jako `42% (57/136)` co N%).
 - **Stan terminalny** w CLI zapisywany do DB tak jak w web (ten sam model),
   tylko bez `group_send` → CLI-run też jest w historii operacji.

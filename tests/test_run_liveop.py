@@ -23,7 +23,7 @@ def superuser(db):
 @pytest.mark.django_db
 def test_run_liveop_staged_op_completes(superuser, settings):
     """run_liveop runs StagedOp to completion: prints stage headers + result."""
-    settings.LIVE_OPERATIONS = {"RUNNER": "eager"}
+    settings.LIVEOPS = {"RUNNER": "eager"}
 
     out = io.StringIO()
     call_command("run_liveop", "tests.StagedOp", stdout=out)
@@ -42,7 +42,7 @@ def test_run_liveop_staged_op_completes(superuser, settings):
 @pytest.mark.django_db
 def test_run_liveop_creates_superuser_when_none_exists(db, settings):
     """If no superuser exists, run_liveop creates admin/admin automatically."""
-    settings.LIVE_OPERATIONS = {"RUNNER": "eager"}
+    settings.LIVEOPS = {"RUNNER": "eager"}
 
     # Ensure no superuser present
     User.objects.filter(is_superuser=True).delete()
@@ -59,7 +59,7 @@ def test_run_liveop_creates_superuser_when_none_exists(db, settings):
 @pytest.mark.django_db
 def test_run_liveop_uses_owner_flag(superuser, db, settings):
     """--owner resolves to specified username."""
-    settings.LIVE_OPERATIONS = {"RUNNER": "eager"}
+    settings.LIVEOPS = {"RUNNER": "eager"}
 
     out = io.StringIO()
     call_command("run_liveop", "tests.StagedOp", owner=superuser.username, stdout=out)
@@ -72,7 +72,7 @@ def test_run_liveop_uses_owner_flag(superuser, db, settings):
 @pytest.mark.django_db
 def test_run_liveop_persists_result(superuser, settings):
     """After run_liveop, the op's result_context is saved to DB."""
-    settings.LIVE_OPERATIONS = {"RUNNER": "eager"}
+    settings.LIVEOPS = {"RUNNER": "eager"}
 
     out = io.StringIO()
     call_command("run_liveop", "tests.StagedOp", stdout=out)

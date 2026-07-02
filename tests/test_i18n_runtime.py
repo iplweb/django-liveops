@@ -13,8 +13,8 @@ import pytest
 from django.contrib.auth import get_user_model
 from django.utils import translation
 
-from live_operations import runner
-from live_operations.progress import TextProgress
+from liveops import runner
+from liveops.progress import TextProgress
 from tests.models import DemoOp
 
 User = get_user_model()
@@ -63,7 +63,7 @@ def test_task_run_without_language_leaves_ambient(user):
 def test_enqueue_captures_active_language(user, settings):
     """enqueue() (called in a request) records the active language so the
     worker can re-activate it."""
-    settings.LIVE_OPERATIONS = {"RUNNER": "eager"}
+    settings.LIVEOPS = {"RUNNER": "eager"}
     op = DemoOp.objects.create(owner=user)
 
     with translation.override("uk"):

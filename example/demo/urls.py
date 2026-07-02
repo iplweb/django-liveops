@@ -8,7 +8,7 @@ from demo.views import (
     RestartDemoImportView,
 )
 
-app_name = "live_operations"
+app_name = "liveops"
 
 urlpatterns = [
     path("", ListDemoImportView.as_view(), name="index"),

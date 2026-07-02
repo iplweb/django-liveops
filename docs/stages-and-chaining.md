@@ -31,7 +31,7 @@ On exit:
 - `OperationCancelled` → `stage_states[name] = "cancelled"`; stepper updated
 - Other exception → `stage_states[name] = "failed"`; stepper updated
 
-The stepper is rendered from `live_operations/_stages.html` which iterates
+The stepper is rendered from `liveops/_stages.html` which iterates
 `op.stages` and looks up state via `{{ op.stage_states|get_item:name }}`.
 
 ## Stages must be flat
@@ -60,7 +60,7 @@ What happens (web mode):
 3. Via `transaction.on_commit` (§19.4):
    - The DOM container is OOB-swapped to show `step_b`'s container
      (`hx-swap-oob="outerHTML:#op-<old_pk>"`)
-   - A `liveop_chain` signal is sent so `live-operations.js` re-initialises
+   - A `liveop_chain` signal is sent so `liveops.js` re-initialises
      the WebSocket subscription to `step_b`'s channel (idempotent init closes
      the old socket cleanly)
 

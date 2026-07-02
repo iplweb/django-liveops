@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{% block title %}django-live-operations demo{% endblock %}</title>
+<title>{% block title %}django-liveops demo{% endblock %}</title>
 <style>
   body { font-family: sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
   nav { margin-bottom: 1.5rem; }
@@ -58,12 +58,12 @@
 </nav>
 {% block content %}{% endblock %}
 <!-- htmx 1.9.12, vendored locally (BSD-2-Clause) — no CDN dependency -->
-<script src="{% static 'live_operations/vendor/htmx.min.js' %}"></script>
+<script src="{% static 'liveops/vendor/htmx.min.js' %}"></script>
 <script src="{% static 'channels_broadcast/js/notifications.js' %}"></script>
-<script src="{% static 'live_operations/live-operations.js' %}"></script>
+<script src="{% static 'liveops/liveops.js' %}"></script>
 <script>
   // Demo UX: when an operation finishes, switch to its completed view.
-  // The package emits a `liveop:finished` DOM event (see live-operations.js);
+  // The package emits a `liveop:finished` DOM event (see liveops.js);
   // we navigate to the operation's page, which renders the clean finished
   // state (done stage stepper + result table). Short delay so the user sees
   // the operation reach 100% first.

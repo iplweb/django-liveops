@@ -1,4 +1,4 @@
-"""Test URL configuration — concrete DemoOp views under live_operations namespace."""
+"""Test URL configuration — concrete DemoOp views under liveops namespace."""
 
 from django.urls import path
 
@@ -10,7 +10,7 @@ from tests.views import (
     RestartDemoOpView,
 )
 
-app_name = "live_operations"
+app_name = "liveops"
 
 urlpatterns = [
     path("", ListDemoOpView.as_view(), name="index"),

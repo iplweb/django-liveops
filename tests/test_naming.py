@@ -1,6 +1,6 @@
 from types import SimpleNamespace
 
-from live_operations.naming import (
+from liveops.naming import (
     channel_name,
     class_to_snake,
     host_template_name,

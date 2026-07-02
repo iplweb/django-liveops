@@ -22,8 +22,8 @@ from channels.testing import WebsocketCommunicator
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
-from live_operations.consumers import LiveOperationConsumer
-from live_operations.security import make_subscription_token
+from liveops.consumers import LiveOperationConsumer
+from liveops.security import make_subscription_token
 from tests.models import DemoOp
 
 User = get_user_model()

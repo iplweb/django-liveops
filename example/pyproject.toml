@@ -12,11 +12,11 @@ dependencies = [
     "channels-redis>=4",
     # [cli] pulls tqdm so `make demo-text` renders a live progress bar
     # (TextProgress falls back to plain percent prints without it).
-    "django-live-operations[cli]",
+    "django-liveops[cli]",
 ]
 
 [tool.uv.sources]
-django-live-operations = { path = "..", editable = true }
+django-liveops = { path = "..", editable = true }
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "demo_project.settings"

@@ -505,7 +505,7 @@ wheels = [
 ]
 
 [[package]]
-name = "django-live-operations"
+name = "django-liveops"
 version = "0.1.0"
 source = { editable = "../" }
 dependencies = [
@@ -612,7 +612,7 @@ dependencies = [
     { name = "django", version = "5.2.15", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
     { name = "django", version = "6.0.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "django-channels-broadcast" },
-    { name = "django-live-operations", extra = ["cli"] },
+    { name = "django-liveops", extra = ["cli"] },
 ]
 
 [package.metadata]
@@ -624,7 +624,7 @@ requires-dist = [
     { name = "daphne", specifier = ">=4" },
     { name = "django", specifier = ">=4.2" },
     { name = "django-channels-broadcast" },
-    { name = "django-live-operations", extras = ["cli"], editable = "../" },
+    { name = "django-liveops", extras = ["cli"], editable = "../" },
 ]
 
 [[package]]

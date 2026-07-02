@@ -8,7 +8,7 @@ verify the base ModelAdmin is correctly configured for a concrete subclass
 
 from django.contrib.admin.sites import AdminSite
 
-from live_operations.admin import LiveOperationAdmin
+from liveops.admin import LiveOperationAdmin
 from tests.models import DemoOp
 
 

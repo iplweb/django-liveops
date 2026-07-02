@@ -1,0 +1,6 @@
+{% extends base_template %}
+{% block content %}
+{% load liveops static %}
+{% live_operation object %}
+<script src="{% static 'liveops/liveops.js' %}"></script>
+{% endblock %}

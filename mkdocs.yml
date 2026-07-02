@@ -1,6 +1,6 @@
-site_name: django-live-operations
+site_name: django-liveops
 site_description: Long-running Django operations with live WebSocket + HTMX UI — no reload, no polling
-site_url: https://iplweb.github.io/django-live-operations/
+site_url: https://iplweb.github.io/django-liveops/
 
 theme:
   name: material

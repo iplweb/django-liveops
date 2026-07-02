@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from demo.models import DemoImport
-from live_operations.admin import LiveOperationAdmin
+from liveops.admin import LiveOperationAdmin
 
 
 @admin.register(DemoImport)

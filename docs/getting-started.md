@@ -3,13 +3,13 @@
 ## Installation
 
 ```bash
-pip install django-live-operations
+pip install django-liveops
 # With Redis support (production):
-pip install django-live-operations[redis]
+pip install django-liveops[redis]
 # With Celery worker:
-pip install django-live-operations[celery]
+pip install django-liveops[celery]
 # With tqdm CLI mode:
-pip install django-live-operations[cli]
+pip install django-liveops[cli]
 ```
 
 ## 1. Add to INSTALLED_APPS
@@ -19,7 +19,7 @@ INSTALLED_APPS = [
     ...
     "channels",
     "channels_broadcast",
-    "live_operations",
+    "liveops",
 ]
 ```
 
@@ -58,7 +58,7 @@ import os
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
-from live_operations.routing import websocket_urlpatterns
+from liveops.routing import websocket_urlpatterns
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myproject.settings")
 
@@ -75,7 +75,7 @@ application = ProtocolTypeRouter({
 Add to `settings.py`:
 
 ```python
-LIVE_OPERATIONS = {
+LIVEOPS = {
     "BASE_TEMPLATE": "base.html",   # your project's base template
     "RUNNER": "celery",             # "eager" | "threading" | "celery"
     "THROTTLE_HZ": 10,              # max percent updates per second
@@ -92,18 +92,18 @@ LIVE_OPERATIONS = {
 ## 4a. Client-side JavaScript
 
 In your base template, include htmx, the channels_broadcast client, and
-live-operations.js (in this order):
+liveops.js (in this order):
 
 ```html
 {% load static %}
-<script src="{% static 'live_operations/vendor/htmx.min.js' %}"></script>
+<script src="{% static 'liveops/vendor/htmx.min.js' %}"></script>
 <script src="{% static 'channels_broadcast/js/notifications.js' %}"></script>
-<script src="{% static 'live_operations/live-operations.js' %}"></script>
+<script src="{% static 'liveops/liveops.js' %}"></script>
 ```
 
 htmx is bundled with the package (vendored, so no CDN request is needed). If
 your project already loads its own copy of htmx, drop the first line — the
-`live-operations.js` client only calls `htmx.process()` when `window.htmx` is
+`liveops.js` client only calls `htmx.process()` when `window.htmx` is
 present, so it works with whichever htmx you load.
 
 ## 5. Run the demo

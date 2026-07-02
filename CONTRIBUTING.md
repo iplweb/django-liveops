@@ -1,14 +1,14 @@
 # Contributing
 
-Thanks for your interest in improving **django-live-operations**.
+Thanks for your interest in improving **django-liveops**.
 
 ## Development setup
 
 The project uses [uv](https://docs.astral.sh/uv/).
 
 ```bash
-git clone https://github.com/iplweb/django-live-operations
-cd django-live-operations
+git clone https://github.com/iplweb/django-liveops
+cd django-liveops
 uv sync --extra dev --extra redis --extra celery --extra cli
 ```
 

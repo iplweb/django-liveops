@@ -7,7 +7,7 @@ import io
 import pytest
 from django.contrib.auth import get_user_model
 
-from live_operations.progress import OperationCancelled, TextProgress
+from liveops.progress import OperationCancelled, TextProgress
 from tests.models import DemoOp
 
 User = get_user_model()

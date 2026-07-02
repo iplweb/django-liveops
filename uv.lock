@@ -650,7 +650,7 @@ wheels = [
 ]
 
 [[package]]
-name = "django-live-operations"
+name = "django-liveops"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

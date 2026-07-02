@@ -1,4 +1,4 @@
-# django-live-operations
+# django-liveops
 
 Long-running Django operations with live WebSocket + HTMX UI — **no page reload, no polling**.
 
@@ -10,7 +10,7 @@ Django apps either:
 - Redirect to a polling page that hammers the server every few seconds, or
 - Use a custom WebSocket + JavaScript stack that the developer has to wire up manually.
 
-`django-live-operations` gives you a single `run(self, p)` method. Everything else
+`django-liveops` gives you a single `run(self, p)` method. Everything else
 — WebSocket transport, HTML fragment updates, snapshot-on-connect, security tokens,
 stage navigation, chaining — is handled by the framework.
 
@@ -18,8 +18,8 @@ stage navigation, chaining — is handled by the framework.
 
 ```python
 # models.py
-from live_operations.models import LiveOperation
-from live_operations.progress import Progress
+from liveops.models import LiveOperation
+from liveops.progress import Progress
 
 class ScoreImport(LiveOperation):
     class Meta:

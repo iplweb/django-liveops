@@ -7,7 +7,7 @@ on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to
 ## [Unreleased]
 
 ### Added
-- Initial release of **django-live-operations**.
+- Initial release of **django-liveops**.
 - `LiveOperation` abstract model + ergonomic `run(self, p)` API.
 - `Progress` with pluggable backends: `WebProgress` (WebSocket + HTML
   out-of-band swaps, no reload, no polling) and `TextProgress` (tqdm/CLI).

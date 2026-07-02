@@ -1,10 +1,10 @@
 """
-Demo project settings for django-live-operations Phase 5 demo.
+Demo project settings for django-liveops Phase 5 demo.
 
 Env vars:
   REDIS_URL          — default redis://localhost:6379/0
   CELERY_BROKER_URL  — default same as REDIS_URL
-  RUNNER             — override LIVE_OPERATIONS["RUNNER"] (default: "celery")
+  RUNNER             — override LIVEOPS["RUNNER"] (default: "celery")
   SECRET_KEY         — override the dev key
   DEBUG              — default True
 """
@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "channels",
     "channels_broadcast",
-    "live_operations",
+    "liveops",
     "demo",
 ]
 
@@ -98,7 +98,7 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticroot"
 
 # --- Internationalization ---------------------------------------------------
-# The demo ships translations for every language django-live-operations
+# The demo ships translations for every language django-liveops
 # supports. Pick one via the language switcher in the nav (POSTs to
 # django.conf.urls.i18n's set_language view), or via Accept-Language.
 LANGUAGE_CODE = "en"
@@ -123,7 +123,7 @@ LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/"
 
 _runner = os.environ.get("RUNNER", "celery")
-LIVE_OPERATIONS = {
+LIVEOPS = {
     "BASE_TEMPLATE": "base.html",
     "RUNNER": _runner,
     "THROTTLE_HZ": 10,

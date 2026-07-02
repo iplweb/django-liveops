@@ -1,6 +1,6 @@
 # Design & rationale
 
-Historical design record for `django-live-operations` (moved from the
+Historical design record for `django-liveops` (moved from the
 original BPP working tree where it was developed):
 
 - [`spec-live-operations.md`](spec-live-operations.md) — the design

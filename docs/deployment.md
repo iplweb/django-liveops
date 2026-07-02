@@ -54,7 +54,7 @@ services:
 ```python
 import os
 
-LIVE_OPERATIONS = {
+LIVEOPS = {
     "BASE_TEMPLATE": "base.html",
     "RUNNER": "celery",
     "THROTTLE_HZ": 10,
@@ -79,17 +79,17 @@ CELERY_BROKER_URL = os.environ.get(
 ## Client-side JavaScript
 
 In your base template, include htmx, channels_broadcast, and
-live-operations.js (in this order):
+liveops.js (in this order):
 
 ```html
 {% load static %}
-<script src="{% static 'live_operations/vendor/htmx.min.js' %}"></script>
+<script src="{% static 'liveops/vendor/htmx.min.js' %}"></script>
 <script src="{% static 'channels_broadcast/js/notifications.js' %}"></script>
-<script src="{% static 'live_operations/live-operations.js' %}"></script>
+<script src="{% static 'liveops/liveops.js' %}"></script>
 ```
 
 Both `channels_broadcast/js/notifications.js` and
-`live_operations/live-operations.js` are shipped as Django static files by
+`liveops/liveops.js` are shipped as Django static files by
 their respective packages — `collectstatic` picks them up automatically.
 
 ## Eager mode (snapshot-only, no Redis/Celery)
@@ -98,7 +98,7 @@ For lightweight deployments that don't need live updates (operations run
 synchronously and only terminal state is shown):
 
 ```python
-LIVE_OPERATIONS = {
+LIVEOPS = {
     "RUNNER": "eager",
     ...
 }
@@ -122,7 +122,7 @@ app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks()
 ```
 
-The `live_operations` runner registers a Celery `shared_task` automatically
+The `liveops` runner registers a Celery `shared_task` automatically
 when Celery is installed. No manual task registration needed — `enqueue()`
 dispatches `_celery_task.delay(app_label, model_name, pk)` which re-loads the
 operation and runs it.

@@ -26,8 +26,8 @@ state. No Redis, no Celery, no browser required.
 ## Programmatic text run
 
 ```python
-from live_operations.progress import TextProgress
-from live_operations.runner import task_run
+from liveops.progress import TextProgress
+from liveops.runner import task_run
 
 op = MyOp.objects.create(owner=user)
 p = TextProgress(op)
@@ -36,7 +36,7 @@ task_run(op, p)
 
 ## tqdm integration
 
-If `tqdm` is installed (`pip install django-live-operations[cli]`), `p.track()`
+If `tqdm` is installed (`pip install django-liveops[cli]`), `p.track()`
 uses a native tqdm progress bar. Otherwise it falls back to periodic `print` at
 10% intervals.
 

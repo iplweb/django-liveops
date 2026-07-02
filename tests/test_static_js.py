@@ -1,5 +1,5 @@
 """
-Smoke tests for the live-operations.js static file.
+Smoke tests for the liveops.js static file.
 
 Asserts:
 - File exists at the expected static path.
@@ -8,18 +8,13 @@ Asserts:
 
 from pathlib import Path
 
-import live_operations
+import liveops
 
-STATIC_JS = (
-    Path(live_operations.__file__).parent
-    / "static"
-    / "live_operations"
-    / "live-operations.js"
-)
+STATIC_JS = Path(liveops.__file__).parent / "static" / "liveops" / "liveops.js"
 
 
 def test_js_file_exists():
-    """live-operations.js is present in the package static directory."""
+    """liveops.js is present in the package static directory."""
     assert STATIC_JS.exists(), f"Expected JS file at {STATIC_JS}"
     assert STATIC_JS.is_file()
 

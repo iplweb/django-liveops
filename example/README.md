@@ -1,4 +1,4 @@
-# django-live-operations — demo
+# django-liveops — demo
 
 ## One command (browser demo)
 

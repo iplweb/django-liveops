@@ -2,7 +2,7 @@
 
 from django import forms
 
-from live_operations.views import (
+from liveops.views import (
     CancelView,
     CreateLiveOperationView,
     LiveOperationListView,

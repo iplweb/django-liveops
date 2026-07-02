@@ -8,8 +8,8 @@ file, with live progress, stages, and a result summary.
 ```python
 # my_app/models.py
 from django.db import models
-from live_operations.models import LiveOperation
-from live_operations.progress import Progress
+from liveops.models import LiveOperation
+from liveops.progress import Progress
 
 
 class ScoreImport(LiveOperation):
@@ -69,16 +69,16 @@ class ScoreImport(LiveOperation):
 
 ## 3. Create the host template (optional)
 
-By default, `live_operations/operation.html` is used. To customise, create
+By default, `liveops/operation.html` is used. To customise, create
 `my_app/templates/my_app/score_import.html`:
 
 ```html
 {% extends "base.html" %}
-{% load live_operations static %}
+{% load liveops static %}
 {% block content %}
 <h1>Score import</h1>
 {% live_operation object %}
-<script src="{% static 'live_operations/live-operations.js' %}"></script>
+<script src="{% static 'liveops/liveops.js' %}"></script>
 {% endblock %}
 ```
 
@@ -100,7 +100,7 @@ class ScoreImportForm(forms.ModelForm):
 
 ```python
 # my_app/views.py
-from live_operations.views import CreateLiveOperationView, LiveOperationView
+from liveops.views import CreateLiveOperationView, LiveOperationView
 from .models import ScoreImport
 from .forms import ScoreImportForm
 
@@ -122,7 +122,7 @@ class ImportLiveView(LiveOperationView):
 from django.urls import include, path
 from . import views
 
-app_name = "live_operations"
+app_name = "liveops"
 
 urlpatterns = [
     path("import/new/", views.ImportCreateView.as_view(), name="create"),
@@ -136,26 +136,26 @@ Include in project URLs:
 urlpatterns = [
     ...
     path("my-app/", include("my_app.urls")),
-    path("live/", include("live_operations.urls")),  # cancel/restart built-ins
+    path("live/", include("liveops.urls")),  # cancel/restart built-ins
 ]
 ```
 
 ## 7. Client-side scripts
 
 In your base template, include htmx, the channels_broadcast client, and
-live-operations.js (in this order):
+liveops.js (in this order):
 
 ```html
 {% load static %}
-<script src="{% static 'live_operations/vendor/htmx.min.js' %}"></script>
+<script src="{% static 'liveops/vendor/htmx.min.js' %}"></script>
 <script src="{% static 'channels_broadcast/js/notifications.js' %}"></script>
-<script src="{% static 'live_operations/live-operations.js' %}"></script>
+<script src="{% static 'liveops/liveops.js' %}"></script>
 ```
 
 Then in the operation host page:
 
 ```html
-{% load live_operations static %}
+{% load liveops static %}
 {% live_operation object %}
 ```
 

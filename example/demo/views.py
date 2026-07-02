@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 
 from demo.forms import DemoImportForm
 from demo.models import DemoImport
-from live_operations.views import (
+from liveops.views import (
     CancelView,
     CreateLiveOperationView,
     LiveOperationListView,

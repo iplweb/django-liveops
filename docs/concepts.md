@@ -2,7 +2,7 @@
 
 ## State projection, not event stream
 
-`django-live-operations` sends **HTML fragments that represent current state**,
+`django-liveops` sends **HTML fragments that represent current state**,
 not a stream of events that must be replayed.
 
 Each fragment is a `hx-swap-oob` element keyed by `id`. The client applies
@@ -20,7 +20,7 @@ an inconsistent state (the FD#388 failure).
 
 ## Idempotent OOB swap
 
-The client plugin (`live-operations.js`) extracts `msg.liveop_html` from the
+The client plugin (`liveops.js`) extracts `msg.liveop_html` from the
 JSON envelope and calls `htmx.process()` on each `hx-swap-oob` node. The swap
 replaces the existing DOM element by `id` with the new content. If the same
 update arrives twice, the result is the same as if it arrived once.

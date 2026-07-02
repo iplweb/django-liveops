@@ -14,7 +14,7 @@ import pytest
 from django.contrib.auth import get_user_model
 from django.template import Context, Template
 
-from live_operations.progress import OperationCancelled, TextProgress, WebProgress
+from liveops.progress import OperationCancelled, TextProgress, WebProgress
 from tests.models import FailedStageOp, StagedOp
 
 User = get_user_model()
@@ -203,10 +203,7 @@ def test_stage_states_persisted_to_db(staged_op, wp):
 def test_stages_template_pending_marker(user):
     """Stages not yet started render with pending marker (○)."""
     op = StagedOp.objects.create(owner=user)
-    tpl = Template(
-        "{% load live_operations %}"
-        "{% include 'live_operations/_stages.html' with op=op %}"
-    )
+    tpl = Template("{% load liveops %}{% include 'liveops/_stages.html' with op=op %}")
     output = tpl.render(Context({"op": op}))
     # All stages pending: ○ (&#9675;)
     assert "&#9675;" in output or "○" in output
@@ -217,10 +214,7 @@ def test_stages_template_pending_marker(user):
 def test_stages_template_active_marker(user):
     """Active stage renders with ● marker."""
     op = StagedOp.objects.create(owner=user, stage_states={"Alpha": "active"})
-    tpl = Template(
-        "{% load live_operations %}"
-        "{% include 'live_operations/_stages.html' with op=op %}"
-    )
+    tpl = Template("{% load liveops %}{% include 'liveops/_stages.html' with op=op %}")
     output = tpl.render(Context({"op": op}))
     assert "&#9679;" in output or "●" in output
 
@@ -229,10 +223,7 @@ def test_stages_template_active_marker(user):
 def test_stages_template_done_marker(user):
     """Done stage renders with ✓ marker."""
     op = StagedOp.objects.create(owner=user, stage_states={"Alpha": "done"})
-    tpl = Template(
-        "{% load live_operations %}"
-        "{% include 'live_operations/_stages.html' with op=op %}"
-    )
+    tpl = Template("{% load liveops %}{% include 'liveops/_stages.html' with op=op %}")
     output = tpl.render(Context({"op": op}))
     assert "&#10003;" in output or "✓" in output
 
@@ -241,10 +232,7 @@ def test_stages_template_done_marker(user):
 def test_stages_template_failed_marker(user):
     """Failed stage renders with ✗ marker."""
     op = StagedOp.objects.create(owner=user, stage_states={"Alpha": "failed"})
-    tpl = Template(
-        "{% load live_operations %}"
-        "{% include 'live_operations/_stages.html' with op=op %}"
-    )
+    tpl = Template("{% load liveops %}{% include 'liveops/_stages.html' with op=op %}")
     output = tpl.render(Context({"op": op}))
     assert "&#10007;" in output or "✗" in output
 
@@ -255,10 +243,7 @@ def test_stages_template_escapes_stage_name(user):
     # Use a real StagedOp; stage names are class-level, not user input.
     # This test verifies the template uses {{ stage_name }} (autoescaped).
     op = StagedOp.objects.create(owner=user)
-    tpl = Template(
-        "{% load live_operations %}"
-        "{% include 'live_operations/_stages.html' with op=op %}"
-    )
+    tpl = Template("{% load liveops %}{% include 'liveops/_stages.html' with op=op %}")
     output = tpl.render(Context({"op": op}))
     # Stage names appear as plain text, not as raw HTML injection
     assert "<script>" not in output

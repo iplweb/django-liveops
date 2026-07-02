@@ -10,7 +10,7 @@ from django.db import models
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy, gettext_noop
 
-from live_operations.models import LiveOperation
+from liveops.models import LiveOperation
 
 # Stage names double as JSON keys in op.stage_states (identity) AND as display
 # text in the stepper. So keep them as stable English strings via gettext_noop

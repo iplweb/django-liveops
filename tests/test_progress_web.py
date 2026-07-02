@@ -9,7 +9,7 @@ Fragment contains region id + hx-swap-oob.
 import pytest
 from django.contrib.auth import get_user_model
 
-from live_operations.progress import WebProgress
+from liveops.progress import WebProgress
 from tests.models import DemoOp
 
 User = get_user_model()

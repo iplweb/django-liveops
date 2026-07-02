@@ -1,12 +1,12 @@
-# `django-live-operations` — Implementation Plan
+# `django-liveops` — Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: superpowers:subagent-driven-development.
 > Each phase ends with a green test gate + commit. Read the spec for any
 > ambiguity: `docs/superpowers/specs/2026-06-30-live-operations-htmx-ws-design.md`
 > — and §19 is NADRZĘDNE (overrides earlier sections).
 
-**Goal:** Standalone, reusable Django package `django-live-operations` (import
-`live_operations`): long-running operations with live WebSocket+HTML-OOB UI (no
+**Goal:** Standalone, reusable Django package `django-liveops` (import
+`liveops`): long-running operations with live WebSocket+HTML-OOB UI (no
 reload, no polling), ergonomic `run(self, p)` API, stages + chaining, text/tqdm
 mode, MkDocs docs, examples, and a one-command Docker demo + 3-tier tests.
 
@@ -26,8 +26,8 @@ pytest-testcontainers-django, MkDocs (+ material).
 - **uv run** for all Python; ruff (88 cols) clean; no `ruff check --fix`.
 - **Zero dependency on BPP** — imports only Django/channels/channels_broadcast.
   No `from bpp...`. (Reusability + future PyPI.)
-- **Location:** new package dir at repo root: `django-live-operations/` with its
-  own `pyproject.toml`; importable app `live_operations`.
+- **Location:** new package dir at repo root: `django-liveops/` with its
+  own `pyproject.toml`; importable app `liveops`.
 - **§19.1** socket addressing = fixed `channels_broadcast` path +
   `subscription_token` (channel `liveop.<pk>`). NO per-pk `ws-connect`/URL.
 - **§19.2** server sends HTML in JSON envelope `{"liveop_html": "<… hx-swap-oob>"}`,
@@ -52,23 +52,23 @@ pytest-testcontainers-django, MkDocs (+ material).
 ## Phase 0 — Package scaffold + tooling + MkDocs skeleton
 
 **Files (create):**
-- `django-live-operations/pyproject.toml` — name `django-live-operations`,
-  packages `live_operations`; deps: `django>=4.2`, `channels>=4`,
+- `django-liveops/pyproject.toml` — name `django-liveops`,
+  packages `liveops`; deps: `django>=4.2`, `channels>=4`,
   `django-channels-broadcast`; extras: `celery`, `cli`(tqdm), `dev`(pytest,
   pytest-django, pytest-testcontainers-django, channels[daphne], ruff,
   mkdocs-material), `redis`(channels_redis).
-- `live_operations/__init__.py`, `apps.py` (AppConfig), `conf.py`
-  (`LIVE_OPERATIONS` settings dict + getters: `BASE_TEMPLATE`, `RUNNER`,
+- `liveops/__init__.py`, `apps.py` (AppConfig), `conf.py`
+  (`LIVEOPS` settings dict + getters: `BASE_TEMPLATE`, `RUNNER`,
   `THROTTLE_HZ`).
-- `live_operations/migrations/__init__.py`.
+- `liveops/migrations/__init__.py`.
 - `.pre-commit-config.yaml`, `ruff` config, `Makefile` (test/demo/docs targets).
 - `mkdocs.yml` + `docs/index.md` (skeleton).
 - `tests/__init__.py`, `tests/settings.py` (minimal Django settings with
-  `channels`, `channels_broadcast`, `live_operations`, InMemory channel layer
+  `channels`, `channels_broadcast`, `liveops`, InMemory channel layer
   default for unit tests), `tests/conftest.py`, `pytest.ini`/`[tool.pytest]`.
 
 **Test gate:** `uv run pytest` collects 0 tests without error; `uv run python -c
-"import live_operations"` works; `uv run python -m mkdocs build` (skeleton) OK.
+"import liveops"` works; `uv run python -m mkdocs build` (skeleton) OK.
 **Commit.**
 
 ## Phase 1 — Core: naming, models, runner, Progress (Web + Text)
@@ -119,11 +119,11 @@ concrete test model in `tests/`):**
   authorizes `liveop.<pk>`). Add **snapshot-on-connect**: a small hook/served
   fragment that, on connect, group_sends current TERMINAL state (if finished →
   result fragment; else a "running" status fragment). Implementation note:
-  channels_broadcast `on_connect` replays Notifications — for live_operations we
+  channels_broadcast `on_connect` replays Notifications — for liveops we
   instead send a snapshot via a connect signal or a thin consumer subclass that
   calls `operation.send_snapshot()`. Decide minimal approach; keep within
   channels_broadcast contract. Receive() must tolerate stray `ack_message`.
-- `static/live_operations/live-operations.js` — `channels_broadcast` plugin:
+- `static/liveops/liveops.js` — `channels_broadcast` plugin:
   reads `data-liveop-channel`/`data-liveop-token` from `#op-<pk>`, calls
   `channelsBroadcast.init([channel], {subscriptionToken})`; overrides
   `addMessage`: if `msg.liveop_html` → parse fragment, OOB-swap by `id`
@@ -150,12 +150,12 @@ concrete test model in `tests/`):**
   result fragment immediately for deep-link), `LiveOperationListView`,
   `CancelView` (POST sets cancel_requested), `RestartView`. All owner+perm
   gated (configurable permission/group).
-- `urls.py` — `app_name="live_operations"`; index/new/live/cancel/restart
+- `urls.py` — `app_name="liveops"`; index/new/live/cancel/restart
   (NO per-pk ws path — §19.1).
-- `templatetags/live_operations.py` — `{% live_operation op %}` → renders
+- `templatetags/liveops.py` — `{% live_operation op %}` → renders
   `#op-<pk>` container with `data-liveop-channel`/`data-liveop-token` +
   `_regions.html`.
-- `templates/live_operations/` — `operation.html` (default host, extends
+- `templates/liveops/` — `operation.html` (default host, extends
   `BASE_TEMPLATE`), `_regions.html` (status/progress/log/stages/result/cancel),
   `_status.html`, `_progress.html`, `_log.html`, `_stages.html` (stepper),
   `_result.html`, `_cancelled.html`. Fragment render helpers produce
@@ -182,7 +182,7 @@ mode: stages print headers; chain runs inline.
 
 ## Phase 5 — Demo project + one-command Docker stack
 
-**Files:** `django-live-operations/example/` — minimal Django project (ASGI with
+**Files:** `django-liveops/example/` — minimal Django project (ASGI with
 channels routing including channels_broadcast), a `DemoImport(LiveOperation)`
 with 5 stages (fake upload→analiza→wyniki, sleeps + `p.track`/`p.log`),
 templates, urls; `manage.py seed_demo` (create owner + dev auto-login token +

@@ -64,7 +64,7 @@ class TestNamingResolvers:
 
 class TestAbstractRun:
     def test_base_run_raises(self, user):
-        from live_operations.models import LiveOperation
+        from liveops.models import LiveOperation
 
         class Concrete(LiveOperation):
             class Meta:

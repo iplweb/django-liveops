@@ -2,7 +2,7 @@
 
 ## LiveOperation (abstract model)
 
-`from live_operations.models import LiveOperation`
+`from liveops.models import LiveOperation`
 
 Concrete subclasses must implement `run(self, p)`.
 
@@ -63,7 +63,7 @@ Returns `f"liveop.{self.pk}"`.
 #### `get_absolute_url() → str`
 
 Returns the URL of the live host page
-(`reverse("live_operations:live", kwargs={"pk": self.pk})`).
+(`reverse("liveops:live", kwargs={"pk": self.pk})`).
 
 #### `send_snapshot() → None`
 
@@ -74,7 +74,7 @@ fragment to this operation's channel group.
 
 ## Progress API
 
-`from live_operations.progress import Progress, WebProgress, TextProgress`
+`from liveops.progress import Progress, WebProgress, TextProgress`
 
 ### Core API (both backends)
 
@@ -148,12 +148,12 @@ for data-bearing updates. `mode="beforeend"` appends instead of replacing.
 
 ## Views and mixins
 
-`from live_operations.views import ...`
+`from liveops.views import ...`
 
 ### `BaseLiveOperationMixin`
 
 Login-required, owner-scoped base for all views. Optional group gate via
-`LIVE_OPERATIONS["REQUIRED_GROUP"]`. `get_queryset()` always filters to
+`LIVEOPS["REQUIRED_GROUP"]`. `get_queryset()` always filters to
 `owner=request.user`.
 
 ### `CreateLiveOperationView`
@@ -164,7 +164,7 @@ redirects to `op.get_absolute_url()`.
 ### `LiveOperationView`
 
 `DetailView` that renders the host template. Template order:
-`op.get_host_template_name()` → `live_operations/operation.html`.
+`op.get_host_template_name()` → `liveops/operation.html`.
 
 ### `LiveOperationListView`
 
@@ -183,12 +183,12 @@ POST-only: resets terminal state, re-enqueues, redirects to live page.
 ## Template tag
 
 ```django
-{% load live_operations %}
+{% load liveops %}
 {% live_operation op %}
 ```
 
 Renders the live container with `data-liveop-channel` and `data-liveop-token`
-attributes. The `live-operations.js` script scans for these on
+attributes. The `liveops.js` script scans for these on
 DOMContentLoaded and calls `channelsBroadcast.init()` to subscribe.
 
 There is also `{% render_op_result op %}` which renders the result fragment
@@ -197,7 +197,7 @@ result template is missing).
 
 ---
 
-## Settings (`LIVE_OPERATIONS` dict)
+## Settings (`LIVEOPS` dict)
 
 | Key | Default | Description |
 |-----|---------|-------------|

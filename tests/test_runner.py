@@ -11,8 +11,8 @@ import time
 import pytest
 from django.contrib.auth import get_user_model
 
-from live_operations import runner
-from live_operations.progress import TextProgress, WebProgress
+from liveops import runner
+from liveops.progress import TextProgress, WebProgress
 from tests.models import DemoOp, ErrorOp
 
 User = get_user_model()
@@ -63,7 +63,7 @@ def test_task_run_sets_terminal_fields(op):
 
 
 def test_enqueue_eager_runs_synchronously(settings, op):
-    settings.LIVE_OPERATIONS = {"RUNNER": "eager"}
+    settings.LIVEOPS = {"RUNNER": "eager"}
     # enqueue selects progress automatically; inject via task_run directly
     p = text_progress(op)
     runner.task_run(op, p)
