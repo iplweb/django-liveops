@@ -29,6 +29,11 @@
   /* Before a result arrives the div holds only whitespace (so :empty won't
      match). Hide the green result box until it actually has content. */
   #op-result:not(:has(> *)) { display: none; }
+  /* Status/progress/log/stages regions start empty (no whitespace) and get
+     content only when the operation actually writes to them. Hide them until
+     then so unused regions don't take up space. */
+  #op-status:empty, #op-progress:empty, #op-log:empty,
+  #op-stages:empty { display: none; }
   .liveop-connected    { color: #4c4; font-size: 0.8rem; }
   .liveop-disconnected { color: #e44; font-size: 0.8rem; }
   table { border-collapse: collapse; width: 100%; }

@@ -13,16 +13,22 @@
 {% endif %}
 </div>
 {% url 'liveops:cancel' op_type=op.op_type_key pk=op.pk as cancel_url %}
-{% if cancel_url and op.get_state != "FINISHED_OK" and op.get_state != "FINISHED_ERROR" and op.get_state != "CANCELLED" %}
-<form method="post" action="{{ cancel_url }}">
+{% url 'liveops:restart' op_type=op.op_type_key pk=op.pk as restart_url %}
+{# Both control forms are rendered up front (with a real CSRF token, since #}
+{# the fragment is rendered WITH the request). The inapplicable one is #}
+{# `hidden`; liveops.js flips them on the terminal `liveop_finished` signal #}
+{# — no reload, no WS-pushed forms (which would carry an empty CSRF token). #}
+<div id="op-controls" data-op-state="{{ op.get_state }}">
+{% if cancel_url %}
+<form class="op-controls-cancel" method="post" action="{{ cancel_url }}"{% if op.get_state != "NOT_STARTED" and op.get_state != "STARTED" %} hidden{% endif %}>
 {% csrf_token %}
 <button type="submit">{% trans "Cancel" %}</button>
 </form>
 {% endif %}
-{% url 'liveops:restart' op_type=op.op_type_key pk=op.pk as restart_url %}
-{% if restart_url and op.get_state == "FINISHED_ERROR" %}
-<form method="post" action="{{ restart_url }}">
+{% if restart_url %}
+<form class="op-controls-restart" method="post" action="{{ restart_url }}"{% if op.get_state != "FINISHED_ERROR" %} hidden{% endif %}>
 {% csrf_token %}
 <button type="submit">{% trans "Retry" %}</button>
 </form>
 {% endif %}
+</div>

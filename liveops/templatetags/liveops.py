@@ -4,8 +4,8 @@ from django.utils.html import mark_safe
 register = template.Library()
 
 
-@register.simple_tag
-def live_operation(op):
+@register.simple_tag(takes_context=True)
+def live_operation(context, op):
     """Render the live operation container with WS binding attributes.
 
     Produces:
@@ -17,10 +17,15 @@ def live_operation(op):
 
     Uses render_op_container so both the templatetag and chain_to share
     the same rendering path.
+
+    ``takes_context`` so we can pass the request down to render_op_container:
+    the cancel/restart forms in ``_regions.html`` use ``{% csrf_token %}``,
+    which is a no-op (empty token, no CSRF cookie set) unless the fragment is
+    rendered with the request. Without it every cancel/restart POST fails CSRF.
     """
     from liveops.rendering import render_op_container
 
-    return mark_safe(render_op_container(op))
+    return mark_safe(render_op_container(op, request=context.get("request")))
 
 
 @register.simple_tag

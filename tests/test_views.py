@@ -157,6 +157,43 @@ def test_cancel_get_returns_405(auth_client, demo_op):
     assert response.status_code == 405
 
 
+@pytest.mark.django_db
+def test_control_forms_have_working_csrf(user):
+    """The live page must render a real CSRF token in the cancel/restart forms
+    and set the CSRF cookie, so those POSTs are accepted.
+
+    Regression: the ``{% live_operation %}`` templatetag rendered the fragment
+    without the request, so ``{% csrf_token %}`` produced an empty token and no
+    cookie was set — every cancel/restart POST failed CSRF.
+    """
+    import re
+
+    from django.test import Client
+    from django.utils import timezone
+
+    op = DemoOp.objects.create(owner=user, started_on=timezone.now())  # STARTED
+    c = Client(enforce_csrf_checks=True)
+    c.force_login(user)
+
+    resp = c.get(op.get_absolute_url())
+    assert resp.status_code == 200
+    html = resp.content.decode()
+    # Both control forms present (Retry rendered too, just hidden until error).
+    assert "op-controls-cancel" in html
+    assert "op-controls-restart" in html
+    m = re.search(r'name="csrfmiddlewaretoken" value="([^"]+)"', html)
+    assert m, "no CSRF token rendered in the control forms"
+
+    # POST cancel with the page's token — must be accepted (302), not 403.
+    resp2 = c.post(
+        op.get_absolute_url() + "cancel/",
+        {"csrfmiddlewaretoken": m.group(1)},
+    )
+    assert resp2.status_code == 302
+    op.refresh_from_db()
+    assert op.cancel_requested is True
+
+
 # ------------------------------------------------------------------ #
 # Access control                                                       #
 # ------------------------------------------------------------------ #

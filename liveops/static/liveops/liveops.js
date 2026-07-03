@@ -130,6 +130,18 @@
             }
             if (message.liveop_finished) {
                 var fin = message.liveop_finished;
+                // Sync the cancel/restart controls to the terminal state
+                // without a reload: hide Cancel, reveal Retry only on error.
+                // The forms were rendered at page load with a valid CSRF
+                // token, so they submit cleanly.
+                var controls = document.getElementById("op-controls");
+                if (controls) {
+                    controls.setAttribute("data-op-state", fin.state);
+                    var cancelForm = controls.querySelector(".op-controls-cancel");
+                    var restartForm = controls.querySelector(".op-controls-restart");
+                    if (cancelForm) cancelForm.hidden = true;
+                    if (restartForm) restartForm.hidden = fin.state !== "FINISHED_ERROR";
+                }
                 // If the operation declared a success URL (get_success_url)
                 // and it finished OK, navigate straight there — skip the
                 // live/list page. Errors/cancellations stay put.
