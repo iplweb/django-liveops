@@ -6,13 +6,14 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 from demo.models import (
+    ChainEnd,
     ChainStart,
     DemoImport,
     FailingTask,
     QuickTask,
     RedirectingTask,
 )
-from liveops.views import CreateLiveOperationView
+from liveops.views import CreateLiveOperationView, LiveOperationListView
 
 # The demo operation catalogue. Each entry is one LiveOperation subclass the
 # landing page offers to run, so you can eyeball every shape the framework
@@ -95,6 +96,42 @@ class DoneView(TemplateView):
     """Where RedirectingTask lands the user on success (get_success_url)."""
 
     template_name = "demo/done.html"
+
+
+_ALL_DEMO_MODELS = [
+    DemoImport,
+    QuickTask,
+    FailingTask,
+    ChainStart,
+    ChainEnd,
+    RedirectingTask,
+]
+
+
+class DemoListView(LiveOperationListView):
+    """Live-updating list of ALL demo operations (across types) for the user.
+
+    Uses the package list templates; the table re-fetches itself on every
+    ``liveop_list_changed`` push (see liveops.js) so newly created / started /
+    finished operations appear without a reload. ``model`` is only a
+    placeholder — the queryset is built across every demo type.
+    """
+
+    model = DemoImport
+
+    def get_queryset(self):
+        ops = []
+        for model in _ALL_DEMO_MODELS:
+            ops.extend(model.objects.filter(owner=self.request.user))
+        ops.sort(key=lambda op: op.created_on, reverse=True)
+        return ops
+
+    def get_template_names(self):
+        # HX-Request → just the table fragment (live refresh). Full page uses a
+        # demo template that does NOT re-load liveops.js (base.html already does).
+        if self.request.headers.get("HX-Request"):
+            return ["liveops/_operation_list_table.html"]
+        return ["demo/operations.html"]
 
 
 def healthz_view(request):

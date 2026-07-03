@@ -55,6 +55,7 @@
 <body>
 <nav>
   <a href="{% url 'demo:index' %}">{% trans "Demos" %}</a>
+  <a href="{% url 'demo:list' %}">{% trans "Operations" %}</a>
   {% get_current_language as CURRENT_LANGUAGE %}
   {% get_available_languages as LANGUAGES %}
   <form action="{% url 'set_language' %}" method="post" style="display:inline; float:right;">
@@ -72,18 +73,9 @@
 <script src="{% static 'liveops/vendor/htmx.min.js' %}"></script>
 <script src="{% static 'channels_broadcast/js/notifications.js' %}"></script>
 <script src="{% static 'liveops/liveops.js' %}"></script>
-<script>
-  // Demo UX: when an operation finishes, switch to its completed view.
-  // The package emits a `liveop:finished` DOM event (see liveops.js);
-  // we navigate to the operation's page, which renders the clean finished
-  // state (done stage stepper + result table). Short delay so the user sees
-  // the operation reach 100% first.
-  document.addEventListener("liveop:finished", function (e) {
-    var url = e.detail && e.detail.url;
-    if (!url) return;
-    if (window.location.pathname === url) return; // already on that page
-    setTimeout(function () { window.location.assign(url); }, 1500);
-  });
-</script>
+{# No end-of-run navigation: the result/error/cancelled fragment is swapped #}
+{# into #op-result live over the WebSocket, so the finished state appears in #}
+{# place — no full-page reload. get_success_url() redirects are handled by #}
+{# liveops.js itself. #}
 </body>
 </html>

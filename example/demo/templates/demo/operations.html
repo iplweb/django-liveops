@@ -1,0 +1,13 @@
+{% extends base_template %}
+{% load i18n %}
+{% block title %}{% trans "Operations" %} — {% trans "demo" %}{% endblock %}
+{% block content %}
+<h1>{% trans "Operations" %}</h1>
+<p><a href="{% url 'demo:index' %}">← {% trans "Back to demos" %}</a></p>
+{# Live-updating table: liveops.js (loaded by base.html) re-fetches #}
+{# #liveop-list on every liveop_list_changed push. The base template must #}
+{# not re-load the script, so this page doesn't include it. #}
+<div id="liveop-list"{% if list_live %} data-liveop-list{% endif %}>
+  {% include "liveops/_operation_list_table.html" %}
+</div>
+{% endblock %}

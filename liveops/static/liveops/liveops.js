@@ -24,6 +24,14 @@
 (function () {
     "use strict";
 
+    // Read a cookie value by name (used for the CSRF token on htmx requests).
+    function getCookie(name) {
+        var match = document.cookie.match(
+            "(?:^|;)\\s*" + name + "\\s*=\\s*([^;]+)"
+        );
+        return match ? decodeURIComponent(match[1]) : "";
+    }
+
     // ------------------------------------------------------------------ //
     // OOB-swap helper                                                     //
     // ------------------------------------------------------------------ //
@@ -113,6 +121,39 @@
         var listEl = document.querySelector("[data-liveop-list]");
 
         if (!container && !listEl) return;
+
+        // htmx wiring for the cancel/restart buttons: send the CSRF token from
+        // the cookie on every htmx request (so no rendered token is needed —
+        // works on WS-pushed chained containers too), and reset the live
+        // regions when a Retry succeeds so the re-run starts from a clean slate.
+        if (window.htmx) {
+            document.body.addEventListener("htmx:configRequest", function (evt) {
+                var token = getCookie("csrftoken");
+                if (token) evt.detail.headers["X-CSRFToken"] = token;
+            });
+            document.body.addEventListener("htmx:afterRequest", function (evt) {
+                var el = evt.target;
+                if (
+                    el && el.classList &&
+                    el.classList.contains("op-controls-restart") &&
+                    evt.detail.successful
+                ) {
+                    ["op-status", "op-progress", "op-log", "op-result"].forEach(
+                        function (id) {
+                            var n = document.getElementById(id);
+                            if (n) n.innerHTML = "";
+                        }
+                    );
+                    var ctrls = document.getElementById("op-controls");
+                    if (ctrls) {
+                        ctrls.setAttribute("data-op-state", "STARTED");
+                        var cancelBtn = ctrls.querySelector(".op-controls-cancel");
+                        if (cancelBtn) cancelBtn.hidden = false;
+                        el.hidden = true;
+                    }
+                }
+            });
+        }
 
         // Save the original addMessage so unknown payload types fall through.
         var _origAddMessage = cn.addMessage.bind(cn);

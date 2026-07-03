@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 11:36-0500\n"
+"POT-Creation-Date: 2026-07-03 12:33-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"(n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: models.py:21
 msgid "Load"
@@ -37,55 +38,63 @@ msgstr "Įrašymas"
 msgid "Report"
 msgstr "Ataskaita"
 
-#: models.py:35
+#: models.py:40
 msgid "Label"
 msgstr "Etiketė"
 
-#: models.py:39
+#: models.py:44
 msgid "A name for this import (shown while it runs)."
 msgstr "Šio importavimo pavadinimas (rodomas vykdymo metu)."
 
-#: models.py:47
+#: models.py:59
 #, python-format
 msgid "Starting import: %(label)s"
 msgstr "Pradedamas importavimas: %(label)s"
 
-#: models.py:57
+#: models.py:69
 #, python-format
 msgid "Stage: %(name)s"
 msgstr "Etapas: %(name)s"
 
-#: models.py:63
+#: models.py:75
 #, python-format
 msgid "[%(stage)s] skipped record %(i)s"
 msgstr "[%(stage)s] praleistas įrašas %(i)s"
 
-#: models.py:69
+#: models.py:81
 #, python-format
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] įrašo klaida %(i)s"
 
-#: models.py:106
+#: models.py:127
 msgid "Crunching numbers…"
 msgstr "Skaičiuojama…"
 
-#: models.py:137
+#: models.py:158
 msgid "Second operation running…"
 msgstr "Vykdoma antra operacija…"
 
-#: models.py:150
+#: models.py:171
 msgid "First operation running…"
 msgstr "Vykdoma pirma operacija…"
 
-#: models.py:168
+#: models.py:189
 msgid "Working — will redirect when done…"
 msgstr "Vykdoma — baigus bus nukreipta…"
 
-#: templates/base.html:52
+#: templates/base.html:57
 msgid "Demos"
 msgstr "Demonstracijos"
 
-#: templates/demo/demo_create.html:3
+#: templates/base.html:58 templates/demo/operations.html:3
+#: templates/demo/operations.html:5
+#, fuzzy
+#| msgid "Operations"
+msgid "Operations"
+msgstr "Operacijos"
+
+#: templates/demo/demo_create.html:3 templates/demo/live.html:3
+#: templates/demo/operations.html:3
 msgid "demo"
 msgstr "demonstracija"
 
@@ -94,6 +103,7 @@ msgid "Start"
 msgstr "Pradėti"
 
 #: templates/demo/demo_create.html:12 templates/demo/done.html:12
+#: templates/demo/live.html:5 templates/demo/operations.html:6
 msgid "Back to demos"
 msgstr "Grįžti į demonstracijas"
 
@@ -160,8 +170,8 @@ msgid ""
 "You were redirected here automatically by get_success_url() the moment the "
 "operation finished successfully — the operations list was skipped entirely."
 msgstr ""
-"Operacijai sėkmingai baigus, get_success_url() automatiškai nukreipė jus čia"
-" — operacijų sąrašas visiškai praleistas."
+"Operacijai sėkmingai baigus, get_success_url() automatiškai nukreipė jus čia "
+"— operacijų sąrašas visiškai praleistas."
 
 #: templates/demo/generic_result.html:2
 msgid "Result"
@@ -171,49 +181,48 @@ msgstr "Rezultatas"
 msgid "Done."
 msgstr "Atlikta."
 
-#: views.py:25
+#: views.py:26
 #, fuzzy
 #| msgid "+ New import"
 msgid "Staged import"
 msgstr "+ Naujas importavimas"
 
-#: views.py:26
+#: views.py:27
 msgid "5 stages — live stepper, per-stage progress bar and log."
 msgstr ""
 "5 etapai — tiesioginis eigos indikatorius, kiekvieno etapo juosta ir "
 "žurnalas."
 
-#: views.py:32
+#: views.py:33
 msgid "Quick task"
 msgstr "Greita užduotis"
 
-#: views.py:33
+#: views.py:34
 msgid "No stages — one progress bar, then a result. Simplest shape."
-msgstr ""
-"Be etapų — viena eigos juosta ir rezultatas. Paprasčiausias variantas."
+msgstr "Be etapų — viena eigos juosta ir rezultatas. Paprasčiausias variantas."
 
-#: views.py:39
+#: views.py:40
 msgid "Failing task"
 msgstr "Nepavykstanti užduotis"
 
-#: views.py:40
+#: views.py:41
 msgid "Raises mid-run — shows the error state and the Retry button."
 msgstr "Nutrūksta vykdymo metu — parodo klaidos būseną ir mygtuką „Kartoti“."
 
-#: views.py:46
+#: views.py:47
 msgid "Chained task"
 msgstr "Grandininė užduotis"
 
-#: views.py:47
+#: views.py:48
 msgid "Runs, then chains to a second operation — no page reload."
 msgstr ""
 "Įvykdoma ir tada susiejama su antra operacija — neperkraunant puslapio."
 
-#: views.py:53
+#: views.py:54
 msgid "Redirect on success"
 msgstr "Nukreipimas pavykus"
 
-#: views.py:54
+#: views.py:55
 msgid "On success auto-redirects to a custom page (get_success_url)."
 msgstr ""
 "Pavykus automatiškai nukreipia į pasirinktinį puslapį (get_success_url)."

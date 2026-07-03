@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 11:36-0500\n"
+"POT-Creation-Date: 2026-07-03 12:33-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,55 +37,63 @@ msgstr "Speichern"
 msgid "Report"
 msgstr "Bericht"
 
-#: models.py:35
+#: models.py:40
 msgid "Label"
 msgstr "Bezeichnung"
 
-#: models.py:39
+#: models.py:44
 msgid "A name for this import (shown while it runs)."
 msgstr "Ein Name für diesen Import (wird während der Ausführung angezeigt)."
 
-#: models.py:47
+#: models.py:59
 #, python-format
 msgid "Starting import: %(label)s"
 msgstr "Import wird gestartet: %(label)s"
 
-#: models.py:57
+#: models.py:69
 #, python-format
 msgid "Stage: %(name)s"
 msgstr "Phase: %(name)s"
 
-#: models.py:63
+#: models.py:75
 #, python-format
 msgid "[%(stage)s] skipped record %(i)s"
 msgstr "[%(stage)s] Datensatz %(i)s übersprungen"
 
-#: models.py:69
+#: models.py:81
 #, python-format
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] Fehler bei Datensatz %(i)s"
 
-#: models.py:106
+#: models.py:127
 msgid "Crunching numbers…"
 msgstr "Zahlen werden verarbeitet…"
 
-#: models.py:137
+#: models.py:158
 msgid "Second operation running…"
 msgstr "Zweite Operation läuft…"
 
-#: models.py:150
+#: models.py:171
 msgid "First operation running…"
 msgstr "Erste Operation läuft…"
 
-#: models.py:168
+#: models.py:189
 msgid "Working — will redirect when done…"
 msgstr "Wird ausgeführt – Weiterleitung nach Abschluss…"
 
-#: templates/base.html:52
+#: templates/base.html:57
 msgid "Demos"
 msgstr "Demos"
 
-#: templates/demo/demo_create.html:3
+#: templates/base.html:58 templates/demo/operations.html:3
+#: templates/demo/operations.html:5
+#, fuzzy
+#| msgid "Operations"
+msgid "Operations"
+msgstr "Vorgänge"
+
+#: templates/demo/demo_create.html:3 templates/demo/live.html:3
+#: templates/demo/operations.html:3
 msgid "demo"
 msgstr "Demo"
 
@@ -94,6 +102,7 @@ msgid "Start"
 msgstr "Start"
 
 #: templates/demo/demo_create.html:12 templates/demo/done.html:12
+#: templates/demo/live.html:5 templates/demo/operations.html:6
 msgid "Back to demos"
 msgstr "Zurück zu den Demos"
 
@@ -172,50 +181,50 @@ msgstr "Ergebnis"
 msgid "Done."
 msgstr "Fertig."
 
-#: views.py:25
+#: views.py:26
 #, fuzzy
 #| msgid "+ New import"
 msgid "Staged import"
 msgstr "+ Neuer Import"
 
-#: views.py:26
+#: views.py:27
 msgid "5 stages — live stepper, per-stage progress bar and log."
 msgstr "5 Phasen – Live-Stepper, Fortschrittsbalken pro Phase und Protokoll."
 
-#: views.py:32
+#: views.py:33
 msgid "Quick task"
 msgstr "Schnelle Aufgabe"
 
-#: views.py:33
+#: views.py:34
 msgid "No stages — one progress bar, then a result. Simplest shape."
 msgstr ""
 "Keine Phasen – ein Fortschrittsbalken, dann ein Ergebnis. Einfachste Form."
 
-#: views.py:39
+#: views.py:40
 msgid "Failing task"
 msgstr "Fehlschlagende Aufgabe"
 
-#: views.py:40
+#: views.py:41
 msgid "Raises mid-run — shows the error state and the Retry button."
 msgstr ""
 "Bricht mitten im Lauf ab – zeigt den Fehlerzustand und die Schaltfläche "
 "„Wiederholen“."
 
-#: views.py:46
+#: views.py:47
 msgid "Chained task"
 msgstr "Verkettete Aufgabe"
 
-#: views.py:47
+#: views.py:48
 msgid "Runs, then chains to a second operation — no page reload."
 msgstr ""
 "Läuft und verkettet dann zu einer zweiten Operation – ohne Neuladen der "
 "Seite."
 
-#: views.py:53
+#: views.py:54
 msgid "Redirect on success"
 msgstr "Weiterleitung bei Erfolg"
 
-#: views.py:54
+#: views.py:55
 msgid "On success auto-redirects to a custom page (get_success_url)."
 msgstr ""
 "Leitet bei Erfolg automatisch zu einer eigenen Seite weiter "

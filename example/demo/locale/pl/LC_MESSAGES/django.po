@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 11:36-0500\n"
+"POT-Creation-Date: 2026-07-03 12:33-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
+"|| n%100>14) ? 1 : 2);\n"
 
 #: models.py:21
 msgid "Load"
@@ -37,55 +38,63 @@ msgstr "Zapis"
 msgid "Report"
 msgstr "Raport"
 
-#: models.py:35
+#: models.py:40
 msgid "Label"
 msgstr "Etykieta"
 
-#: models.py:39
+#: models.py:44
 msgid "A name for this import (shown while it runs)."
 msgstr "Nazwa tego importu (wyświetlana podczas działania)."
 
-#: models.py:47
+#: models.py:59
 #, python-format
 msgid "Starting import: %(label)s"
 msgstr "Rozpoczynanie importu: %(label)s"
 
-#: models.py:57
+#: models.py:69
 #, python-format
 msgid "Stage: %(name)s"
 msgstr "Etap: %(name)s"
 
-#: models.py:63
+#: models.py:75
 #, python-format
 msgid "[%(stage)s] skipped record %(i)s"
 msgstr "[%(stage)s] pominięto rekord %(i)s"
 
-#: models.py:69
+#: models.py:81
 #, python-format
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] błąd rekordu %(i)s"
 
-#: models.py:106
+#: models.py:127
 msgid "Crunching numbers…"
 msgstr "Przetwarzanie liczb…"
 
-#: models.py:137
+#: models.py:158
 msgid "Second operation running…"
 msgstr "Druga operacja w toku…"
 
-#: models.py:150
+#: models.py:171
 msgid "First operation running…"
 msgstr "Pierwsza operacja w toku…"
 
-#: models.py:168
+#: models.py:189
 msgid "Working — will redirect when done…"
 msgstr "Praca w toku — po zakończeniu nastąpi przekierowanie…"
 
-#: templates/base.html:52
+#: templates/base.html:57
 msgid "Demos"
 msgstr "Demonstracje"
 
-#: templates/demo/demo_create.html:3
+#: templates/base.html:58 templates/demo/operations.html:3
+#: templates/demo/operations.html:5
+#, fuzzy
+#| msgid "Operations"
+msgid "Operations"
+msgstr "Operacje"
+
+#: templates/demo/demo_create.html:3 templates/demo/live.html:3
+#: templates/demo/operations.html:3
 msgid "demo"
 msgstr "demo"
 
@@ -94,6 +103,7 @@ msgid "Start"
 msgstr "Start"
 
 #: templates/demo/demo_create.html:12 templates/demo/done.html:12
+#: templates/demo/live.html:5 templates/demo/operations.html:6
 msgid "Back to demos"
 msgstr "Powrót do demonstracji"
 
@@ -171,46 +181,46 @@ msgstr "Wynik"
 msgid "Done."
 msgstr "Gotowe."
 
-#: views.py:25
+#: views.py:26
 #, fuzzy
 #| msgid "+ New import"
 msgid "Staged import"
 msgstr "+ Nowy import"
 
-#: views.py:26
+#: views.py:27
 msgid "5 stages — live stepper, per-stage progress bar and log."
 msgstr "5 etapów — stepper na żywo, pasek postępu na etap i log."
 
-#: views.py:32
+#: views.py:33
 msgid "Quick task"
 msgstr "Szybkie zadanie"
 
-#: views.py:33
+#: views.py:34
 msgid "No stages — one progress bar, then a result. Simplest shape."
 msgstr "Bez etapów — jeden pasek postępu, potem wynik. Najprostsza forma."
 
-#: views.py:39
+#: views.py:40
 msgid "Failing task"
 msgstr "Zadanie z błędem"
 
-#: views.py:40
+#: views.py:41
 msgid "Raises mid-run — shows the error state and the Retry button."
 msgstr "Przerywa w trakcie — pokazuje stan błędu i przycisk Ponów."
 
-#: views.py:46
+#: views.py:47
 msgid "Chained task"
 msgstr "Zadanie łańcuchowe"
 
-#: views.py:47
+#: views.py:48
 msgid "Runs, then chains to a second operation — no page reload."
 msgstr ""
 "Wykonuje się, a potem łączy z drugą operacją — bez przeładowania strony."
 
-#: views.py:53
+#: views.py:54
 msgid "Redirect on success"
 msgstr "Przekierowanie po sukcesie"
 
-#: views.py:54
+#: views.py:55
 msgid "On success auto-redirects to a custom page (get_success_url)."
 msgstr ""
 "Po sukcesie automatycznie przekierowuje na własną stronę (get_success_url)."
@@ -220,4 +230,5 @@ msgstr ""
 
 #~ msgid "Click “Start” to run a 5-stage import with a live progress preview."
 #~ msgstr ""
-#~ "Kliknij „Start”, aby uruchomić 5-etapowy import z podglądem postępu na żywo."
+#~ "Kliknij „Start”, aby uruchomić 5-etapowy import z podglądem postępu na "
+#~ "żywo."

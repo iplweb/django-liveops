@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 11:36-0500\n"
+"POT-Creation-Date: 2026-07-03 12:33-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,55 +37,63 @@ msgstr "保存"
 msgid "Report"
 msgstr "报告"
 
-#: models.py:35
+#: models.py:40
 msgid "Label"
 msgstr "标签"
 
-#: models.py:39
+#: models.py:44
 msgid "A name for this import (shown while it runs)."
 msgstr "此次导入的名称（运行时显示）。"
 
-#: models.py:47
+#: models.py:59
 #, python-format
 msgid "Starting import: %(label)s"
 msgstr "开始导入：%(label)s"
 
-#: models.py:57
+#: models.py:69
 #, python-format
 msgid "Stage: %(name)s"
 msgstr "阶段：%(name)s"
 
-#: models.py:63
+#: models.py:75
 #, python-format
 msgid "[%(stage)s] skipped record %(i)s"
 msgstr "[%(stage)s] 已跳过记录 %(i)s"
 
-#: models.py:69
+#: models.py:81
 #, python-format
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] 记录错误 %(i)s"
 
-#: models.py:106
+#: models.py:127
 msgid "Crunching numbers…"
 msgstr "正在处理数据…"
 
-#: models.py:137
+#: models.py:158
 msgid "Second operation running…"
 msgstr "正在运行第二个操作…"
 
-#: models.py:150
+#: models.py:171
 msgid "First operation running…"
 msgstr "正在运行第一个操作…"
 
-#: models.py:168
+#: models.py:189
 msgid "Working — will redirect when done…"
 msgstr "处理中 — 完成后将自动跳转…"
 
-#: templates/base.html:52
+#: templates/base.html:57
 msgid "Demos"
 msgstr "演示"
 
-#: templates/demo/demo_create.html:3
+#: templates/base.html:58 templates/demo/operations.html:3
+#: templates/demo/operations.html:5
+#, fuzzy
+#| msgid "Operations"
+msgid "Operations"
+msgstr "操作"
+
+#: templates/demo/demo_create.html:3 templates/demo/live.html:3
+#: templates/demo/operations.html:3
 msgid "demo"
 msgstr "演示"
 
@@ -94,6 +102,7 @@ msgid "Start"
 msgstr "开始"
 
 #: templates/demo/demo_create.html:12 templates/demo/done.html:12
+#: templates/demo/live.html:5 templates/demo/operations.html:6
 msgid "Back to demos"
 msgstr "返回演示列表"
 
@@ -157,7 +166,9 @@ msgstr "自定义成功页面"
 msgid ""
 "You were redirected here automatically by get_success_url() the moment the "
 "operation finished successfully — the operations list was skipped entirely."
-msgstr "操作成功完成的那一刻，get_success_url() 便自动将您重定向到此页面 — 操作列表被完全跳过。"
+msgstr ""
+"操作成功完成的那一刻，get_success_url() 便自动将您重定向到此页面 — 操作列表被"
+"完全跳过。"
 
 #: templates/demo/generic_result.html:2
 msgid "Result"
@@ -167,45 +178,45 @@ msgstr "结果"
 msgid "Done."
 msgstr "完成。"
 
-#: views.py:25
+#: views.py:26
 #, fuzzy
 #| msgid "+ New import"
 msgid "Staged import"
 msgstr "+ 新建导入"
 
-#: views.py:26
+#: views.py:27
 msgid "5 stages — live stepper, per-stage progress bar and log."
 msgstr "5 个阶段 — 实时步骤条、每阶段进度条和日志。"
 
-#: views.py:32
+#: views.py:33
 msgid "Quick task"
 msgstr "快速任务"
 
-#: views.py:33
+#: views.py:34
 msgid "No stages — one progress bar, then a result. Simplest shape."
 msgstr "无阶段 — 一个进度条，然后是结果。最简单的形式。"
 
-#: views.py:39
+#: views.py:40
 msgid "Failing task"
 msgstr "失败的任务"
 
-#: views.py:40
+#: views.py:41
 msgid "Raises mid-run — shows the error state and the Retry button."
 msgstr "运行中途失败 — 显示错误状态和“重试”按钮。"
 
-#: views.py:46
+#: views.py:47
 msgid "Chained task"
 msgstr "链式任务"
 
-#: views.py:47
+#: views.py:48
 msgid "Runs, then chains to a second operation — no page reload."
 msgstr "运行后链接到第二个操作 — 无需刷新页面。"
 
-#: views.py:53
+#: views.py:54
 msgid "Redirect on success"
 msgstr "成功后跳转"
 
-#: views.py:54
+#: views.py:55
 msgid "On success auto-redirects to a custom page (get_success_url)."
 msgstr "成功后自动跳转到自定义页面（get_success_url）。"
 

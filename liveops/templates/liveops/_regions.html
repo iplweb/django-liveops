@@ -14,21 +14,15 @@
 </div>
 {% url 'liveops:cancel' op_type=op.op_type_key pk=op.pk as cancel_url %}
 {% url 'liveops:restart' op_type=op.op_type_key pk=op.pk as restart_url %}
-{# Both control forms are rendered up front (with a real CSRF token, since #}
-{# the fragment is rendered WITH the request). The inapplicable one is #}
-{# `hidden`; liveops.js flips them on the terminal `liveop_finished` signal #}
-{# — no reload, no WS-pushed forms (which would carry an empty CSRF token). #}
+{# Cancel/restart are htmx buttons (no full-page reload). CSRF travels as an #}
+{# X-CSRFToken header injected from the cookie by liveops.js, so no rendered #}
+{# token is needed — this also works on WS-pushed chained containers, which #}
+{# have no request context. liveops.js flips visibility on liveop_finished. #}
 <div id="op-controls" data-op-state="{{ op.get_state }}">
 {% if cancel_url %}
-<form class="op-controls-cancel" method="post" action="{{ cancel_url }}"{% if op.get_state != "NOT_STARTED" and op.get_state != "STARTED" %} hidden{% endif %}>
-{% csrf_token %}
-<button type="submit">{% trans "Cancel" %}</button>
-</form>
+<button type="button" class="op-controls-cancel" hx-post="{{ cancel_url }}" hx-swap="none"{% if op.get_state != "NOT_STARTED" and op.get_state != "STARTED" %} hidden{% endif %}>{% trans "Cancel" %}</button>
 {% endif %}
 {% if restart_url %}
-<form class="op-controls-restart" method="post" action="{{ restart_url }}"{% if op.get_state != "FINISHED_ERROR" %} hidden{% endif %}>
-{% csrf_token %}
-<button type="submit">{% trans "Retry" %}</button>
-</form>
+<button type="button" class="op-controls-restart" hx-post="{{ restart_url }}" hx-swap="none"{% if op.get_state != "FINISHED_ERROR" %} hidden{% endif %}>{% trans "Retry" %}</button>
 {% endif %}
 </div>

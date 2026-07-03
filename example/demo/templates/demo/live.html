@@ -1,0 +1,10 @@
+{% extends base_template %}
+{% load liveops i18n %}
+{% block title %}{{ object.live_title }} — {% trans "demo" %}{% endblock %}
+{% block content %}
+<p><a href="{% url 'demo:index' %}">← {% trans "Back to demos" %}</a></p>
+<h1>{{ object.live_title }}</h1>
+{# Scripts (htmx + channels_broadcast + liveops.js) are loaded once by #}
+{# base.html, so this host page must not re-include them. #}
+{% live_operation object %}
+{% endblock %}

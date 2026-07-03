@@ -158,16 +158,14 @@ def test_cancel_get_returns_405(auth_client, demo_op):
 
 
 @pytest.mark.django_db
-def test_control_forms_have_working_csrf(user):
-    """The live page must render a real CSRF token in the cancel/restart forms
-    and set the CSRF cookie, so those POSTs are accepted.
+def test_cancel_via_htmx_sets_and_uses_csrf_cookie(user):
+    """The live page must set the CSRF cookie (ensure_csrf_cookie), and an htmx
+    cancel POST carrying X-CSRFToken from that cookie must be accepted (204).
 
     Regression: the ``{% live_operation %}`` templatetag rendered the fragment
-    without the request, so ``{% csrf_token %}`` produced an empty token and no
-    cookie was set — every cancel/restart POST failed CSRF.
+    without the request, so no CSRF cookie was set and every cancel/restart
+    failed CSRF.
     """
-    import re
-
     from django.test import Client
     from django.utils import timezone
 
@@ -178,18 +176,19 @@ def test_control_forms_have_working_csrf(user):
     resp = c.get(op.get_absolute_url())
     assert resp.status_code == 200
     html = resp.content.decode()
-    # Both control forms present (Retry rendered too, just hidden until error).
+    # Both control buttons are present (Retry rendered too, hidden until error).
     assert "op-controls-cancel" in html
     assert "op-controls-restart" in html
-    m = re.search(r'name="csrfmiddlewaretoken" value="([^"]+)"', html)
-    assert m, "no CSRF token rendered in the control forms"
+    # ensure_csrf_cookie set the cookie so htmx can send it back.
+    token = c.cookies["csrftoken"].value
+    assert token
 
-    # POST cancel with the page's token — must be accepted (302), not 403.
     resp2 = c.post(
         op.get_absolute_url() + "cancel/",
-        {"csrfmiddlewaretoken": m.group(1)},
+        HTTP_HX_REQUEST="true",
+        HTTP_X_CSRFTOKEN=token,
     )
-    assert resp2.status_code == 302
+    assert resp2.status_code == 204  # htmx → no redirect/reload
     op.refresh_from_db()
     assert op.cancel_requested is True
 

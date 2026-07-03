@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 11:36-0500\n"
+"POT-Creation-Date: 2026-07-03 12:33-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,55 +37,63 @@ msgstr "Enregistrement"
 msgid "Report"
 msgstr "Rapport"
 
-#: models.py:35
+#: models.py:40
 msgid "Label"
 msgstr "Libellé"
 
-#: models.py:39
+#: models.py:44
 msgid "A name for this import (shown while it runs)."
 msgstr "Un nom pour cet import (affiché pendant son exécution)."
 
-#: models.py:47
+#: models.py:59
 #, python-format
 msgid "Starting import: %(label)s"
 msgstr "Démarrage de l'import : %(label)s"
 
-#: models.py:57
+#: models.py:69
 #, python-format
 msgid "Stage: %(name)s"
 msgstr "Étape : %(name)s"
 
-#: models.py:63
+#: models.py:75
 #, python-format
 msgid "[%(stage)s] skipped record %(i)s"
 msgstr "[%(stage)s] enregistrement ignoré %(i)s"
 
-#: models.py:69
+#: models.py:81
 #, python-format
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] erreur d’enregistrement %(i)s"
 
-#: models.py:106
+#: models.py:127
 msgid "Crunching numbers…"
 msgstr "Calcul en cours…"
 
-#: models.py:137
+#: models.py:158
 msgid "Second operation running…"
 msgstr "Deuxième opération en cours…"
 
-#: models.py:150
+#: models.py:171
 msgid "First operation running…"
 msgstr "Première opération en cours…"
 
-#: models.py:168
+#: models.py:189
 msgid "Working — will redirect when done…"
 msgstr "En cours — redirection à la fin…"
 
-#: templates/base.html:52
+#: templates/base.html:57
 msgid "Demos"
 msgstr "Démos"
 
-#: templates/demo/demo_create.html:3
+#: templates/base.html:58 templates/demo/operations.html:3
+#: templates/demo/operations.html:5
+#, fuzzy
+#| msgid "Operations"
+msgid "Operations"
+msgstr "Opérations"
+
+#: templates/demo/demo_create.html:3 templates/demo/live.html:3
+#: templates/demo/operations.html:3
 msgid "demo"
 msgstr "démo"
 
@@ -94,6 +102,7 @@ msgid "Start"
 msgstr "Démarrer"
 
 #: templates/demo/demo_create.html:12 templates/demo/done.html:12
+#: templates/demo/live.html:5 templates/demo/operations.html:6
 msgid "Back to demos"
 msgstr "Retour aux démos"
 
@@ -171,51 +180,50 @@ msgstr "Résultat"
 msgid "Done."
 msgstr "Terminé."
 
-#: views.py:25
+#: views.py:26
 #, fuzzy
 #| msgid "+ New import"
 msgid "Staged import"
 msgstr "+ Nouvel import"
 
-#: views.py:26
+#: views.py:27
 msgid "5 stages — live stepper, per-stage progress bar and log."
 msgstr ""
 "5 étapes — indicateur en direct, barre de progression par étape et journal."
 
-#: views.py:32
+#: views.py:33
 msgid "Quick task"
 msgstr "Tâche rapide"
 
-#: views.py:33
+#: views.py:34
 msgid "No stages — one progress bar, then a result. Simplest shape."
 msgstr ""
 "Sans étapes — une barre de progression, puis un résultat. La forme la plus "
 "simple."
 
-#: views.py:39
+#: views.py:40
 msgid "Failing task"
 msgstr "Tâche en échec"
 
-#: views.py:40
+#: views.py:41
 msgid "Raises mid-run — shows the error state and the Retry button."
 msgstr ""
-"Échoue en cours d’exécution — affiche l’état d’erreur et le bouton "
-"Réessayer."
+"Échoue en cours d’exécution — affiche l’état d’erreur et le bouton Réessayer."
 
-#: views.py:46
+#: views.py:47
 msgid "Chained task"
 msgstr "Tâche chaînée"
 
-#: views.py:47
+#: views.py:48
 msgid "Runs, then chains to a second operation — no page reload."
 msgstr ""
 "S’exécute puis enchaîne sur une deuxième opération — sans recharger la page."
 
-#: views.py:53
+#: views.py:54
 msgid "Redirect on success"
 msgstr "Redirection en cas de succès"
 
-#: views.py:54
+#: views.py:55
 msgid "On success auto-redirects to a custom page (get_success_url)."
 msgstr ""
 "En cas de succès, redirige automatiquement vers une page personnalisée "
@@ -226,5 +234,5 @@ msgstr ""
 
 #~ msgid "Click “Start” to run a 5-stage import with a live progress preview."
 #~ msgstr ""
-#~ "Cliquez sur « Démarrer » pour lancer un import en 5 étapes avec un aperçu de"
-#~ " la progression en direct."
+#~ "Cliquez sur « Démarrer » pour lancer un import en 5 étapes avec un aperçu "
+#~ "de la progression en direct."

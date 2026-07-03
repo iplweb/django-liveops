@@ -29,6 +29,11 @@ _STAGE_ITEMS = {
 class DemoImport(LiveOperation):
     stages = ["Load", "Validate", "Match", "Save", "Report"]
 
+    # Custom host page (demo/live.html) shows live_title() as a heading so the
+    # import's name stays visible the whole run — a transient p.status() would
+    # be overwritten by the first stage.
+    host_template_name = "demo/live.html"
+
     # One user-supplied parameter, purely to show how a form value reaches
     # run(). The demo just echoes it in the first status line.
     label = models.CharField(
@@ -41,6 +46,13 @@ class DemoImport(LiveOperation):
 
     class Meta:
         app_label = "demo"
+
+    def live_title(self):
+        # Shown persistently on the live host page (demo/live.html).
+        return self.label or str(self._meta.verbose_name).title()
+
+    def __str__(self):
+        return f"{self.live_title()} ({str(self.pk)[:8]})"
 
     def run(self, p):
         if self.label:
@@ -91,9 +103,18 @@ class DemoBase(LiveOperation):
     """
 
     result_template_name = "demo/generic_result.html"
+    host_template_name = "demo/live.html"
 
     class Meta:
         abstract = True
+
+    def live_title(self):
+        # Human-readable class name, e.g. "Quick task", shown as the live
+        # page heading (demo/live.html) and in the operations list.
+        return str(self._meta.verbose_name).title()
+
+    def __str__(self):
+        return f"{self.live_title()} ({str(self.pk)[:8]})"
 
 
 class QuickTask(DemoBase):

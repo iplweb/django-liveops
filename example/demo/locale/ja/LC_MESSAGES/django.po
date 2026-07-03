@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 11:36-0500\n"
+"POT-Creation-Date: 2026-07-03 12:33-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,55 +37,63 @@ msgstr "保存"
 msgid "Report"
 msgstr "レポート"
 
-#: models.py:35
+#: models.py:40
 msgid "Label"
 msgstr "ラベル"
 
-#: models.py:39
+#: models.py:44
 msgid "A name for this import (shown while it runs)."
 msgstr "このインポートの名前（実行中に表示されます）。"
 
-#: models.py:47
+#: models.py:59
 #, python-format
 msgid "Starting import: %(label)s"
 msgstr "インポートを開始しています: %(label)s"
 
-#: models.py:57
+#: models.py:69
 #, python-format
 msgid "Stage: %(name)s"
 msgstr "ステージ: %(name)s"
 
-#: models.py:63
+#: models.py:75
 #, python-format
 msgid "[%(stage)s] skipped record %(i)s"
 msgstr "[%(stage)s] レコード %(i)s をスキップしました"
 
-#: models.py:69
+#: models.py:81
 #, python-format
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] レコード %(i)s でエラーが発生しました"
 
-#: models.py:106
+#: models.py:127
 msgid "Crunching numbers…"
 msgstr "計算中…"
 
-#: models.py:137
+#: models.py:158
 msgid "Second operation running…"
 msgstr "2 番目の処理を実行中…"
 
-#: models.py:150
+#: models.py:171
 msgid "First operation running…"
 msgstr "1 番目の処理を実行中…"
 
-#: models.py:168
+#: models.py:189
 msgid "Working — will redirect when done…"
 msgstr "処理中 — 完了後にリダイレクトします…"
 
-#: templates/base.html:52
+#: templates/base.html:57
 msgid "Demos"
 msgstr "デモ"
 
-#: templates/demo/demo_create.html:3
+#: templates/base.html:58 templates/demo/operations.html:3
+#: templates/demo/operations.html:5
+#, fuzzy
+#| msgid "Operations"
+msgid "Operations"
+msgstr "オペレーション一覧"
+
+#: templates/demo/demo_create.html:3 templates/demo/live.html:3
+#: templates/demo/operations.html:3
 msgid "demo"
 msgstr "デモ"
 
@@ -94,6 +102,7 @@ msgid "Start"
 msgstr "開始"
 
 #: templates/demo/demo_create.html:12 templates/demo/done.html:12
+#: templates/demo/live.html:5 templates/demo/operations.html:6
 msgid "Back to demos"
 msgstr "デモ一覧に戻る"
 
@@ -158,8 +167,8 @@ msgid ""
 "You were redirected here automatically by get_success_url() the moment the "
 "operation finished successfully — the operations list was skipped entirely."
 msgstr ""
-"操作が正常に完了した瞬間、get_success_url() によって自動的にこのページへリダイレクトされました — "
-"操作一覧は完全にスキップされています。"
+"操作が正常に完了した瞬間、get_success_url() によって自動的にこのページへリダ"
+"イレクトされました — 操作一覧は完全にスキップされています。"
 
 #: templates/demo/generic_result.html:2
 msgid "Result"
@@ -169,50 +178,53 @@ msgstr "結果"
 msgid "Done."
 msgstr "完了。"
 
-#: views.py:25
+#: views.py:26
 #, fuzzy
 #| msgid "+ New import"
 msgid "Staged import"
 msgstr "+ 新規インポート"
 
-#: views.py:26
+#: views.py:27
 msgid "5 stages — live stepper, per-stage progress bar and log."
 msgstr "5 段階 — ライブステッパー、段階ごとの進捗バーとログ。"
 
-#: views.py:32
+#: views.py:33
 msgid "Quick task"
 msgstr "クイックタスク"
 
-#: views.py:33
+#: views.py:34
 msgid "No stages — one progress bar, then a result. Simplest shape."
 msgstr "段階なし — 進捗バー 1 本、そして結果。最もシンプルな形。"
 
-#: views.py:39
+#: views.py:40
 msgid "Failing task"
 msgstr "失敗するタスク"
 
-#: views.py:40
+#: views.py:41
 msgid "Raises mid-run — shows the error state and the Retry button."
 msgstr "実行中に失敗 — エラー状態と「再試行」ボタンを表示します。"
 
-#: views.py:46
+#: views.py:47
 msgid "Chained task"
 msgstr "連鎖タスク"
 
-#: views.py:47
+#: views.py:48
 msgid "Runs, then chains to a second operation — no page reload."
 msgstr "実行後、2 番目の処理へ連鎖します — ページの再読み込みなし。"
 
-#: views.py:53
+#: views.py:54
 msgid "Redirect on success"
 msgstr "成功時にリダイレクト"
 
-#: views.py:54
+#: views.py:55
 msgid "On success auto-redirects to a custom page (get_success_url)."
-msgstr "成功すると独自のページへ自動的にリダイレクトします（get_success_url）。"
+msgstr ""
+"成功すると独自のページへ自動的にリダイレクトします（get_success_url）。"
 
 #~ msgid "New demonstration import"
 #~ msgstr "新しいデモンストレーション用インポート"
 
 #~ msgid "Click “Start” to run a 5-stage import with a live progress preview."
-#~ msgstr "“開始” をクリックすると、進捗をリアルタイムで確認しながら5段階のインポートを実行します。"
+#~ msgstr ""
+#~ "“開始” をクリックすると、進捗をリアルタイムで確認しながら5段階のインポート"
+#~ "を実行します。"

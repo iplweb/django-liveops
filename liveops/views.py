@@ -16,13 +16,23 @@ from __future__ import annotations
 
 from django.contrib.auth.mixins import AccessMixin
 from django.core.exceptions import PermissionDenied
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
+from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.generic import CreateView, DetailView, ListView
 from django.views.generic.detail import SingleObjectMixin
 
 from liveops.conf import get_setting
+
+
+def _hx_no_content_or_redirect(request, operation):
+    """204 for an htmx request (UI updates arrive over the WebSocket), else a
+    plain redirect back to the live page (progressive enhancement / no-JS)."""
+    if request.headers.get("HX-Request"):
+        return HttpResponse(status=204)
+    return redirect(operation.get_absolute_url())
 
 
 class BaseLiveOperationMixin(AccessMixin):
@@ -95,9 +105,15 @@ class CreateLiveOperationView(BaseLiveOperationMixin, CreateView):
         return redirect(self.object.get_absolute_url())
 
 
+@method_decorator(ensure_csrf_cookie, name="dispatch")
 class LiveOperationView(OpTypeObjectMixin, BaseLiveOperationMixin, DetailView):
     """
     Live host page for a running or finished operation.
+
+    ``ensure_csrf_cookie`` guarantees the CSRF cookie is set on this page, so
+    the htmx-driven cancel/restart buttons (which send X-CSRFToken from the
+    cookie) work — including on WS-pushed chained containers that never carry
+    a rendered token.
 
     Template order: object.get_host_template_name() → liveops/operation.html.
     For finished operations the result is rendered inline (deep-link / refresh).
@@ -148,7 +164,7 @@ class CancelView(OpTypeObjectMixin, BaseLiveOperationMixin, SingleObjectMixin, V
         operation = self.get_object()
         operation.cancel_requested = True
         operation.save(update_fields=["cancel_requested"])
-        return redirect(operation.get_absolute_url())
+        return _hx_no_content_or_redirect(request, operation)
 
 
 class RestartView(OpTypeObjectMixin, BaseLiveOperationMixin, SingleObjectMixin, View):
@@ -190,4 +206,4 @@ class RestartView(OpTypeObjectMixin, BaseLiveOperationMixin, SingleObjectMixin, 
             ]
         )
         operation.enqueue()
-        return redirect(operation.get_absolute_url())
+        return _hx_no_content_or_redirect(request, operation)
