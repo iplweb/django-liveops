@@ -1,7 +1,26 @@
 # django-liveops
 
+[![CI](https://github.com/iplweb/django-liveops/actions/workflows/ci.yml/badge.svg)](https://github.com/iplweb/django-liveops/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/django-liveops.svg)](https://pypi.org/project/django-liveops/)
+[![Python](https://img.shields.io/pypi/pyversions/django-liveops.svg)](https://pypi.org/project/django-liveops/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 A standalone, reusable Django package for long-running operations with a live
 WebSocket + HTMX user interface — no page reloads, no polling.
+
+## Installation
+
+```bash
+pip install django-liveops
+# optional extras:
+pip install django-liveops[redis]    # Redis channel layer (production)
+pip install django-liveops[celery]   # Celery worker runner
+pip install django-liveops[cli]      # tqdm progress bar for text mode
+```
+
+Requires Python 3.11+ and Django 5.2+. See the
+[Getting Started guide](https://iplweb.github.io/django-liveops/getting-started/)
+for the full setup (channels, ASGI, settings).
 
 The developer writes one method:
 
@@ -43,3 +62,7 @@ for what you'll see and how the demo is wired.
 
 Full docs are published at
 **<https://iplweb.github.io/django-liveops/>** (source in `docs/`).
+
+## License
+
+MIT — see [LICENSE](LICENSE).
