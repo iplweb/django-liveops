@@ -34,6 +34,13 @@
   table { border-collapse: collapse; width: 100%; }
   th, td { border: 1px solid #ccc; padding: 0.4rem 0.7rem; text-align: left; }
   th { background: #f0f0f0; }
+  .op-state { display: inline-block; padding: 0.1rem 0.5rem; border-radius: 3px;
+              font-size: 0.8rem; color: #fff; background: #999; white-space: nowrap; }
+  .op-state--FINISHED_OK    { background: #4c4; }
+  .op-state--FINISHED_ERROR { background: #e44; }
+  .op-state--CANCELLED      { background: #c90; }
+  .op-state--STARTED        { background: #4af; }
+  .op-state--NOT_STARTED    { background: #999; }
   .btn { display: inline-block; padding: 0.4rem 0.9rem; border-radius: 4px;
          cursor: pointer; border: none; background: #46a; color: #fff;
          text-decoration: none; font-size: 1rem; }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-02 05:33-0500\n"
+"POT-Creation-Date: 2026-07-03 04:05-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,15 +16,32 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: admin.py:49
+msgid "ID"
+msgstr "ID"
+
+#: admin.py:53
+msgid "State"
+msgstr "Olek"
+
+#: admin.py:57
+msgid "Result"
+msgstr "Tulemus"
+
+#: admin.py:66
+msgid "Stages"
+msgstr "Etapid"
+
 #: apps.py:8
 msgid "Live Operations"
 msgstr "Reaalajas toimingud"
 
-#: models.py:161 templates/liveops/_cancelled.html:3
+#: models.py:180 templates/liveops/_cancelled.html:3
 msgid "Operation was cancelled."
 msgstr "Toiming tühistati."
 
-#: models.py:166
+#: models.py:185
 msgid "Operation in progress…"
 msgstr "Toiming on pooleli…"
 
@@ -40,3 +57,50 @@ msgstr "Tühista"
 #: templates/liveops/_regions.html:26
 msgid "Retry"
 msgstr "Proovi uuesti"
+
+#: templates/liveops/operation_list.html:7
+#| msgid "Live Operations"
+msgid "Operation"
+msgstr "Toiming"
+
+#: templates/liveops/operation_list.html:8
+msgid "Ordered by"
+msgstr "Tellija"
+
+#: templates/liveops/operation_list.html:9
+msgid "Started"
+msgstr "Alustatud"
+
+#: templates/liveops/operation_list.html:10
+msgid "Finished"
+msgstr "Lõpetatud"
+
+#: templates/liveops/operation_list.html:11
+msgid "Status"
+msgstr "Staatus"
+
+#: templates/liveops/operation_list.html:24
+msgid "Completed"
+msgstr "Valmis"
+
+#: templates/liveops/operation_list.html:25
+msgid "Failed"
+msgstr "Ebaõnnestus"
+
+#: templates/liveops/operation_list.html:26
+#| msgid "Cancel"
+msgid "Cancelled"
+msgstr "Tühistatud"
+
+#: templates/liveops/operation_list.html:27
+msgid "Running"
+msgstr "Töötab"
+
+#: templates/liveops/operation_list.html:28
+msgid "Not started"
+msgstr "Alustamata"
+
+#: templates/liveops/operation_list.html:34
+#| msgid "Live Operations"
+msgid "No operations yet."
+msgstr "Toiminguid veel pole."

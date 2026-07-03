@@ -1,8 +1,38 @@
 {% extends base_template %}
+{% load i18n %}
 {% block content %}
-<ul>
-{% for op in operations %}
-<li><a href="{{ op.get_absolute_url }}">{{ op }}</a></li>
-{% endfor %}
-</ul>
+<table class="op-list">
+  <thead>
+    <tr>
+      <th>{% trans "Operation" %}</th>
+      <th>{% trans "Ordered by" %}</th>
+      <th>{% trans "Started" %}</th>
+      <th>{% trans "Finished" %}</th>
+      <th>{% trans "Status" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for op in operations %}
+    {% with state=op.get_state %}
+    <tr>
+      <td><a href="{{ op.get_absolute_url }}">{{ op }}</a></td>
+      <td>{{ op.owner }}</td>
+      <td>{{ op.started_on|date:"Y-m-d H:i"|default:"—" }}</td>
+      <td>{{ op.finished_on|date:"Y-m-d H:i"|default:"—" }}</td>
+      <td>
+        <span class="op-state op-state--{{ state }}">
+          {% if state == "FINISHED_OK" %}{% trans "Completed" %}
+          {% elif state == "FINISHED_ERROR" %}{% trans "Failed" %}
+          {% elif state == "CANCELLED" %}{% trans "Cancelled" %}
+          {% elif state == "STARTED" %}{% trans "Running" %}
+          {% else %}{% trans "Not started" %}{% endif %}
+        </span>
+      </td>
+    </tr>
+    {% endwith %}
+  {% empty %}
+    <tr><td colspan="5">{% trans "No operations yet." %}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
 {% endblock %}

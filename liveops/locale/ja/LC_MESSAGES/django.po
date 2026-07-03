@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-02 05:33-0500\n"
+"POT-Creation-Date: 2026-07-03 04:05-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,15 +16,32 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: admin.py:49
+msgid "ID"
+msgstr "ID"
+
+#: admin.py:53
+msgid "State"
+msgstr "状態"
+
+#: admin.py:57
+msgid "Result"
+msgstr "結果"
+
+#: admin.py:66
+msgid "Stages"
+msgstr "ステージ"
+
 #: apps.py:8
 msgid "Live Operations"
 msgstr "ライブオペレーション"
 
-#: models.py:161 templates/liveops/_cancelled.html:3
+#: models.py:180 templates/liveops/_cancelled.html:3
 msgid "Operation was cancelled."
 msgstr "処理はキャンセルされました。"
 
-#: models.py:166
+#: models.py:185
 msgid "Operation in progress…"
 msgstr "処理を実行中です…"
 
@@ -40,3 +57,50 @@ msgstr "キャンセル"
 #: templates/liveops/_regions.html:26
 msgid "Retry"
 msgstr "再試行"
+
+#: templates/liveops/operation_list.html:7
+#| msgid "Live Operations"
+msgid "Operation"
+msgstr "オペレーション"
+
+#: templates/liveops/operation_list.html:8
+msgid "Ordered by"
+msgstr "依頼者"
+
+#: templates/liveops/operation_list.html:9
+msgid "Started"
+msgstr "開始"
+
+#: templates/liveops/operation_list.html:10
+msgid "Finished"
+msgstr "終了"
+
+#: templates/liveops/operation_list.html:11
+msgid "Status"
+msgstr "ステータス"
+
+#: templates/liveops/operation_list.html:24
+msgid "Completed"
+msgstr "完了"
+
+#: templates/liveops/operation_list.html:25
+msgid "Failed"
+msgstr "失敗"
+
+#: templates/liveops/operation_list.html:26
+#| msgid "Cancel"
+msgid "Cancelled"
+msgstr "キャンセル済み"
+
+#: templates/liveops/operation_list.html:27
+msgid "Running"
+msgstr "実行中"
+
+#: templates/liveops/operation_list.html:28
+msgid "Not started"
+msgstr "未開始"
+
+#: templates/liveops/operation_list.html:34
+#| msgid "Live Operations"
+msgid "No operations yet."
+msgstr "まだ操作はありません。"
