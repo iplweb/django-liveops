@@ -33,6 +33,7 @@ class DemoImport(LiveOperation):
     # import's name stays visible the whole run — a transient p.status() would
     # be overwritten by the first stage.
     host_template_name = "demo/live.html"
+    title = gettext_lazy("Staged import")
 
     # One user-supplied parameter, purely to show how a form value reaches
     # run(). The demo just echoes it in the first status line.
@@ -49,7 +50,7 @@ class DemoImport(LiveOperation):
 
     def live_title(self):
         # Shown persistently on the live host page (demo/live.html).
-        return self.label or str(self._meta.verbose_name).title()
+        return self.label or str(self.title)
 
     def __str__(self):
         return f"{self.live_title()} ({str(self.pk)[:8]})"
@@ -104,13 +105,16 @@ class DemoBase(LiveOperation):
 
     result_template_name = "demo/generic_result.html"
     host_template_name = "demo/live.html"
+    title = None  # translatable display name; set per concrete model
 
     class Meta:
         abstract = True
 
     def live_title(self):
-        # Human-readable class name, e.g. "Quick task", shown as the live
-        # page heading (demo/live.html) and in the operations list.
+        # Shown as the live page heading (demo/live.html) and in the list.
+        # `title` reuses the (already translated) catalogue names.
+        if self.title:
+            return str(self.title)
         return str(self._meta.verbose_name).title()
 
     def __str__(self):
@@ -119,6 +123,8 @@ class DemoBase(LiveOperation):
 
 class QuickTask(DemoBase):
     """No stages — a single progress bar then a result. The simplest shape."""
+
+    title = gettext_lazy("Quick task")
 
     class Meta:
         app_label = "demo"
@@ -129,11 +135,13 @@ class QuickTask(DemoBase):
         for i in p.track(range(30), total=30, label="crunch"):
             time.sleep(0.04)
             total += i
-        p.result({"sum": total, "items": 30})
+        p.result({"sum": total, "count": 30})
 
 
 class FailingTask(DemoBase):
     """Raises mid-run to demonstrate the error state + Retry button."""
+
+    title = gettext_lazy("Failing task")
 
     class Meta:
         app_label = "demo"
@@ -151,6 +159,8 @@ class FailingTask(DemoBase):
 class ChainEnd(DemoBase):
     """Second link of the chain demo (started by ChainStart)."""
 
+    title = gettext_lazy("Chained task")
+
     class Meta:
         app_label = "demo"
 
@@ -163,6 +173,8 @@ class ChainEnd(DemoBase):
 
 class ChainStart(DemoBase):
     """Runs, then chains to a second operation — no page reload (p.chain_to)."""
+
+    title = gettext_lazy("Chained task")
 
     class Meta:
         app_label = "demo"
@@ -181,6 +193,8 @@ class RedirectingTask(DemoBase):
     Demonstrates skipping the live/list page entirely: the browser lands on
     ``demo:done`` the moment this finishes OK.
     """
+
+    title = gettext_lazy("Redirect on success")
 
     class Meta:
         app_label = "demo"

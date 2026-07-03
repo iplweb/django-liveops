@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 12:33-0500\n"
+"POT-Creation-Date: 2026-07-03 12:54-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,47 +37,68 @@ msgstr "Speichern"
 msgid "Report"
 msgstr "Bericht"
 
-#: models.py:40
+#: models.py:36 views.py:26
+#| msgid "+ New import"
+msgid "Staged import"
+msgstr "Mehrstufiger Import"
+
+#: models.py:41
 msgid "Label"
 msgstr "Bezeichnung"
 
-#: models.py:44
+#: models.py:45
 msgid "A name for this import (shown while it runs)."
 msgstr "Ein Name für diesen Import (wird während der Ausführung angezeigt)."
 
-#: models.py:59
+#: models.py:60
 #, python-format
 msgid "Starting import: %(label)s"
 msgstr "Import wird gestartet: %(label)s"
 
-#: models.py:69
+#: models.py:70
 #, python-format
 msgid "Stage: %(name)s"
 msgstr "Phase: %(name)s"
 
-#: models.py:75
+#: models.py:76
 #, python-format
 msgid "[%(stage)s] skipped record %(i)s"
 msgstr "[%(stage)s] Datensatz %(i)s übersprungen"
 
-#: models.py:81
+#: models.py:82
 #, python-format
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] Fehler bei Datensatz %(i)s"
 
-#: models.py:127
+#: models.py:127 views.py:33
+msgid "Quick task"
+msgstr "Schnelle Aufgabe"
+
+#: models.py:133
 msgid "Crunching numbers…"
 msgstr "Zahlen werden verarbeitet…"
 
-#: models.py:158
+#: models.py:144 views.py:40
+msgid "Failing task"
+msgstr "Fehlschlagende Aufgabe"
+
+#: models.py:162 models.py:177 views.py:47
+msgid "Chained task"
+msgstr "Verkettete Aufgabe"
+
+#: models.py:168
 msgid "Second operation running…"
 msgstr "Zweite Operation läuft…"
 
-#: models.py:171
+#: models.py:183
 msgid "First operation running…"
 msgstr "Erste Operation läuft…"
 
-#: models.py:189
+#: models.py:197 views.py:54
+msgid "Redirect on success"
+msgstr "Weiterleitung bei Erfolg"
+
+#: models.py:203
 msgid "Working — will redirect when done…"
 msgstr "Wird ausgeführt – Weiterleitung nach Abschluss…"
 
@@ -87,10 +108,9 @@ msgstr "Demos"
 
 #: templates/base.html:58 templates/demo/operations.html:3
 #: templates/demo/operations.html:5
-#, fuzzy
 #| msgid "Operations"
 msgid "Operations"
-msgstr "Vorgänge"
+msgstr "Operationen"
 
 #: templates/demo/demo_create.html:3 templates/demo/live.html:3
 #: templates/demo/operations.html:3
@@ -141,10 +161,9 @@ msgstr ""
 "Oberfläche in Aktion zu sehen."
 
 #: templates/demo/demo_index.html:10
-#, fuzzy
 #| msgid "Operations"
 msgid "Operation"
-msgstr "Vorgänge"
+msgstr "Operation"
 
 #: templates/demo/demo_index.html:11
 msgid "What it demonstrates"
@@ -155,10 +174,9 @@ msgid "Run"
 msgstr "Ausführen"
 
 #: templates/demo/done.html:3
-#, fuzzy
 #| msgid "New import — demo"
 msgid "Done — demo"
-msgstr "Neuer Import — Demo"
+msgstr "Fertig — Demo"
 
 #: templates/demo/done.html:5
 msgid "Custom success page"
@@ -181,28 +199,14 @@ msgstr "Ergebnis"
 msgid "Done."
 msgstr "Fertig."
 
-#: views.py:26
-#, fuzzy
-#| msgid "+ New import"
-msgid "Staged import"
-msgstr "+ Neuer Import"
-
 #: views.py:27
 msgid "5 stages — live stepper, per-stage progress bar and log."
 msgstr "5 Phasen – Live-Stepper, Fortschrittsbalken pro Phase und Protokoll."
-
-#: views.py:33
-msgid "Quick task"
-msgstr "Schnelle Aufgabe"
 
 #: views.py:34
 msgid "No stages — one progress bar, then a result. Simplest shape."
 msgstr ""
 "Keine Phasen – ein Fortschrittsbalken, dann ein Ergebnis. Einfachste Form."
-
-#: views.py:40
-msgid "Failing task"
-msgstr "Fehlschlagende Aufgabe"
 
 #: views.py:41
 msgid "Raises mid-run — shows the error state and the Retry button."
@@ -210,19 +214,11 @@ msgstr ""
 "Bricht mitten im Lauf ab – zeigt den Fehlerzustand und die Schaltfläche "
 "„Wiederholen“."
 
-#: views.py:47
-msgid "Chained task"
-msgstr "Verkettete Aufgabe"
-
 #: views.py:48
 msgid "Runs, then chains to a second operation — no page reload."
 msgstr ""
 "Läuft und verkettet dann zu einer zweiten Operation – ohne Neuladen der "
 "Seite."
-
-#: views.py:54
-msgid "Redirect on success"
-msgstr "Weiterleitung bei Erfolg"
 
 #: views.py:55
 msgid "On success auto-redirects to a custom page (get_success_url)."

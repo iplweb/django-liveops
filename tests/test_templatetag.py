@@ -9,6 +9,28 @@ from tests.models import DemoOp
 User = get_user_model()
 
 
+def test_pairs_filter_is_immune_to_items_key():
+    """`pairs` must iterate a dict even when it has a key literally named
+    'items' (Django's dot lookup would otherwise shadow dict.items)."""
+    from liveops.templatetags.liveops import pairs
+
+    assert pairs({"items": 5, "sum": 10}) == [("items", 5), ("sum", 10)]
+    assert pairs("not a dict") == []
+
+
+def test_result_template_renders_with_items_key():
+    """The default result template must render a result_context that has an
+    'items' key (regression: `.items` resolved to the value → TypeError →
+    blank result)."""
+    from django.template.loader import render_to_string
+
+    html = render_to_string(
+        "liveops/_result.html", {"result_context": {"items": 5, "sum": 10}}
+    )
+    assert "items=5" in html
+    assert "sum=10" in html
+
+
 @pytest.mark.django_db
 def test_live_operation_tag_renders_channel():
     user = User.objects.create_user(username="taguser", password="pass")

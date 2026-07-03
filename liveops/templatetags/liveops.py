@@ -57,6 +57,20 @@ def render_op_result(op):
 
 
 @register.filter
+def pairs(value):
+    """Yield ``(key, value)`` from a dict for iteration in templates.
+
+    Use this instead of ``{% for k, v in mydict.items %}``: Django's dot lookup
+    resolves ``mydict.items`` as the KEY ``"items"`` first when the dict has one
+    (a common footgun in result_context), so ``.items`` can silently return a
+    value instead of the method. ``{% for k, v in mydict|pairs %}`` is immune.
+    """
+    if isinstance(value, dict):
+        return list(value.items())
+    return []
+
+
+@register.filter
 def get_item(dictionary, key):
     """Return ``dictionary[key]`` or empty string when key is absent.
 

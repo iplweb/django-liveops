@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 12:33-0500\n"
+"POT-Creation-Date: 2026-07-03 12:54-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,47 +37,68 @@ msgstr "Salvestamine"
 msgid "Report"
 msgstr "Aruandlus"
 
-#: models.py:40
+#: models.py:36 views.py:26
+#| msgid "+ New import"
+msgid "Staged import"
+msgstr "Etapiline import"
+
+#: models.py:41
 msgid "Label"
 msgstr "Silt"
 
-#: models.py:44
+#: models.py:45
 msgid "A name for this import (shown while it runs)."
 msgstr "Selle importi nimi (kuvatakse töö ajal)."
 
-#: models.py:59
+#: models.py:60
 #, python-format
 msgid "Starting import: %(label)s"
 msgstr "Impordi alustamine: %(label)s"
 
-#: models.py:69
+#: models.py:70
 #, python-format
 msgid "Stage: %(name)s"
 msgstr "Etapp: %(name)s"
 
-#: models.py:75
+#: models.py:76
 #, python-format
 msgid "[%(stage)s] skipped record %(i)s"
 msgstr "[%(stage)s] jäeti vahele kirje %(i)s"
 
-#: models.py:81
+#: models.py:82
 #, python-format
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] kirje viga %(i)s"
 
-#: models.py:127
+#: models.py:127 views.py:33
+msgid "Quick task"
+msgstr "Kiire ülesanne"
+
+#: models.py:133
 msgid "Crunching numbers…"
 msgstr "Arvutan…"
 
-#: models.py:158
+#: models.py:144 views.py:40
+msgid "Failing task"
+msgstr "Ebaõnnestuv ülesanne"
+
+#: models.py:162 models.py:177 views.py:47
+msgid "Chained task"
+msgstr "Aheldatud ülesanne"
+
+#: models.py:168
 msgid "Second operation running…"
 msgstr "Teine toiming töötab…"
 
-#: models.py:171
+#: models.py:183
 msgid "First operation running…"
 msgstr "Esimene toiming töötab…"
 
-#: models.py:189
+#: models.py:197 views.py:54
+msgid "Redirect on success"
+msgstr "Ümbersuunamine õnnestumisel"
+
+#: models.py:203
 msgid "Working — will redirect when done…"
 msgstr "Töötab — suunan valmides ümber…"
 
@@ -87,7 +108,6 @@ msgstr "Demod"
 
 #: templates/base.html:58 templates/demo/operations.html:3
 #: templates/demo/operations.html:5
-#, fuzzy
 #| msgid "Operations"
 msgid "Operations"
 msgstr "Toimingud"
@@ -139,10 +159,9 @@ msgid "Pick an operation type and run it to see the live UI in action."
 msgstr "Vali toimingu tüüp ja käivita see, et näha reaalajas liidest töös."
 
 #: templates/demo/demo_index.html:10
-#, fuzzy
 #| msgid "Operations"
 msgid "Operation"
-msgstr "Toimingud"
+msgstr "Toiming"
 
 #: templates/demo/demo_index.html:11
 msgid "What it demonstrates"
@@ -153,10 +172,9 @@ msgid "Run"
 msgstr "Käivita"
 
 #: templates/demo/done.html:3
-#, fuzzy
 #| msgid "New import — demo"
 msgid "Done — demo"
-msgstr "Uus import — demo"
+msgstr "Valmis — demo"
 
 #: templates/demo/done.html:5
 msgid "Custom success page"
@@ -178,43 +196,21 @@ msgstr "Tulemus"
 msgid "Done."
 msgstr "Valmis."
 
-#: views.py:26
-#, fuzzy
-#| msgid "+ New import"
-msgid "Staged import"
-msgstr "+ Uus import"
-
 #: views.py:27
 msgid "5 stages — live stepper, per-stage progress bar and log."
 msgstr "5 etappi — reaalajas sammuriba, iga etapi edenemisriba ja logi."
-
-#: views.py:33
-msgid "Quick task"
-msgstr "Kiire ülesanne"
 
 #: views.py:34
 msgid "No stages — one progress bar, then a result. Simplest shape."
 msgstr "Etappideta — üks edenemisriba, seejärel tulemus. Lihtsaim kuju."
 
-#: views.py:40
-msgid "Failing task"
-msgstr "Ebaõnnestuv ülesanne"
-
 #: views.py:41
 msgid "Raises mid-run — shows the error state and the Retry button."
 msgstr "Katkeb töö keskel — kuvab veaoleku ja nupu „Proovi uuesti“."
 
-#: views.py:47
-msgid "Chained task"
-msgstr "Aheldatud ülesanne"
-
 #: views.py:48
 msgid "Runs, then chains to a second operation — no page reload."
 msgstr "Töötab ja aheldab seejärel teise toiminguga — lehte laadimata."
-
-#: views.py:54
-msgid "Redirect on success"
-msgstr "Ümbersuunamine õnnestumisel"
 
 #: views.py:55
 msgid "On success auto-redirects to a custom page (get_success_url)."

@@ -1,4 +1,4 @@
-<div id="op-result" hx-swap-oob="true">
-{% if result_context %}{% for k, v in result_context.items %}{{ k }}={{ v }}
+{% load liveops %}<div id="op-result" hx-swap-oob="true">
+{% if result_context %}{% for k, v in result_context|pairs %}{{ k }}={{ v }}
 {% endfor %}{% endif %}
 </div>

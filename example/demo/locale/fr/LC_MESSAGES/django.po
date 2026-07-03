@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 12:33-0500\n"
+"POT-Creation-Date: 2026-07-03 12:54-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,47 +37,68 @@ msgstr "Enregistrement"
 msgid "Report"
 msgstr "Rapport"
 
-#: models.py:40
+#: models.py:36 views.py:26
+#| msgid "+ New import"
+msgid "Staged import"
+msgstr "Import par étapes"
+
+#: models.py:41
 msgid "Label"
 msgstr "Libellé"
 
-#: models.py:44
+#: models.py:45
 msgid "A name for this import (shown while it runs)."
 msgstr "Un nom pour cet import (affiché pendant son exécution)."
 
-#: models.py:59
+#: models.py:60
 #, python-format
 msgid "Starting import: %(label)s"
 msgstr "Démarrage de l'import : %(label)s"
 
-#: models.py:69
+#: models.py:70
 #, python-format
 msgid "Stage: %(name)s"
 msgstr "Étape : %(name)s"
 
-#: models.py:75
+#: models.py:76
 #, python-format
 msgid "[%(stage)s] skipped record %(i)s"
 msgstr "[%(stage)s] enregistrement ignoré %(i)s"
 
-#: models.py:81
+#: models.py:82
 #, python-format
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] erreur d’enregistrement %(i)s"
 
-#: models.py:127
+#: models.py:127 views.py:33
+msgid "Quick task"
+msgstr "Tâche rapide"
+
+#: models.py:133
 msgid "Crunching numbers…"
 msgstr "Calcul en cours…"
 
-#: models.py:158
+#: models.py:144 views.py:40
+msgid "Failing task"
+msgstr "Tâche en échec"
+
+#: models.py:162 models.py:177 views.py:47
+msgid "Chained task"
+msgstr "Tâche chaînée"
+
+#: models.py:168
 msgid "Second operation running…"
 msgstr "Deuxième opération en cours…"
 
-#: models.py:171
+#: models.py:183
 msgid "First operation running…"
 msgstr "Première opération en cours…"
 
-#: models.py:189
+#: models.py:197 views.py:54
+msgid "Redirect on success"
+msgstr "Redirection en cas de succès"
+
+#: models.py:203
 msgid "Working — will redirect when done…"
 msgstr "En cours — redirection à la fin…"
 
@@ -87,7 +108,6 @@ msgstr "Démos"
 
 #: templates/base.html:58 templates/demo/operations.html:3
 #: templates/demo/operations.html:5
-#, fuzzy
 #| msgid "Operations"
 msgid "Operations"
 msgstr "Opérations"
@@ -140,10 +160,9 @@ msgstr ""
 "Choisissez un type d’opération et lancez-le pour voir l’interface en direct."
 
 #: templates/demo/demo_index.html:10
-#, fuzzy
 #| msgid "Operations"
 msgid "Operation"
-msgstr "Opérations"
+msgstr "Opération"
 
 #: templates/demo/demo_index.html:11
 msgid "What it demonstrates"
@@ -154,10 +173,9 @@ msgid "Run"
 msgstr "Lancer"
 
 #: templates/demo/done.html:3
-#, fuzzy
 #| msgid "New import — demo"
 msgid "Done — demo"
-msgstr "Nouvel import — démo"
+msgstr "Terminé — démo"
 
 #: templates/demo/done.html:5
 msgid "Custom success page"
@@ -180,20 +198,10 @@ msgstr "Résultat"
 msgid "Done."
 msgstr "Terminé."
 
-#: views.py:26
-#, fuzzy
-#| msgid "+ New import"
-msgid "Staged import"
-msgstr "+ Nouvel import"
-
 #: views.py:27
 msgid "5 stages — live stepper, per-stage progress bar and log."
 msgstr ""
 "5 étapes — indicateur en direct, barre de progression par étape et journal."
-
-#: views.py:33
-msgid "Quick task"
-msgstr "Tâche rapide"
 
 #: views.py:34
 msgid "No stages — one progress bar, then a result. Simplest shape."
@@ -201,27 +209,16 @@ msgstr ""
 "Sans étapes — une barre de progression, puis un résultat. La forme la plus "
 "simple."
 
-#: views.py:40
-msgid "Failing task"
-msgstr "Tâche en échec"
-
 #: views.py:41
 msgid "Raises mid-run — shows the error state and the Retry button."
 msgstr ""
-"Échoue en cours d’exécution — affiche l’état d’erreur et le bouton Réessayer."
-
-#: views.py:47
-msgid "Chained task"
-msgstr "Tâche chaînée"
+"Échoue en cours d’exécution — affiche l’état d’erreur et le bouton "
+"Réessayer."
 
 #: views.py:48
 msgid "Runs, then chains to a second operation — no page reload."
 msgstr ""
 "S’exécute puis enchaîne sur une deuxième opération — sans recharger la page."
-
-#: views.py:54
-msgid "Redirect on success"
-msgstr "Redirection en cas de succès"
 
 #: views.py:55
 msgid "On success auto-redirects to a custom page (get_success_url)."
@@ -234,5 +231,5 @@ msgstr ""
 
 #~ msgid "Click “Start” to run a 5-stage import with a live progress preview."
 #~ msgstr ""
-#~ "Cliquez sur « Démarrer » pour lancer un import en 5 étapes avec un aperçu "
-#~ "de la progression en direct."
+#~ "Cliquez sur « Démarrer » pour lancer un import en 5 étapes avec un aperçu de"
+#~ " la progression en direct."
