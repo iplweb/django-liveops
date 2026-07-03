@@ -15,6 +15,7 @@ live progress.
 
 from __future__ import annotations
 
+from typing import Optional
 from uuid import uuid4
 
 from django.conf import settings
@@ -164,6 +165,20 @@ class LiveOperation(models.Model):
             "liveops:live",
             kwargs={"op_type": self.op_type_key(), "pk": self.pk},
         )
+
+    def get_success_url(self) -> Optional[str]:
+        """URL to auto-redirect to when the operation finishes successfully.
+
+        Default ``None`` — the client stays on the live page and shows the
+        result fragment inline. Override to return a URL (e.g.
+        ``reverse("my_app:done", args=[self.pk])``) and the browser will
+        navigate there as soon as the operation reaches ``FINISHED_OK``,
+        instead of leaving the user on the live/list page. Lets a consumer
+        skip the operations index entirely and land on a dedicated page.
+
+        Only followed on success; error/cancelled stay on the live page.
+        """
+        return None
 
     def on_restart(self) -> None:
         """Hook called by ``RestartView`` before state reset + re-enqueue.

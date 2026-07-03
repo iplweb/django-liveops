@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% trans "New import — demo" %}{% endblock %}
+{% block title %}{{ spec.name }} — {% trans "demo" %}{% endblock %}
 {% block content %}
-<h1>{% trans "New demonstration import" %}</h1>
-<p>{% trans "Click “Start” to run a 5-stage import with a live progress preview." %}</p>
+<h1>{{ spec.name }}</h1>
+<p>{{ spec.desc }}</p>
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit" class="btn">{% trans "Start" %}</button>
 </form>
+<p><a href="{% url 'demo:index' %}">← {% trans "Back to demos" %}</a></p>
 {% endblock %}

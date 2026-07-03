@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-02 14:40-0500\n"
+"POT-Creation-Date: 2026-07-03 11:36-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,31 +65,37 @@ msgstr "[%(stage)s] レコード %(i)s をスキップしました"
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] レコード %(i)s でエラーが発生しました"
 
-#: templates/base.html:42
-msgid "Operations"
-msgstr "オペレーション一覧"
+#: models.py:106
+msgid "Crunching numbers…"
+msgstr "計算中…"
 
-#: templates/base.html:43
-msgid "+ New import"
-msgstr "+ 新規インポート"
+#: models.py:137
+msgid "Second operation running…"
+msgstr "2 番目の処理を実行中…"
 
-#: templates/demo/demo_import_create.html:3
-msgid "New import — demo"
-msgstr "新規インポート — デモ"
+#: models.py:150
+msgid "First operation running…"
+msgstr "1 番目の処理を実行中…"
 
-#: templates/demo/demo_import_create.html:5
-msgid "New demonstration import"
-msgstr "新しいデモンストレーション用インポート"
+#: models.py:168
+msgid "Working — will redirect when done…"
+msgstr "処理中 — 完了後にリダイレクトします…"
 
-#: templates/demo/demo_import_create.html:6
-msgid "Click “Start” to run a 5-stage import with a live progress preview."
-msgstr ""
-"“開始” をクリックすると、進捗をリアルタイムで確認しながら5段階のインポートを"
-"実行します。"
+#: templates/base.html:52
+msgid "Demos"
+msgstr "デモ"
 
-#: templates/demo/demo_import_create.html:10
+#: templates/demo/demo_create.html:3
+msgid "demo"
+msgstr "デモ"
+
+#: templates/demo/demo_create.html:10
 msgid "Start"
 msgstr "開始"
+
+#: templates/demo/demo_create.html:12 templates/demo/done.html:12
+msgid "Back to demos"
+msgstr "デモ一覧に戻る"
 
 #: templates/demo/demo_import_result.html:2
 msgid "Import results"
@@ -110,3 +116,103 @@ msgstr "スキップ"
 #: templates/demo/demo_import_result.html:7
 msgid "Errors"
 msgstr "エラー"
+
+#: templates/demo/demo_index.html:3
+msgid "django-liveops demo"
+msgstr "django-liveops デモ"
+
+#: templates/demo/demo_index.html:5
+msgid "django-liveops — demo operations"
+msgstr "django-liveops — デモ操作"
+
+#: templates/demo/demo_index.html:6
+msgid "Pick an operation type and run it to see the live UI in action."
+msgstr "操作の種類を選んで実行すると、ライブ UI の動作を確認できます。"
+
+#: templates/demo/demo_index.html:10
+#, fuzzy
+#| msgid "Operations"
+msgid "Operation"
+msgstr "オペレーション一覧"
+
+#: templates/demo/demo_index.html:11
+msgid "What it demonstrates"
+msgstr "デモの内容"
+
+#: templates/demo/demo_index.html:21
+msgid "Run"
+msgstr "実行"
+
+#: templates/demo/done.html:3
+#, fuzzy
+#| msgid "New import — demo"
+msgid "Done — demo"
+msgstr "新規インポート — デモ"
+
+#: templates/demo/done.html:5
+msgid "Custom success page"
+msgstr "カスタム完了ページ"
+
+#: templates/demo/done.html:7
+msgid ""
+"You were redirected here automatically by get_success_url() the moment the "
+"operation finished successfully — the operations list was skipped entirely."
+msgstr ""
+"操作が正常に完了した瞬間、get_success_url() によって自動的にこのページへリダイレクトされました — "
+"操作一覧は完全にスキップされています。"
+
+#: templates/demo/generic_result.html:2
+msgid "Result"
+msgstr "結果"
+
+#: templates/demo/generic_result.html:10
+msgid "Done."
+msgstr "完了。"
+
+#: views.py:25
+#, fuzzy
+#| msgid "+ New import"
+msgid "Staged import"
+msgstr "+ 新規インポート"
+
+#: views.py:26
+msgid "5 stages — live stepper, per-stage progress bar and log."
+msgstr "5 段階 — ライブステッパー、段階ごとの進捗バーとログ。"
+
+#: views.py:32
+msgid "Quick task"
+msgstr "クイックタスク"
+
+#: views.py:33
+msgid "No stages — one progress bar, then a result. Simplest shape."
+msgstr "段階なし — 進捗バー 1 本、そして結果。最もシンプルな形。"
+
+#: views.py:39
+msgid "Failing task"
+msgstr "失敗するタスク"
+
+#: views.py:40
+msgid "Raises mid-run — shows the error state and the Retry button."
+msgstr "実行中に失敗 — エラー状態と「再試行」ボタンを表示します。"
+
+#: views.py:46
+msgid "Chained task"
+msgstr "連鎖タスク"
+
+#: views.py:47
+msgid "Runs, then chains to a second operation — no page reload."
+msgstr "実行後、2 番目の処理へ連鎖します — ページの再読み込みなし。"
+
+#: views.py:53
+msgid "Redirect on success"
+msgstr "成功時にリダイレクト"
+
+#: views.py:54
+msgid "On success auto-redirects to a custom page (get_success_url)."
+msgstr "成功すると独自のページへ自動的にリダイレクトします（get_success_url）。"
+
+#~ msgid "New demonstration import"
+#~ msgstr "新しいデモンストレーション用インポート"
+
+#~ msgid "Click “Start” to run a 5-stage import with a live progress preview."
+#~ msgstr "“開始” をクリックすると、進捗をリアルタイムで確認しながら5段階のインポートを実行します。"

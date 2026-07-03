@@ -6,6 +6,20 @@ on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to
 
 ## [Unreleased]
 
+### Added
+- `LiveOperation.get_success_url()` — return a URL to auto-redirect the
+  browser to when the operation finishes successfully (default `None` keeps
+  the user on the live page). Flows through the `liveop_finished` signal as
+  `success_url`; `liveops.js` navigates there on `FINISHED_OK`. Lets a
+  consumer skip the operations index and land on a dedicated page.
+- Demo (`example/`): a catalogue of operation types — staged import, quick
+  task, failing task, chained task, and redirect-on-success — reachable from
+  a landing page, so every shape of the framework can be tried in the browser.
+
+### Fixed
+- Demo URLs updated to the 0.2.0 op_type routing (they still used the old
+  per-pk `liveops` patterns and would `NoReverseMatch`).
+
 ## [0.2.0]
 
 ### Changed

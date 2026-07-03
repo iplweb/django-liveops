@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "django-liveops demo" %}{% endblock %}
+{% block content %}
+<h1>{% trans "django-liveops — demo operations" %}</h1>
+<p>{% trans "Pick an operation type and run it to see the live UI in action." %}</p>
+<table>
+  <thead>
+    <tr>
+      <th>{% trans "Operation" %}</th>
+      <th>{% trans "What it demonstrates" %}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for op in demo_ops %}
+      <tr>
+        <td><strong>{{ op.name }}</strong></td>
+        <td>{{ op.desc }}</td>
+        <td>
+          <a class="btn" href="{% url 'demo:new' kind=op.kind %}">{% trans "Run" %} →</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

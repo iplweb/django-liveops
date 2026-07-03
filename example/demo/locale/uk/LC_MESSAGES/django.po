@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-02 14:40-0500\n"
+"POT-Creation-Date: 2026-07-03 11:36-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,8 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 
 #: models.py:21
 msgid "Load"
@@ -66,31 +65,37 @@ msgstr "[%(stage)s] пропущено запис %(i)s"
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] помилка запису %(i)s"
 
-#: templates/base.html:42
-msgid "Operations"
-msgstr "Операції"
+#: models.py:106
+msgid "Crunching numbers…"
+msgstr "Обробка чисел…"
 
-#: templates/base.html:43
-msgid "+ New import"
-msgstr "+ Новий імпорт"
+#: models.py:137
+msgid "Second operation running…"
+msgstr "Виконується друга операція…"
 
-#: templates/demo/demo_import_create.html:3
-msgid "New import — demo"
-msgstr "Новий імпорт — демо"
+#: models.py:150
+msgid "First operation running…"
+msgstr "Виконується перша операція…"
 
-#: templates/demo/demo_import_create.html:5
-msgid "New demonstration import"
-msgstr "Новий демонстраційний імпорт"
+#: models.py:168
+msgid "Working — will redirect when done…"
+msgstr "Виконується — після завершення буде перенаправлення…"
 
-#: templates/demo/demo_import_create.html:6
-msgid "Click “Start” to run a 5-stage import with a live progress preview."
-msgstr ""
-"Натисніть «Старт», щоб запустити 5-етапний імпорт із переглядом прогресу в "
-"реальному часі."
+#: templates/base.html:52
+msgid "Demos"
+msgstr "Демо"
 
-#: templates/demo/demo_import_create.html:10
+#: templates/demo/demo_create.html:3
+msgid "demo"
+msgstr "демо"
+
+#: templates/demo/demo_create.html:10
 msgid "Start"
 msgstr "Старт"
+
+#: templates/demo/demo_create.html:12 templates/demo/done.html:12
+msgid "Back to demos"
+msgstr "Назад до демо"
 
 #: templates/demo/demo_import_result.html:2
 msgid "Import results"
@@ -111,3 +116,111 @@ msgstr "Пропущено"
 #: templates/demo/demo_import_result.html:7
 msgid "Errors"
 msgstr "Помилки"
+
+#: templates/demo/demo_index.html:3
+msgid "django-liveops demo"
+msgstr "django-liveops демо"
+
+#: templates/demo/demo_index.html:5
+msgid "django-liveops — demo operations"
+msgstr "django-liveops — демонстраційні операції"
+
+#: templates/demo/demo_index.html:6
+msgid "Pick an operation type and run it to see the live UI in action."
+msgstr ""
+"Виберіть тип операції та запустіть його, щоб побачити живий інтерфейс у дії."
+
+#: templates/demo/demo_index.html:10
+#, fuzzy
+#| msgid "Operations"
+msgid "Operation"
+msgstr "Операції"
+
+#: templates/demo/demo_index.html:11
+msgid "What it demonstrates"
+msgstr "Що демонструє"
+
+#: templates/demo/demo_index.html:21
+msgid "Run"
+msgstr "Запустити"
+
+#: templates/demo/done.html:3
+#, fuzzy
+#| msgid "New import — demo"
+msgid "Done — demo"
+msgstr "Новий імпорт — демо"
+
+#: templates/demo/done.html:5
+msgid "Custom success page"
+msgstr "Власна сторінка успіху"
+
+#: templates/demo/done.html:7
+msgid ""
+"You were redirected here automatically by get_success_url() the moment the "
+"operation finished successfully — the operations list was skipped entirely."
+msgstr ""
+"Вас автоматично перенаправлено сюди функцією get_success_url() у момент "
+"успішного завершення операції — список операцій було повністю пропущено."
+
+#: templates/demo/generic_result.html:2
+msgid "Result"
+msgstr "Результат"
+
+#: templates/demo/generic_result.html:10
+msgid "Done."
+msgstr "Готово."
+
+#: views.py:25
+#, fuzzy
+#| msgid "+ New import"
+msgid "Staged import"
+msgstr "+ Новий імпорт"
+
+#: views.py:26
+msgid "5 stages — live stepper, per-stage progress bar and log."
+msgstr "5 етапів — живий степер, смуга прогресу для кожного етапу та журнал."
+
+#: views.py:32
+msgid "Quick task"
+msgstr "Швидке завдання"
+
+#: views.py:33
+msgid "No stages — one progress bar, then a result. Simplest shape."
+msgstr "Без етапів — одна смуга прогресу, потім результат. Найпростіша форма."
+
+#: views.py:39
+msgid "Failing task"
+msgstr "Завдання з помилкою"
+
+#: views.py:40
+msgid "Raises mid-run — shows the error state and the Retry button."
+msgstr ""
+"Перериває під час виконання — показує стан помилки та кнопку «Повторити»."
+
+#: views.py:46
+msgid "Chained task"
+msgstr "Ланцюгове завдання"
+
+#: views.py:47
+msgid "Runs, then chains to a second operation — no page reload."
+msgstr ""
+"Виконується, а потім переходить до другої операції — без перезавантаження "
+"сторінки."
+
+#: views.py:53
+msgid "Redirect on success"
+msgstr "Перенаправлення після успіху"
+
+#: views.py:54
+msgid "On success auto-redirects to a custom page (get_success_url)."
+msgstr ""
+"У разі успіху автоматично перенаправляє на власну сторінку "
+"(get_success_url)."
+
+#~ msgid "New demonstration import"
+#~ msgstr "Новий демонстраційний імпорт"
+
+#~ msgid "Click “Start” to run a 5-stage import with a live progress preview."
+#~ msgstr ""
+#~ "Натисніть «Старт», щоб запустити 5-етапний імпорт із переглядом прогресу в "
+#~ "реальному часі."

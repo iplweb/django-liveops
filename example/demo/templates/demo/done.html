@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Done — demo" %}{% endblock %}
+{% block content %}
+<h1>✓ {% trans "Custom success page" %}</h1>
+<p>
+  {% blocktrans trimmed %}
+    You were redirected here automatically by get_success_url() the moment the
+    operation finished successfully — the operations list was skipped entirely.
+  {% endblocktrans %}
+</p>
+<p><a class="btn" href="{% url 'demo:index' %}">{% trans "Back to demos" %}</a></p>
+{% endblock %}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-02 14:40-0500\n"
+"POT-Creation-Date: 2026-07-03 11:36-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,31 +65,37 @@ msgstr "[%(stage)s] Datensatz %(i)s übersprungen"
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] Fehler bei Datensatz %(i)s"
 
-#: templates/base.html:42
-msgid "Operations"
-msgstr "Vorgänge"
+#: models.py:106
+msgid "Crunching numbers…"
+msgstr "Zahlen werden verarbeitet…"
 
-#: templates/base.html:43
-msgid "+ New import"
-msgstr "+ Neuer Import"
+#: models.py:137
+msgid "Second operation running…"
+msgstr "Zweite Operation läuft…"
 
-#: templates/demo/demo_import_create.html:3
-msgid "New import — demo"
-msgstr "Neuer Import — Demo"
+#: models.py:150
+msgid "First operation running…"
+msgstr "Erste Operation läuft…"
 
-#: templates/demo/demo_import_create.html:5
-msgid "New demonstration import"
-msgstr "Neuer Demonstrations-Import"
+#: models.py:168
+msgid "Working — will redirect when done…"
+msgstr "Wird ausgeführt – Weiterleitung nach Abschluss…"
 
-#: templates/demo/demo_import_create.html:6
-msgid "Click “Start” to run a 5-stage import with a live progress preview."
-msgstr ""
-"Klicken Sie auf „Start“, um einen 5-stufigen Import mit einer Live-"
-"Fortschrittsvorschau auszuführen."
+#: templates/base.html:52
+msgid "Demos"
+msgstr "Demos"
 
-#: templates/demo/demo_import_create.html:10
+#: templates/demo/demo_create.html:3
+msgid "demo"
+msgstr "Demo"
+
+#: templates/demo/demo_create.html:10
 msgid "Start"
 msgstr "Start"
+
+#: templates/demo/demo_create.html:12 templates/demo/done.html:12
+msgid "Back to demos"
+msgstr "Zurück zu den Demos"
 
 #: templates/demo/demo_import_result.html:2
 msgid "Import results"
@@ -110,3 +116,115 @@ msgstr "Übersprungen"
 #: templates/demo/demo_import_result.html:7
 msgid "Errors"
 msgstr "Fehler"
+
+#: templates/demo/demo_index.html:3
+msgid "django-liveops demo"
+msgstr "django-liveops-Demo"
+
+#: templates/demo/demo_index.html:5
+msgid "django-liveops — demo operations"
+msgstr "django-liveops — Demo-Operationen"
+
+#: templates/demo/demo_index.html:6
+msgid "Pick an operation type and run it to see the live UI in action."
+msgstr ""
+"Wählen Sie einen Operationstyp und führen Sie ihn aus, um die Live-"
+"Oberfläche in Aktion zu sehen."
+
+#: templates/demo/demo_index.html:10
+#, fuzzy
+#| msgid "Operations"
+msgid "Operation"
+msgstr "Vorgänge"
+
+#: templates/demo/demo_index.html:11
+msgid "What it demonstrates"
+msgstr "Was es zeigt"
+
+#: templates/demo/demo_index.html:21
+msgid "Run"
+msgstr "Ausführen"
+
+#: templates/demo/done.html:3
+#, fuzzy
+#| msgid "New import — demo"
+msgid "Done — demo"
+msgstr "Neuer Import — Demo"
+
+#: templates/demo/done.html:5
+msgid "Custom success page"
+msgstr "Eigene Erfolgsseite"
+
+#: templates/demo/done.html:7
+msgid ""
+"You were redirected here automatically by get_success_url() the moment the "
+"operation finished successfully — the operations list was skipped entirely."
+msgstr ""
+"Sie wurden hierher automatisch durch get_success_url() weitergeleitet, "
+"sobald die Operation erfolgreich abgeschlossen war – die Operationsliste "
+"wurde komplett übersprungen."
+
+#: templates/demo/generic_result.html:2
+msgid "Result"
+msgstr "Ergebnis"
+
+#: templates/demo/generic_result.html:10
+msgid "Done."
+msgstr "Fertig."
+
+#: views.py:25
+#, fuzzy
+#| msgid "+ New import"
+msgid "Staged import"
+msgstr "+ Neuer Import"
+
+#: views.py:26
+msgid "5 stages — live stepper, per-stage progress bar and log."
+msgstr "5 Phasen – Live-Stepper, Fortschrittsbalken pro Phase und Protokoll."
+
+#: views.py:32
+msgid "Quick task"
+msgstr "Schnelle Aufgabe"
+
+#: views.py:33
+msgid "No stages — one progress bar, then a result. Simplest shape."
+msgstr ""
+"Keine Phasen – ein Fortschrittsbalken, dann ein Ergebnis. Einfachste Form."
+
+#: views.py:39
+msgid "Failing task"
+msgstr "Fehlschlagende Aufgabe"
+
+#: views.py:40
+msgid "Raises mid-run — shows the error state and the Retry button."
+msgstr ""
+"Bricht mitten im Lauf ab – zeigt den Fehlerzustand und die Schaltfläche "
+"„Wiederholen“."
+
+#: views.py:46
+msgid "Chained task"
+msgstr "Verkettete Aufgabe"
+
+#: views.py:47
+msgid "Runs, then chains to a second operation — no page reload."
+msgstr ""
+"Läuft und verkettet dann zu einer zweiten Operation – ohne Neuladen der "
+"Seite."
+
+#: views.py:53
+msgid "Redirect on success"
+msgstr "Weiterleitung bei Erfolg"
+
+#: views.py:54
+msgid "On success auto-redirects to a custom page (get_success_url)."
+msgstr ""
+"Leitet bei Erfolg automatisch zu einer eigenen Seite weiter "
+"(get_success_url)."
+
+#~ msgid "New demonstration import"
+#~ msgstr "Neuer Demonstrations-Import"
+
+#~ msgid "Click “Start” to run a 5-stage import with a live progress preview."
+#~ msgstr ""
+#~ "Klicken Sie auf „Start“, um einen 5-stufigen Import mit einer Live-"
+#~ "Fortschrittsvorschau auszuführen."

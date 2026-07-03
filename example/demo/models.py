@@ -80,3 +80,97 @@ class DemoImport(LiveOperation):
                 "errors": errors,
             }
         )
+
+
+class DemoBase(LiveOperation):
+    """Shared base for the small demo operations.
+
+    They all render their result via one generic template instead of a
+    per-class ``*_result.html`` (``result_template_name`` is picked up by
+    ``liveops.naming.result_template_name``).
+    """
+
+    result_template_name = "demo/generic_result.html"
+
+    class Meta:
+        abstract = True
+
+
+class QuickTask(DemoBase):
+    """No stages — a single progress bar then a result. The simplest shape."""
+
+    class Meta:
+        app_label = "demo"
+
+    def run(self, p):
+        p.status(_("Crunching numbers…"))
+        total = 0
+        for i in p.track(range(30), total=30, label="crunch"):
+            time.sleep(0.04)
+            total += i
+        p.result({"sum": total, "items": 30})
+
+
+class FailingTask(DemoBase):
+    """Raises mid-run to demonstrate the error state + Retry button."""
+
+    class Meta:
+        app_label = "demo"
+
+    def run(self, p):
+        for i in p.track(range(10), total=10, label="work"):
+            time.sleep(0.12)
+            if i == 5:
+                raise RuntimeError(
+                    "Boom at item 5 — this failure is intentional (demo)."
+                )
+        p.result({"never": "reached"})
+
+
+class ChainEnd(DemoBase):
+    """Second link of the chain demo (started by ChainStart)."""
+
+    class Meta:
+        app_label = "demo"
+
+    def run(self, p):
+        p.status(_("Second operation running…"))
+        for _i in p.track(range(15), total=15, label="phase 2"):
+            time.sleep(0.05)
+        p.result({"message": "chain complete"})
+
+
+class ChainStart(DemoBase):
+    """Runs, then chains to a second operation — no page reload (p.chain_to)."""
+
+    class Meta:
+        app_label = "demo"
+
+    def run(self, p):
+        p.status(_("First operation running…"))
+        for _i in p.track(range(15), total=15, label="phase 1"):
+            time.sleep(0.05)
+        nxt = ChainEnd.objects.create(owner=self.owner)
+        p.chain_to(nxt)
+
+
+class RedirectingTask(DemoBase):
+    """On success, auto-redirects to a dedicated page via get_success_url().
+
+    Demonstrates skipping the live/list page entirely: the browser lands on
+    ``demo:done`` the moment this finishes OK.
+    """
+
+    class Meta:
+        app_label = "demo"
+
+    def run(self, p):
+        p.status(_("Working — will redirect when done…"))
+        for _i in p.track(range(20), total=20, label="work"):
+            time.sleep(0.05)
+        p.result({"done": True})
+
+    def get_success_url(self):
+        from django.urls import reverse
+
+        return reverse("demo:done")

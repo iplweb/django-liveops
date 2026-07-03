@@ -49,8 +49,7 @@
 </head>
 <body>
 <nav>
-  <a href="/">{% trans "Operations" %}</a>
-  <a href="/new/" class="btn">{% trans "+ New import" %}</a>
+  <a href="{% url 'demo:index' %}">{% trans "Demos" %}</a>
   {% get_current_language as CURRENT_LANGUAGE %}
   {% get_available_languages as LANGUAGES %}
   <form action="{% url 'set_language' %}" method="post" style="display:inline; float:right;">

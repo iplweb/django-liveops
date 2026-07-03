@@ -129,13 +129,19 @@
                 return;
             }
             if (message.liveop_finished) {
-                // Terminal state reached. Dispatch a DOM event carrying
-                // {pk, state, url} so pages can react (e.g. navigate to the
-                // finished operation). This forces no behaviour by itself.
+                var fin = message.liveop_finished;
+                // If the operation declared a success URL (get_success_url)
+                // and it finished OK, navigate straight there — skip the
+                // live/list page. Errors/cancellations stay put.
+                if (fin.state === "FINISHED_OK" && fin.success_url) {
+                    window.location.assign(fin.success_url);
+                    return;
+                }
+                // Otherwise dispatch a DOM event carrying {pk, state, url} so
+                // pages can react (e.g. navigate to the finished operation).
+                // This forces no behaviour by itself.
                 document.dispatchEvent(
-                    new CustomEvent("liveop:finished", {
-                        detail: message.liveop_finished,
-                    })
+                    new CustomEvent("liveop:finished", { detail: fin })
                 );
                 return;
             }

@@ -8,7 +8,9 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     # Docker healthcheck endpoint (no side effects — see healthz_view).
     path("healthz/", healthz_view, name="healthz"),
-    # demo.urls declares app_name="liveops" — all liveop URL reversals work.
+    # Generic liveops router (op_type): live/cancel/restart for every op type.
+    path("live/", include("liveops.urls")),
+    # Demo landing + per-type create + the redirect-on-success target.
     path("", include("demo.urls")),
     path("__login__/", autologin_view, name="autologin"),
 ]

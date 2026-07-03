@@ -530,6 +530,13 @@ class WebProgress(Progress):
                 url = op.get_absolute_url()
             except Exception:
                 url = ""
+            # success_url: where the client should navigate on FINISHED_OK
+            # (op.get_success_url(); None by default). Lets an operation skip
+            # the live/list page and land the user on a dedicated page.
+            try:
+                success_url = op.get_success_url()
+            except Exception:
+                success_url = None
             push_message_fn(
                 {
                     # "type" routes through the consumer's chat_message handler
@@ -539,6 +546,7 @@ class WebProgress(Progress):
                         "pk": str(op.pk),
                         "state": op.get_state(),
                         "url": url,
+                        "success_url": success_url,
                     },
                 }
             )

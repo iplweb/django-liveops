@@ -146,6 +146,26 @@ def test_task_run_emits_liveop_finished_signal(user):
     assert payload["state"] == "FINISHED_OK"
     assert payload["url"] == op.get_absolute_url()
     assert payload["pk"] == str(op.pk)
+    # get_success_url() defaults to None → no forced redirect.
+    assert payload["success_url"] is None
+
+
+@pytest.mark.django_db(transaction=True)
+def test_liveop_finished_carries_success_url(user, monkeypatch):
+    """get_success_url() flows into the liveop_finished payload as success_url,
+    so the client can redirect straight to a dedicated page on success."""
+    op = DemoOp.objects.create(owner=user)
+    monkeypatch.setattr(DemoOp, "get_success_url", lambda self: "/done/here/")
+    layer = FakeChannelLayer()
+    wp = WebProgress(op, layer)
+
+    runner.task_run(op, wp)
+
+    payload = [msg for _, msg in layer.sent if "liveop_finished" in msg][0][
+        "liveop_finished"
+    ]
+    assert payload["success_url"] == "/done/here/"
+    assert payload["state"] == "FINISHED_OK"
 
 
 @pytest.mark.django_db(transaction=True)

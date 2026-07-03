@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-02 14:40-0500\n"
+"POT-Creation-Date: 2026-07-03 11:36-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,31 +65,37 @@ msgstr "[%(stage)s] jäeti vahele kirje %(i)s"
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] kirje viga %(i)s"
 
-#: templates/base.html:42
-msgid "Operations"
-msgstr "Toimingud"
+#: models.py:106
+msgid "Crunching numbers…"
+msgstr "Arvutan…"
 
-#: templates/base.html:43
-msgid "+ New import"
-msgstr "+ Uus import"
+#: models.py:137
+msgid "Second operation running…"
+msgstr "Teine toiming töötab…"
 
-#: templates/demo/demo_import_create.html:3
-msgid "New import — demo"
-msgstr "Uus import — demo"
+#: models.py:150
+msgid "First operation running…"
+msgstr "Esimene toiming töötab…"
 
-#: templates/demo/demo_import_create.html:5
-msgid "New demonstration import"
-msgstr "Uus näidisimport"
+#: models.py:168
+msgid "Working — will redirect when done…"
+msgstr "Töötab — suunan valmides ümber…"
 
-#: templates/demo/demo_import_create.html:6
-msgid "Click “Start” to run a 5-stage import with a live progress preview."
-msgstr ""
-"Klõpsa “Start”, et käivitada 5-etapiline import reaalajas edenemise "
-"eelvaatega."
+#: templates/base.html:52
+msgid "Demos"
+msgstr "Demod"
 
-#: templates/demo/demo_import_create.html:10
+#: templates/demo/demo_create.html:3
+msgid "demo"
+msgstr "demo"
+
+#: templates/demo/demo_create.html:10
 msgid "Start"
 msgstr "Start"
+
+#: templates/demo/demo_create.html:12 templates/demo/done.html:12
+msgid "Back to demos"
+msgstr "Tagasi demode juurde"
 
 #: templates/demo/demo_import_result.html:2
 msgid "Import results"
@@ -110,3 +116,106 @@ msgstr "Vahele jäetud"
 #: templates/demo/demo_import_result.html:7
 msgid "Errors"
 msgstr "Vead"
+
+#: templates/demo/demo_index.html:3
+msgid "django-liveops demo"
+msgstr "django-liveops demo"
+
+#: templates/demo/demo_index.html:5
+msgid "django-liveops — demo operations"
+msgstr "django-liveops — näidistoimingud"
+
+#: templates/demo/demo_index.html:6
+msgid "Pick an operation type and run it to see the live UI in action."
+msgstr "Vali toimingu tüüp ja käivita see, et näha reaalajas liidest töös."
+
+#: templates/demo/demo_index.html:10
+#, fuzzy
+#| msgid "Operations"
+msgid "Operation"
+msgstr "Toimingud"
+
+#: templates/demo/demo_index.html:11
+msgid "What it demonstrates"
+msgstr "Mida see näitab"
+
+#: templates/demo/demo_index.html:21
+msgid "Run"
+msgstr "Käivita"
+
+#: templates/demo/done.html:3
+#, fuzzy
+#| msgid "New import — demo"
+msgid "Done — demo"
+msgstr "Uus import — demo"
+
+#: templates/demo/done.html:5
+msgid "Custom success page"
+msgstr "Kohandatud õnnestumisleht"
+
+#: templates/demo/done.html:7
+msgid ""
+"You were redirected here automatically by get_success_url() the moment the "
+"operation finished successfully — the operations list was skipped entirely."
+msgstr ""
+"Teid suunati siia automaatselt funktsiooniga get_success_url() kohe, kui "
+"toiming edukalt lõppes — toimingute loend jäeti täielikult vahele."
+
+#: templates/demo/generic_result.html:2
+msgid "Result"
+msgstr "Tulemus"
+
+#: templates/demo/generic_result.html:10
+msgid "Done."
+msgstr "Valmis."
+
+#: views.py:25
+#, fuzzy
+#| msgid "+ New import"
+msgid "Staged import"
+msgstr "+ Uus import"
+
+#: views.py:26
+msgid "5 stages — live stepper, per-stage progress bar and log."
+msgstr "5 etappi — reaalajas sammuriba, iga etapi edenemisriba ja logi."
+
+#: views.py:32
+msgid "Quick task"
+msgstr "Kiire ülesanne"
+
+#: views.py:33
+msgid "No stages — one progress bar, then a result. Simplest shape."
+msgstr "Etappideta — üks edenemisriba, seejärel tulemus. Lihtsaim kuju."
+
+#: views.py:39
+msgid "Failing task"
+msgstr "Ebaõnnestuv ülesanne"
+
+#: views.py:40
+msgid "Raises mid-run — shows the error state and the Retry button."
+msgstr "Katkeb töö keskel — kuvab veaoleku ja nupu „Proovi uuesti“."
+
+#: views.py:46
+msgid "Chained task"
+msgstr "Aheldatud ülesanne"
+
+#: views.py:47
+msgid "Runs, then chains to a second operation — no page reload."
+msgstr "Töötab ja aheldab seejärel teise toiminguga — lehte laadimata."
+
+#: views.py:53
+msgid "Redirect on success"
+msgstr "Ümbersuunamine õnnestumisel"
+
+#: views.py:54
+msgid "On success auto-redirects to a custom page (get_success_url)."
+msgstr ""
+"Õnnestumisel suunab automaatselt kohandatud leheküljele (get_success_url)."
+
+#~ msgid "New demonstration import"
+#~ msgstr "Uus näidisimport"
+
+#~ msgid "Click “Start” to run a 5-stage import with a live progress preview."
+#~ msgstr ""
+#~ "Klõpsa “Start”, et käivitada 5-etapiline import reaalajas edenemise "
+#~ "eelvaatega."

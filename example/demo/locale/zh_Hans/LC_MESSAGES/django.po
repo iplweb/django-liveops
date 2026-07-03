@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-02 14:40-0500\n"
+"POT-Creation-Date: 2026-07-03 11:36-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: machine-translated\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,29 +65,37 @@ msgstr "[%(stage)s] 已跳过记录 %(i)s"
 msgid "[%(stage)s] record error %(i)s"
 msgstr "[%(stage)s] 记录错误 %(i)s"
 
-#: templates/base.html:42
-msgid "Operations"
-msgstr "操作"
+#: models.py:106
+msgid "Crunching numbers…"
+msgstr "正在处理数据…"
 
-#: templates/base.html:43
-msgid "+ New import"
-msgstr "+ 新建导入"
+#: models.py:137
+msgid "Second operation running…"
+msgstr "正在运行第二个操作…"
 
-#: templates/demo/demo_import_create.html:3
-msgid "New import — demo"
-msgstr "新建导入 — 演示"
+#: models.py:150
+msgid "First operation running…"
+msgstr "正在运行第一个操作…"
 
-#: templates/demo/demo_import_create.html:5
-msgid "New demonstration import"
-msgstr "新建演示导入"
+#: models.py:168
+msgid "Working — will redirect when done…"
+msgstr "处理中 — 完成后将自动跳转…"
 
-#: templates/demo/demo_import_create.html:6
-msgid "Click “Start” to run a 5-stage import with a live progress preview."
-msgstr "点击“开始”运行一个包含 5 个阶段的导入，并实时预览进度。"
+#: templates/base.html:52
+msgid "Demos"
+msgstr "演示"
 
-#: templates/demo/demo_import_create.html:10
+#: templates/demo/demo_create.html:3
+msgid "demo"
+msgstr "演示"
+
+#: templates/demo/demo_create.html:10
 msgid "Start"
 msgstr "开始"
+
+#: templates/demo/demo_create.html:12 templates/demo/done.html:12
+msgid "Back to demos"
+msgstr "返回演示列表"
 
 #: templates/demo/demo_import_result.html:2
 msgid "Import results"
@@ -108,3 +116,101 @@ msgstr "已跳过"
 #: templates/demo/demo_import_result.html:7
 msgid "Errors"
 msgstr "错误"
+
+#: templates/demo/demo_index.html:3
+msgid "django-liveops demo"
+msgstr "django-liveops 演示"
+
+#: templates/demo/demo_index.html:5
+msgid "django-liveops — demo operations"
+msgstr "django-liveops — 演示操作"
+
+#: templates/demo/demo_index.html:6
+msgid "Pick an operation type and run it to see the live UI in action."
+msgstr "选择一种操作类型并运行，即可查看实时界面的效果。"
+
+#: templates/demo/demo_index.html:10
+#, fuzzy
+#| msgid "Operations"
+msgid "Operation"
+msgstr "操作"
+
+#: templates/demo/demo_index.html:11
+msgid "What it demonstrates"
+msgstr "演示内容"
+
+#: templates/demo/demo_index.html:21
+msgid "Run"
+msgstr "运行"
+
+#: templates/demo/done.html:3
+#, fuzzy
+#| msgid "New import — demo"
+msgid "Done — demo"
+msgstr "新建导入 — 演示"
+
+#: templates/demo/done.html:5
+msgid "Custom success page"
+msgstr "自定义成功页面"
+
+#: templates/demo/done.html:7
+msgid ""
+"You were redirected here automatically by get_success_url() the moment the "
+"operation finished successfully — the operations list was skipped entirely."
+msgstr "操作成功完成的那一刻，get_success_url() 便自动将您重定向到此页面 — 操作列表被完全跳过。"
+
+#: templates/demo/generic_result.html:2
+msgid "Result"
+msgstr "结果"
+
+#: templates/demo/generic_result.html:10
+msgid "Done."
+msgstr "完成。"
+
+#: views.py:25
+#, fuzzy
+#| msgid "+ New import"
+msgid "Staged import"
+msgstr "+ 新建导入"
+
+#: views.py:26
+msgid "5 stages — live stepper, per-stage progress bar and log."
+msgstr "5 个阶段 — 实时步骤条、每阶段进度条和日志。"
+
+#: views.py:32
+msgid "Quick task"
+msgstr "快速任务"
+
+#: views.py:33
+msgid "No stages — one progress bar, then a result. Simplest shape."
+msgstr "无阶段 — 一个进度条，然后是结果。最简单的形式。"
+
+#: views.py:39
+msgid "Failing task"
+msgstr "失败的任务"
+
+#: views.py:40
+msgid "Raises mid-run — shows the error state and the Retry button."
+msgstr "运行中途失败 — 显示错误状态和“重试”按钮。"
+
+#: views.py:46
+msgid "Chained task"
+msgstr "链式任务"
+
+#: views.py:47
+msgid "Runs, then chains to a second operation — no page reload."
+msgstr "运行后链接到第二个操作 — 无需刷新页面。"
+
+#: views.py:53
+msgid "Redirect on success"
+msgstr "成功后跳转"
+
+#: views.py:54
+msgid "On success auto-redirects to a custom page (get_success_url)."
+msgstr "成功后自动跳转到自定义页面（get_success_url）。"
+
+#~ msgid "New demonstration import"
+#~ msgstr "新建演示导入"
+
+#~ msgid "Click “Start” to run a 5-stage import with a live progress preview."
+#~ msgstr "点击“开始”运行一个包含 5 个阶段的导入，并实时预览进度。"
