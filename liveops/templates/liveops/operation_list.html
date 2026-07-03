@@ -1,8 +1,10 @@
 {% extends base_template %}
 {% load static %}
 {% block content %}
-{# When list_live is on, liveops.js connects the user's audience channel and
-   re-fetches this table into #liveop-list on every liveop_list_changed push. #}
+{% comment %}
+When list_live is on, liveops.js connects the user's audience channel and
+re-fetches this table into #liveop-list on every liveop_list_changed push.
+{% endcomment %}
 <div id="liveop-list"{% if list_live %} data-liveop-list{% endif %}>
   {% include "liveops/_operation_list_table.html" %}
 </div>

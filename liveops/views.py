@@ -81,6 +81,12 @@ class LiveOperationListView(BaseLiveOperationMixin, ListView):
 
     context_object_name = "operations"
 
+    def get_queryset(self):
+        # A concrete LiveOperation subclass must declare its own Meta (for
+        # app_label), which drops the abstract base's ordering. Order here so
+        # the list is newest-first regardless of the subclass's Meta.
+        return super().get_queryset().order_by("-created_on")
+
     def get_template_names(self):
         if self.request.headers.get("HX-Request"):
             return ["liveops/_operation_list_table.html"]
