@@ -1,14 +1,13 @@
-"""Concrete view subclasses for DemoOp — used only in the test suite."""
+"""Concrete view subclasses for DemoOp — used only in the test suite.
+
+Only create + list are app-specific now. live/cancel/restart are served
+generically by ``liveops.urls`` (resolved via op_type), so the test app no
+longer subclasses those.
+"""
 
 from django import forms
 
-from liveops.views import (
-    CancelView,
-    CreateLiveOperationView,
-    LiveOperationListView,
-    LiveOperationView,
-    RestartView,
-)
+from liveops.views import CreateLiveOperationView, LiveOperationListView
 from tests.models import DemoOp
 
 
@@ -23,17 +22,5 @@ class CreateDemoOpView(CreateLiveOperationView):
     form_class = DemoOpForm
 
 
-class LiveDemoOpView(LiveOperationView):
-    model = DemoOp
-
-
 class ListDemoOpView(LiveOperationListView):
-    model = DemoOp
-
-
-class CancelDemoOpView(CancelView):
-    model = DemoOp
-
-
-class RestartDemoOpView(RestartView):
     model = DemoOp

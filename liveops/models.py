@@ -89,6 +89,22 @@ class LiveOperation(models.Model):
         return "NOT_STARTED"
 
     # ------------------------------------------------------------------ #
+    # Operation type key — routing across many subclasses                 #
+    # ------------------------------------------------------------------ #
+
+    @classmethod
+    def op_type_key(cls) -> str:
+        """Stable, reversible key identifying this concrete subclass in URLs.
+
+        Format: ``<app_label>.<model_name>`` — resolvable back to the model
+        via ``django.apps.apps.get_model``. This lets ONE central set of
+        liveops URLs (live/cancel/restart) route every subclass with an O(1)
+        lookup, instead of the consumer scanning all LiveOperation subclasses
+        per request. See ``liveops.views.OpTypeObjectMixin``.
+        """
+        return f"{cls._meta.app_label}.{cls._meta.model_name}"
+
+    # ------------------------------------------------------------------ #
     # Naming resolvers — delegate to liveops.naming               #
     # ------------------------------------------------------------------ #
 
@@ -136,10 +152,26 @@ class LiveOperation(models.Model):
         return runner.enqueue(self)
 
     def get_absolute_url(self) -> str:
-        """Return the URL of the live host page for this operation."""
+        """Return the URL of the live host page for this operation.
+
+        The URL carries ``op_type`` (``<app_label>.<model_name>``) so the
+        central generic ``liveops:live`` view can resolve the concrete model
+        in one lookup — no per-subclass URL wiring, no registry scan.
+        """
         from django.urls import reverse
 
-        return reverse("liveops:live", kwargs={"pk": self.pk})
+        return reverse(
+            "liveops:live",
+            kwargs={"op_type": self.op_type_key(), "pk": self.pk},
+        )
+
+    def on_restart(self) -> None:
+        """Hook called by ``RestartView`` before state reset + re-enqueue.
+
+        No-op by default. Subclasses with child records (e.g. per-row import
+        results) override this to delete them, so a restart begins from a
+        clean slate. Keeps that knowledge in the model, not in the view.
+        """
 
     # ------------------------------------------------------------------ #
     # Phase 2: subscription token + snapshot                              #

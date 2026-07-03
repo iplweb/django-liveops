@@ -1,21 +1,17 @@
-"""Test URL configuration — concrete DemoOp views under liveops namespace."""
+"""Test URL configuration — app-specific create/list for DemoOp.
+
+live/cancel/restart are NOT here — they come generically from
+``liveops.urls`` (mounted in ``tests/root_urls.py``). Create/list stay
+app-specific because they need a form/model + custom templates.
+"""
 
 from django.urls import path
 
-from tests.views import (
-    CancelDemoOpView,
-    CreateDemoOpView,
-    ListDemoOpView,
-    LiveDemoOpView,
-    RestartDemoOpView,
-)
+from tests.views import CreateDemoOpView, ListDemoOpView
 
-app_name = "liveops"
+app_name = "tests"
 
 urlpatterns = [
     path("", ListDemoOpView.as_view(), name="index"),
     path("new/", CreateDemoOpView.as_view(), name="new"),
-    path("<uuid:pk>/", LiveDemoOpView.as_view(), name="live"),
-    path("<uuid:pk>/cancel/", CancelDemoOpView.as_view(), name="cancel"),
-    path("<uuid:pk>/restart/", RestartDemoOpView.as_view(), name="restart"),
 ]

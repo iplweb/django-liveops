@@ -1,22 +1,42 @@
 """
-URL configuration for liveops.
+URL configuration for liveops — the central, generic operation router.
 
-These are illustrative patterns.  Consumer apps must subclass the generic
-views (setting model/form_class), then include their own URL patterns under
-the "liveops" namespace.  See tests/urls.py for a concrete example.
+These patterns serve EVERY ``LiveOperation`` subclass in the project. The
+``op_type`` segment (``<app_label>.<model_name>``, see
+``LiveOperation.op_type_key``) lets the generic views resolve the concrete
+model with an O(1) lookup — no per-app URL wiring, no registry scan.
 
-  app_name = "liveops"
-  urlpatterns = [
-      path("",                  MyListView.as_view(),    name="index"),
-      path("new/",              MyCreateView.as_view(),  name="new"),
-      path("<uuid:pk>/",        MyLiveView.as_view(),    name="live"),
-      path("<uuid:pk>/cancel/", MyCancelView.as_view(),  name="cancel"),
-      path("<uuid:pk>/restart/",MyRestartView.as_view(), name="restart"),
-  ]
+Mount ONCE in your project's root URLconf::
+
+    path("live/", include("liveops.urls")),
+
+Then ``operation.get_absolute_url()`` reverses ``liveops:live`` for any
+subclass automatically.
+
+Create/list views stay app-specific (they need a form/model and custom
+templates) — wire those under your own app's namespace; their success
+redirect targets ``liveops:live`` via ``get_absolute_url()``.
 
 NOTE: no WebSocket path here (§19.1 — WS uses channels_broadcast's fixed
 path /asgi/notifications/ + subscription_token, not a per-pk URL).
 """
 
+from django.urls import path
+
+from liveops.views import CancelView, LiveOperationView, RestartView
+
 app_name = "liveops"
-urlpatterns: list = []
+
+urlpatterns = [
+    path("<str:op_type>/<uuid:pk>/", LiveOperationView.as_view(), name="live"),
+    path(
+        "<str:op_type>/<uuid:pk>/cancel/",
+        CancelView.as_view(),
+        name="cancel",
+    ),
+    path(
+        "<str:op_type>/<uuid:pk>/restart/",
+        RestartView.as_view(),
+        name="restart",
+    ),
+]

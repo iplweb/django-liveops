@@ -6,6 +6,31 @@ on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to
 
 ## [Unreleased]
 
+## [0.2.0]
+
+### Changed
+- **BREAKING — central op_type routing.** The `liveops:live`, `liveops:cancel`
+  and `liveops:restart` URLs now carry an `op_type` segment
+  (`<app_label>.<model_name>`), and `LiveOperation.get_absolute_url()` includes
+  it. `liveops.urls` now ships these three **generic** patterns — mount them
+  **once** in the project root (`path("live/", include("liveops.urls"))`) and
+  they serve *every* `LiveOperation` subclass via an O(1) `apps.get_model`
+  lookup. Consumer apps no longer subclass `LiveOperationView` /
+  `CancelView` / `RestartView` per model, and no longer register their own
+  `liveops`-namespaced URLs for them (only `create`/`list`, which need a
+  form/model, stay app-specific).
+  - Migration: replace per-app `live/cancel/restart` URL entries with a single
+    `include("liveops.urls")`; drop the per-model view subclasses.
+
+### Added
+- `LiveOperation.op_type_key()` — stable, reversible key used for routing.
+- `LiveOperation.on_restart()` — model hook called by `RestartView` before it
+  resets state and re-enqueues (override to clean up child records).
+- Superusers are now exempt from the `LIVEOPS["REQUIRED_GROUP"]` gate
+  (matches Django admin / django-braces semantics).
+
+## [0.1.0]
+
 ### Added
 - Initial release of **django-liveops**.
 - `LiveOperation` abstract model + ergonomic `run(self, p)` API.

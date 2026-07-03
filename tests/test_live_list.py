@@ -61,8 +61,8 @@ def test_list_view_full_page_vs_hx_fragment(user, client):
     client.force_login(user)
     DemoOp.objects.create(owner=user)
 
-    full = client.get("/").content.decode()
-    frag = client.get("/", HTTP_HX_REQUEST="true").content.decode()
+    full = client.get("/demo/").content.decode()
+    frag = client.get("/demo/", HTTP_HX_REQUEST="true").content.decode()
 
     # Full page carries the live wrapper + the table; the htmx fragment is just
     # the table (so it swaps into #liveop-list in place).
@@ -77,9 +77,9 @@ def test_list_live_setting_toggles_wiring(user, client, settings):
     DemoOp.objects.create(owner=user)
 
     settings.LIVEOPS = {"LIST_LIVE": True, "BASE_TEMPLATE": "base.html"}
-    on = client.get("/").content.decode()
+    on = client.get("/demo/").content.decode()
     assert "data-liveop-list" in on and "liveops.js" in on
 
     settings.LIVEOPS = {"LIST_LIVE": False, "BASE_TEMPLATE": "base.html"}
-    off = client.get("/").content.decode()
+    off = client.get("/demo/").content.decode()
     assert "data-liveop-list" not in off

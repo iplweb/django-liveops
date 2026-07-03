@@ -2,18 +2,22 @@
 CBV mixins for LiveOperation views.
 
 BaseLiveOperationMixin — login-required + owner-scoped queryset + optional
-group gate (LIVEOPS["REQUIRED_GROUP"]).  All views inherit from it.
+group gate (LIVEOPS["REQUIRED_GROUP"], superusers exempt).  All views inherit
+from it.
 
-Consumer apps subclass these views, set model/form_class, and register their
-own URL patterns under app_name="liveops".  See tests/urls.py for an
-example.
+live/cancel/restart are GENERIC: they resolve the concrete model from the
+URL ``op_type`` (OpTypeObjectMixin) and are wired once via ``liveops.urls``.
+Consumer apps only subclass CreateLiveOperationView / LiveOperationListView
+(which need a model/form) under their own namespace; their success redirect
+targets ``liveops:live`` through ``get_absolute_url()``.
 """
 
 from __future__ import annotations
 
 from django.contrib.auth.mixins import AccessMixin
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import redirect
+from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect
 from django.views import View
 from django.views.generic import CreateView, DetailView, ListView
 from django.views.generic.detail import SingleObjectMixin
@@ -34,8 +38,12 @@ class BaseLiveOperationMixin(AccessMixin):
         if not request.user.is_authenticated:
             return self.handle_no_permission()
         required_group = get_setting("REQUIRED_GROUP")
+        # Superusers are exempt from the group gate (matches Django admin /
+        # django-braces GroupRequiredMixin semantics). Without this, a
+        # superuser not explicitly in REQUIRED_GROUP would get a 403.
         if (
             required_group
+            and not request.user.is_superuser
             and not request.user.groups.filter(name=required_group).exists()
         ):
             raise PermissionDenied
@@ -43,6 +51,38 @@ class BaseLiveOperationMixin(AccessMixin):
 
     def get_queryset(self):
         return self.model._default_manager.filter(owner=self.request.user)
+
+
+class OpTypeObjectMixin:
+    """Resolve the concrete LiveOperation instance from the URL ``op_type``.
+
+    ``op_type`` is ``<app_label>.<model_name>`` (see
+    ``LiveOperation.op_type_key``). Resolution is one ``apps.get_model`` plus
+    one owner-scoped ``get`` — O(1), no scanning of the model registry. This
+    is what lets a single central set of URLs (live/cancel/restart) serve
+    every LiveOperation subclass in the project.
+
+    Sets ``self.model`` so the standard DetailView/SingleObjectMixin
+    machinery (template names, context) keeps working.
+    """
+
+    def get_object(self, queryset=None):
+        from django.apps import apps
+
+        from liveops.models import LiveOperation
+
+        op_type = self.kwargs["op_type"]
+        try:
+            app_label, model_name = op_type.split(".", 1)
+            model = apps.get_model(app_label, model_name)
+        except (ValueError, LookupError) as exc:
+            raise Http404(f"Unknown operation type: {op_type!r}") from exc
+
+        if not (isinstance(model, type) and issubclass(model, LiveOperation)):
+            raise Http404(f"Not a LiveOperation: {op_type!r}")
+
+        self.model = model
+        return get_object_or_404(model, pk=self.kwargs["pk"], owner=self.request.user)
 
 
 class CreateLiveOperationView(BaseLiveOperationMixin, CreateView):
@@ -55,7 +95,7 @@ class CreateLiveOperationView(BaseLiveOperationMixin, CreateView):
         return redirect(self.object.get_absolute_url())
 
 
-class LiveOperationView(BaseLiveOperationMixin, DetailView):
+class LiveOperationView(OpTypeObjectMixin, BaseLiveOperationMixin, DetailView):
     """
     Live host page for a running or finished operation.
 
@@ -99,7 +139,7 @@ class LiveOperationListView(BaseLiveOperationMixin, ListView):
         return ctx
 
 
-class CancelView(BaseLiveOperationMixin, SingleObjectMixin, View):
+class CancelView(OpTypeObjectMixin, BaseLiveOperationMixin, SingleObjectMixin, View):
     """POST-only: set cancel_requested=True and redirect to live page."""
 
     http_method_names = ["post"]
@@ -111,13 +151,16 @@ class CancelView(BaseLiveOperationMixin, SingleObjectMixin, View):
         return redirect(operation.get_absolute_url())
 
 
-class RestartView(BaseLiveOperationMixin, SingleObjectMixin, View):
+class RestartView(OpTypeObjectMixin, BaseLiveOperationMixin, SingleObjectMixin, View):
     """POST-only: reset terminal state, re-enqueue, redirect to live page."""
 
     http_method_names = ["post"]
 
     def post(self, request, *args, **kwargs):
         operation = self.get_object()
+        # Model hook: let the subclass clean up child records (e.g. import
+        # result rows) before we wipe the operation's own state.
+        operation.on_restart()
         operation.finished_on = None
         operation.started_on = None
         operation.finished_successfully = False
