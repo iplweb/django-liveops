@@ -128,6 +128,11 @@ class LiveOperation(models.Model):
             if self.pk is not None:
                 self.save(update_fields=["language"])
 
+        # New/re-run operation → refresh any open list pages for this owner.
+        from liveops.notifications import notify_list_changed
+
+        notify_list_changed(self)
+
         return runner.enqueue(self)
 
     def get_absolute_url(self) -> str:

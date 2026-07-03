@@ -1,38 +1,12 @@
 {% extends base_template %}
-{% load i18n %}
+{% load static %}
 {% block content %}
-<table class="op-list">
-  <thead>
-    <tr>
-      <th>{% trans "Operation" %}</th>
-      <th>{% trans "Ordered by" %}</th>
-      <th>{% trans "Started" %}</th>
-      <th>{% trans "Finished" %}</th>
-      <th>{% trans "Status" %}</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for op in operations %}
-    {% with state=op.get_state %}
-    <tr>
-      <td><a href="{{ op.get_absolute_url }}">{{ op }}</a></td>
-      <td>{{ op.owner }}</td>
-      <td>{{ op.started_on|date:"Y-m-d H:i"|default:"—" }}</td>
-      <td>{{ op.finished_on|date:"Y-m-d H:i"|default:"—" }}</td>
-      <td>
-        <span class="op-state op-state--{{ state }}">
-          {% if state == "FINISHED_OK" %}{% trans "Completed" %}
-          {% elif state == "FINISHED_ERROR" %}{% trans "Failed" %}
-          {% elif state == "CANCELLED" %}{% trans "Cancelled" %}
-          {% elif state == "STARTED" %}{% trans "Running" %}
-          {% else %}{% trans "Not started" %}{% endif %}
-        </span>
-      </td>
-    </tr>
-    {% endwith %}
-  {% empty %}
-    <tr><td colspan="5">{% trans "No operations yet." %}</td></tr>
-  {% endfor %}
-  </tbody>
-</table>
+{# When list_live is on, liveops.js connects the user's audience channel and
+   re-fetches this table into #liveop-list on every liveop_list_changed push. #}
+<div id="liveop-list"{% if list_live %} data-liveop-list{% endif %}>
+  {% include "liveops/_operation_list_table.html" %}
+</div>
+{% if list_live %}
+<script src="{% static 'liveops/liveops.js' %}"></script>
+{% endif %}
 {% endblock %}

@@ -4,6 +4,9 @@ _DEFAULTS = {
     "BASE_TEMPLATE": "base.html",
     "RUNNER": "eager",
     "THROTTLE_HZ": 10,
+    # Live operations list: push a per-user "list changed" signal on
+    # create/start/finish so open list pages refresh. Set False to opt out.
+    "LIST_LIVE": True,
 }
 
 

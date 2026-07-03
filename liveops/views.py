@@ -73,14 +73,23 @@ class LiveOperationView(BaseLiveOperationMixin, DetailView):
 
 
 class LiveOperationListView(BaseLiveOperationMixin, ListView):
-    """List all operations owned by the current user."""
+    """List all operations owned by the current user.
 
-    template_name = "liveops/operation_list.html"
+    A live-refresh request (htmx, ``HX-Request`` header) gets only the table
+    fragment so ``liveops.js`` can swap it into ``#liveop-list`` in place.
+    """
+
     context_object_name = "operations"
+
+    def get_template_names(self):
+        if self.request.headers.get("HX-Request"):
+            return ["liveops/_operation_list_table.html"]
+        return ["liveops/operation_list.html"]
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["base_template"] = get_setting("BASE_TEMPLATE")
+        ctx["list_live"] = get_setting("LIST_LIVE")
         return ctx
 
 

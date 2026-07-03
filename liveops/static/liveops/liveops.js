@@ -104,12 +104,15 @@
             return;
         }
 
+        // Detail page: a per-operation container carrying a subscription token.
         var container = document.querySelector(
             "[data-liveop-channel][data-liveop-token]"
         );
-        if (!container) return;
+        // List page: a marker element; we connect the user's audience channel
+        // (no token) and refresh #liveop-list on each liveop_list_changed push.
+        var listEl = document.querySelector("[data-liveop-list]");
 
-        var token = container.getAttribute("data-liveop-token");
+        if (!container && !listEl) return;
 
         // Save the original addMessage so unknown payload types fall through.
         var _origAddMessage = cn.addMessage.bind(cn);
@@ -136,12 +139,37 @@
                 );
                 return;
             }
+            if (message.liveop_list_changed) {
+                // One of this user's operations was created/started/finished:
+                // re-fetch the table fragment (HX-Request) into #liveop-list.
+                refreshList();
+                return;
+            }
             // Unknown message type — delegate to default handler.
             _origAddMessage(message);
         };
 
-        // null extraChannels — the token carries the channel name.
-        cn.init(null, { subscriptionToken: token });
+        if (container) {
+            // null extraChannels — the token carries the channel name.
+            cn.init(null, { subscriptionToken: container.getAttribute("data-liveop-token") });
+        } else {
+            // Audience-only connection: the authenticated user is auto-subscribed
+            // to their own channel; no token needed.
+            cn.init();
+        }
+    }
+
+    function refreshList() {
+        var target = document.getElementById("liveop-list");
+        if (!target || !window.htmx) return;
+        try {
+            window.htmx.ajax("GET", window.location.href, {
+                target: "#liveop-list",
+                swap: "innerHTML",
+            });
+        } catch (e) {
+            console.debug("live-operations: list refresh failed", e);
+        }
     }
 
     if (document.readyState === "loading") {

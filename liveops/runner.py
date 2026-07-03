@@ -120,6 +120,8 @@ def task_run(operation: Any, progress: Any) -> None:
 def _task_run(operation: Any, progress: Any) -> None:
     from django.utils import timezone
 
+    from liveops.notifications import notify_list_changed
+
     # notify_finished() fires once for every terminal outcome (cancelled before
     # start, success, cancelled mid-run, error) so watching clients get a single
     # "done" signal regardless of path.
@@ -135,6 +137,7 @@ def _task_run(operation: Any, progress: Any) -> None:
         # Mark started
         operation.started_on = timezone.now()
         operation.save(update_fields=["started_on"])
+        notify_list_changed(operation)  # row → Running
 
         try:
             operation.run(progress)
@@ -154,6 +157,7 @@ def _task_run(operation: Any, progress: Any) -> None:
             _handle_error(operation, tb.format_exc(), progress)
     finally:
         progress.notify_finished()
+        notify_list_changed(operation)  # row → terminal status
 
 
 def _get_cancelled_class() -> type:

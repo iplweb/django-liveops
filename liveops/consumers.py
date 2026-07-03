@@ -35,8 +35,13 @@ class LiveOperationConsumer(NotificationsConsumer):
 
         liveop_channels = [c for c in self.channels if c.startswith("liveop.")]
         if not liveop_channels:
-            # No authorised liveop channel — token invalid/mismatched user.
-            self.close()
+            # Close only if a subscription token was supplied but authorised no
+            # liveop channel (invalid / mismatched-user token). A tokenless
+            # connection (e.g. the operations list page) is legitimate: the
+            # authenticated user stays subscribed to their own audience channel
+            # to receive per-user list-changed signals.
+            if b"subscription_token" in self.scope.get("query_string", b""):
+                self.close()
             return
 
         for channel in liveop_channels:
