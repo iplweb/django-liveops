@@ -62,6 +62,17 @@ Called at exactly three transition points (coarse — not per progress tick):
 
 That is 2–3 signals per operation lifecycle, regardless of progress volume.
 
+### 1b. Consumer accepts audience-only connections (package)
+
+`LiveOperationConsumer.connect()` currently closes any socket that ends up with
+no `liveop.*` channel — intended to reject invalid/mismatched tokens, but it
+would also kill the list page's legitimate audience-only connection (the
+authenticated user is on their own per-user channel, which is not a `liveop.*`
+channel). Relax it: close **only when a `subscription_token` was supplied but
+authorised no channel** (a genuinely invalid token). A tokenless connection
+(the list page) stays open on the user's audience channel. The snapshot loop
+still runs only for real `liveop.*` channels, so nothing else changes.
+
 ### 2. List page connects the WS and refreshes (package + demo)
 
 `operation_list.html` gains (only when the opt-out setting is on):
@@ -71,7 +82,13 @@ That is 2–3 signals per operation lifecycle, regardless of progress volume.
   per-operation token needed.
 
 The table is wrapped in `#liveop-list` so htmx can target/swap just that
-fragment.
+fragment. The list-handling lives in the existing `liveops.js` (extended to
+recognise a `[data-liveop-list]` marker and, on `liveop_list_changed`,
+`htmx.ajax` the fragment into `#liveop-list`). Like the detail page, the list
+template loads `liveops.js` itself and assumes the host page already provides
+htmx and channels_broadcast's `notifications.js` (the demo base template does).
+This dependency is documented so the package is not silently reliant on a
+specific host base template.
 
 ### 3. List view returns a fragment on htmx requests (package)
 
