@@ -6,6 +6,22 @@ on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to
 
 ## [Unreleased]
 
+## [0.4.0]
+
+### Added
+- **Default component stylesheet** (`liveops/static/liveops/liveops.css`). The
+  package now ships a neutral, framework-agnostic default look for the
+  live-operation UI — progress bar (grey track + coloured fill with a width
+  transition), stage stepper pills (blue active / green done / red
+  failed·cancelled), status line, monospace scrollable log, result box, and
+  the cancel/retry controls — plus `:empty` hiding so unused regions don't
+  reserve space. The built-in `liveops/operation.html` template loads it
+  automatically next to `liveops.js`. It's pure low-specificity CSS (no SCSS,
+  no Foundation/Bootstrap/Tailwind dependency), so a host can override any rule
+  from a later stylesheet or skip the link and style the semantic classes
+  directly. Previously the package shipped only JS and every host styled the
+  components from scratch.
+
 ## [0.3.0]
 
 ### Added

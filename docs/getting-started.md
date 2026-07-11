@@ -106,6 +106,24 @@ your project already loads its own copy of htmx, drop the first line — the
 `liveops.js` client only calls `htmx.process()` when `window.htmx` is
 present, so it works with whichever htmx you load.
 
+## 4b. Styling (optional)
+
+The package ships a neutral default stylesheet for the live-operation
+components (progress bar, stage stepper, status line, log, result box and the
+cancel/retry controls). The built-in `liveops/operation.html` template loads
+it automatically. If you render `{% live_operation %}` in your own template
+instead, add the link yourself:
+
+```html
+{% load static %}
+<link rel="stylesheet" href="{% static 'liveops/liveops.css' %}">
+```
+
+It is pure, framework-agnostic CSS with low specificity — override any rule
+from a stylesheet loaded after it, or skip the link entirely and style the
+semantic classes (`.progress-bar`, `.progress-fill`, `.op-stage--active`,
+`#op-status`, `#op-log`, `.op-controls-cancel`, …) yourself.
+
 ## 5. Run the demo
 
 ```bash

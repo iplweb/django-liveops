@@ -40,6 +40,17 @@ class MyImport(LiveOperation):
 The framework handles channels, tokens, OOB-swaps, snapshot-on-connect,
 throttling, and cooperative cancellation.
 
+## Styling
+
+The package ships a neutral default stylesheet (`liveops/liveops.css`) for the
+live-operation components — progress bar, stage stepper, status line, log,
+result box and the cancel/retry controls. The built-in `operation.html`
+template loads it automatically; render `{% live_operation %}` in your own
+template and you can add
+`<link rel="stylesheet" href="{% static 'liveops/liveops.css' %}">` yourself.
+It's framework-agnostic, low-specificity CSS — override any rule from your own
+stylesheet, or drop it and style the semantic classes directly.
+
 ## Try the demo
 
 A self-contained demo project lives in [`example/`](example/).

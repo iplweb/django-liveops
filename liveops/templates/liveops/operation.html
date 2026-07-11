@@ -1,6 +1,7 @@
 {% extends base_template %}
 {% block content %}
 {% load liveops static %}
+<link rel="stylesheet" href="{% static 'liveops/liveops.css' %}">
 {% live_operation object %}
 <script src="{% static 'liveops/liveops.js' %}"></script>
 {% endblock %}

@@ -77,10 +77,14 @@ By default, `liveops/operation.html` is used. To customise, create
 {% load liveops static %}
 {% block content %}
 <h1>Score import</h1>
+<link rel="stylesheet" href="{% static 'liveops/liveops.css' %}">
 {% live_operation object %}
 <script src="{% static 'liveops/liveops.js' %}"></script>
 {% endblock %}
 ```
+
+The `liveops.css` link brings the package's neutral default styling; drop it
+if you'd rather style the semantic classes yourself.
 
 ## 4. Form (optional)
 

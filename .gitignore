@@ -25,6 +25,7 @@ example/*.sqlite3
 htmlcov/
 
 # IDE
+.idea/
 .DS_Store
 *.swp
 *~

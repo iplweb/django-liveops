@@ -1,0 +1,155 @@
+/*
+ * django-liveops — default component styles.
+ *
+ * A neutral, framework-agnostic default look for the live-operation UI
+ * rendered by liveops templates (progress bar, stage stepper, status line,
+ * log, result box and the cancel/retry controls). Loaded automatically by
+ * `liveops/operation.html` next to `liveops.js`.
+ *
+ * Everything here is intentionally low-specificity (single class / id, no
+ * !important) so a host project can override any rule from its own stylesheet
+ * simply by loading it after this file. Colours are hard-coded status
+ * semantics (blue = active, green = done, red = failed) — not a theme; swap
+ * them in your own CSS if they clash with your design.
+ *
+ * Pure CSS: no SCSS variables, no Foundation/Bootstrap/Tailwind dependency.
+ */
+
+/* --- Status line ---------------------------------------------------------- */
+#op-status {
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  background: #eef;
+  border-radius: 4px;
+}
+
+/* --- Progress bar --------------------------------------------------------- */
+#op-progress {
+  margin: 0.5rem 0;
+}
+.progress-bar {
+  width: 100%;
+  height: 1.2rem;
+  background: #e0e0e0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: #4caf50;
+  border-radius: 3px;
+  transition: width 0.2s;
+}
+
+/* --- Log ------------------------------------------------------------------ */
+#op-log {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  max-height: 12rem;
+  overflow-y: auto;
+  background: #f5f5f5;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+}
+#op-log .log-line {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* --- Stage stepper -------------------------------------------------------- */
+#op-stages {
+  margin: 0.75rem 0;
+}
+.op-stages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.op-stage {
+  padding: 0.25rem 0.6rem;
+  border-radius: 3px;
+  font-size: 0.85rem;
+  background: #dddddd;
+  color: #333333;
+}
+.op-stage--active {
+  background: #4a90e2;
+  color: #ffffff;
+}
+.op-stage--done {
+  background: #4caf50;
+  color: #ffffff;
+}
+.op-stage--failed,
+.op-stage--cancelled {
+  background: #e04444;
+  color: #ffffff;
+}
+
+/* --- Result box ----------------------------------------------------------- */
+#op-result {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f0fff0;
+  border-left: 4px solid #4caf50;
+}
+#op-result .error {
+  color: #b00020;
+}
+#op-result .op-cancelled {
+  color: #8a6d00;
+}
+
+/* --- Controls (cancel / retry) -------------------------------------------- */
+#op-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.op-controls-cancel,
+.op-controls-restart {
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+/* Neutral, hollow — a low-emphasis "get me out" action. */
+.op-controls-cancel {
+  border: 1px solid #999999;
+  background: transparent;
+  color: #333333;
+}
+/* Primary — the recommended "try again" action after a failure. */
+.op-controls-restart {
+  border: none;
+  background: #4466aa;
+  color: #ffffff;
+}
+/* liveops.js toggles the `hidden` attribute to show the right button for the
+ * current state; the explicit rule beats the display above (a UA `[hidden]`
+ * alone would not, once we set display: inline-block). */
+.op-controls-cancel[hidden],
+.op-controls-restart[hidden] {
+  display: none;
+}
+
+/* --- Empty-region hiding -------------------------------------------------- */
+/* Status / progress / log / stages regions start with no content and only get
+ * markup once the operation actually writes to them — hide the empty shells so
+ * unused regions don't reserve vertical space. */
+#op-status:empty,
+#op-progress:empty,
+#op-log:empty,
+#op-stages:empty {
+  display: none;
+}
+/* The result region always holds whitespace (so :empty never matches); hide it
+ * until an actual result/error/cancelled fragment is swapped in. */
+#op-result:not(:has(> *)) {
+  display: none;
+}
